@@ -1,56 +1,67 @@
-name: 'Deploy ASP.NET Core app to Azure Web App'
+name: Combined Workflow
 
 on:
-  # push:
-  #   branches:
-  #     - "main"
-
   workflow_dispatch:
     inputs:
       environment:
-        # description: "pipeline start manual
-        type: "environmnet"
+        description: 'Select environment (dev or prod)'
         required: true
-      
- 
-env:
-  DOTNET_VERSION: '3.1.404'
+        default: 'dev'
 
 jobs:
-  build-and-publish-prod:
+  build-and-deploy-dev:
     runs-on: ubuntu-latest
-    environment:
-      name: prod
+    if: ${{ github.event.inputs.environment == 'dev' }}
+
     steps:
+    # - name: Checkout Repository
+    #   uses: actions/checkout@v2
 
-      # Checkout the repo
-      - uses: actions/checkout@master
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '5.0.x'  # You can adjust this version
 
-      # Setup .NET Core SDK
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+    # - name: Restore dependencies
+    #   run: dotnet restore
 
-      # Your build and publish steps for prod environment go here
+    # - name: Build application
+    #   run: dotnet build --configuration Release
 
-  build-and-publish-dev:
+    # - name: Publish artifact
+    #   run: dotnet publish -c Release -o $(Build.ArtifactStagingDirectory)
+
+    - name: Deploy to Dev
+      run: |
+        # Add your deployment script or commands for the dev environment
+        echo "Deploying to Dev environment..."
+
+  build-and-deploy-prod:
     runs-on: ubuntu-latest
-    environment:
-      name: dev
+    if: ${{ github.event.inputs.environment == 'prod' }}
+
     steps:
+    # - name: Checkout Repository
+    #   uses: actions/checkout@v2
 
-      # Checkout the repo
-      - uses: actions/checkout@master
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v5
+      with:
+        dotnet-version: '5.0.x'  # You can adjust this version
 
-      # Setup .NET Core SDK
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+    # - name: Restore dependencies
+    #   run: dotnet restore
 
-      # Your build and publish steps for dev environment go here
+    # - name: Build application
+    #   run: dotnet build --configuration Release
 
+    # - name: Publish artifact
+    #   run: dotnet publish -c Release -o $(Build.ArtifactStagingDirectory)
+
+    - name: Deploy to Prod
+      run: |
+        # Add your deployment script or commands for the prod environment
+        echo "Deploying to Prod environment..."
 
 
 
