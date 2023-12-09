@@ -4,19 +4,20 @@ on:
   # push:
   #   branches:
   #     - "main"
+
   workflow_dispatch:
     inputs:
       environment:
         # description: "pipeline start manual
-        type: environmnet
+        type: "environmnet"
         required: true
+      
  
 env:
   DOTNET_VERSION: '3.1.404'
 
-
 jobs:
-  build-and-publish:
+  build-and-publish-prod:
     runs-on: ubuntu-latest
     environment:
       name: prod
@@ -25,20 +26,13 @@ jobs:
       # Checkout the repo
       - uses: actions/checkout@master
 
-  build:
-    runs-on: ubuntu-latest
-    needs: build-and-publish
-    environment:
-      name: prod
-    
-    steps:
       # Setup .NET Core SDK
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-
+      # Your build and publish steps for prod environment go here
 
   build-and-publish-dev:
     runs-on: ubuntu-latest
@@ -49,18 +43,81 @@ jobs:
       # Checkout the repo
       - uses: actions/checkout@master
 
-  build-dev:
-    runs-on: ubuntu-latest
-    needs: build-and-publish-dev
-    environment:
-      name: dev
-    
-    steps:
       # Setup .NET Core SDK
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      # Your build and publish steps for dev environment go here
+
+
+
+
+
+# name: 'Deploy ASP.NET Core app to Azure Web App'
+
+# on:
+#   # push:
+#   #   branches:
+#   #     - "main"
+#   workflow_dispatch:
+#     inputs:
+#       environment:
+#         # description: "pipeline start manual
+#         type: environmnet
+#         required: true
+ 
+# env:
+#   DOTNET_VERSION: '3.1.404'
+
+
+# jobs:
+#   build-and-publish:
+#     runs-on: ubuntu-latest
+#     environment:
+#       name: prod
+#     steps:
+
+#       # Checkout the repo
+#       - uses: actions/checkout@master
+
+#   build:
+#     runs-on: ubuntu-latest
+#     needs: build-and-publish
+#     environment:
+#       name: prod
+    
+#     steps:
+#       # Setup .NET Core SDK
+#       - name: Setup .NET Core
+#         uses: actions/setup-dotnet@v3
+#         with:
+#           dotnet-version: ${{ env.DOTNET_VERSION }}
+
+
+
+#   build-and-publish-dev:
+#     runs-on: ubuntu-latest
+#     environment:
+#       name: dev
+#     steps:
+
+#       # Checkout the repo
+#       - uses: actions/checkout@master
+
+#   build-dev:
+#     runs-on: ubuntu-latest
+#     needs: build-and-publish-dev
+#     environment:
+#       name: dev
+    
+#     steps:
+#       # Setup .NET Core SDK
+#       - name: Setup .NET Core
+#         uses: actions/setup-dotnet@v3
+#         with:
+#           dotnet-version: ${{ env.DOTNET_VERSION }}
 
 
 
