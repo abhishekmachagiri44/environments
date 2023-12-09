@@ -12,6 +12,8 @@ env:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    environment:
+      name: prod
     steps:
 
       # Checkout the repo
@@ -29,6 +31,41 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
+
+
+
+  build-and-publish-dev:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+    steps:
+
+      # Checkout the repo
+      - uses: actions/checkout@master
+
+  build-dev:
+    runs-on: ubuntu-latest
+    needs: build-and-publish-dev
+    environment:
+      name: dev
+    
+    steps:
+      # Setup .NET Core SDK
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+
+
+
+
+
+
+
+
+
+          
 
       # Run dotnet build and publish
       # - name: dotnet build and publish
