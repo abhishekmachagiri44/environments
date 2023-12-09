@@ -12,6 +12,7 @@ env:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    environment: 'dev'
     steps:
 
       # Checkout the repo
@@ -24,58 +25,58 @@ jobs:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
       # Run dotnet build and publish
-      - name: dotnet build and publish
-        working-directory: 'app'
-        run: |
-          dotnet restore
-          dotnet build --configuration Release
-          dotnet publish -c Release -o './published-app'
+      # - name: dotnet build and publish
+      #   working-directory: 'app'
+      #   run: |
+      #     dotnet restore
+      #     dotnet build --configuration Release
+      #     dotnet publish -c Release -o './published-app'
 
-      # Publish artifact
-      - name: Publish artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: published-app
-          path: './app/published-app'
+      # # Publish artifact
+      # - name: Publish artifact
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: published-app
+      #     path: './app/published-app'
 
-  deploy-dev:
-    runs-on: 'ubuntu-latest'
-    environment: 'dev'
-    needs: build-and-publish
-    steps:
+  # deploy-dev:
+  #   runs-on: 'ubuntu-latest'
+  #   environment: 'dev'
+  #   needs: build-and-publish
+  #   steps:
 
-      # Download published artifact
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: published-app
-          path: './published-app'
+  #     # Download published artifact
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: published-app
+  #         path: './published-app'
 
-      # Deploy to web app
-      - name: Deploy to Azure WebApp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: app-cloudlumberjack-dev
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: './published-app'
+  #     # Deploy to web app
+  #     - name: Deploy to Azure WebApp
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: app-cloudlumberjack-dev
+  #         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+  #         package: './published-app'
 
-  deploy-prod:
-    runs-on: 'ubuntu-latest'
-    environment: 'prod'
-    needs: [build-and-publish, deploy-dev]
-    steps:
+  # deploy-prod:
+  #   runs-on: 'ubuntu-latest'
+  #   environment: 'prod'
+  #   needs: [build-and-publish, deploy-dev]
+  #   steps:
 
-      # Download published artifact
-      - name: Download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: published-app
-          path: './published-app'
+  #     # Download published artifact
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: published-app
+  #         path: './published-app'
 
-      # Deploy to web app
-      - name: Deploy to Azure WebApp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: app-cloudlumberjack-prod
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: './published-app'
+  #     # Deploy to web app
+  #     - name: Deploy to Azure WebApp
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: app-cloudlumberjack-prod
+  #         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+  #         package: './published-app'
