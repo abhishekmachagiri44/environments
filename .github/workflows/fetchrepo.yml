@@ -23,8 +23,8 @@ jobs:
       with:
         repository: abhishekmachag/environments
         ref: main
-        path: ${{ github.workspace }}\environments
-        token: ${{ secrets.GH_TOKEN }}
+        path: ${{ github.workspace }}/environments
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - run: Get-ChildItem
     - run: Get-Location
