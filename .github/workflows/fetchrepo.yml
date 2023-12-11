@@ -19,7 +19,8 @@ jobs:
     
     steps:
     - run: Get-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR"
-    - run: Stop-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR" --PassThru
+    - run: Stop-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR" -PassThru
+
     # - name: Checkout First Repository
     #   uses: actions/checkout@v3
     #   with:
