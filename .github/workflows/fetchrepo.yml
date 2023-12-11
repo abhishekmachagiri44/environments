@@ -14,10 +14,11 @@ on:
 
 jobs:
   build-dev:
-    runs-on: windows-2019
+    runs-on: local
     # if: ${{ github.event.inputs.environment == 'dev' }}
     
     steps:
+    - run: Copy-Item -Path C:\angular\angular1\Newfolder\* -Destination C:\Users\Newfolder -Recurse 
     # - run: Get-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR"
     # # - run: Start-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR" -PassThru
     # - run: |
@@ -25,8 +26,8 @@ jobs:
     #       Get-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR"
     #       Start-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR" -PassThru
 
-    - name: Checkout First Repository
-      run: git clone https://x-token-auth:ATCTT3xFfGN0lJU1YpCo85GEPVpiXU4BNJwXJNuBJgEg8j5KCOZlC9A9CaIAB5-AvAmYhYNq_C4rHJCxBJow72QJkeBna4_SSJmQQ01hhHF9xhwPqmM6Oq_c3dSP_0QVxsurTujOx7kwoZx1o69tuMhxlp7xVNt6Z1w5mXRZcntVqLI3RQ5QinM=B3B30D8C@bitbucket.org/projects44/angular1.git
+    # - name: Checkout First Repository
+    #   run: git clone https://x-token-auth:ATCTT3xFfGN0lJU1YpCo85GEPVpiXU4BNJwXJNuBJgEg8j5KCOZlC9A9CaIAB5-AvAmYhYNq_C4rHJCxBJow72QJkeBna4_SSJmQQ01hhHF9xhwPqmM6Oq_c3dSP_0QVxsurTujOx7kwoZx1o69tuMhxlp7xVNt6Z1w5mXRZcntVqLI3RQ5QinM=B3B30D8C@bitbucket.org/projects44/angular1.git
       # uses: actions/checkout@v3
       # with:
       #   repository: abhishekmachag/environments
@@ -34,11 +35,11 @@ jobs:
       #   path: ${{ github.workspace }}/environments
       #   token: ${{ secrets.GITHUB_TOKEN }}
 
-    - run: Get-ChildItem
-    - run: Get-Location
+    # - run: Get-ChildItem
+    # - run: Get-Location
     
-    - name: Checkout Second Repository
-      run: git clone https://abhishekmachag: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@github.com/abhishekmachag/msbuild.git
+    # - name: Checkout Second Repository
+    #   run: git clone https://abhishekmachag: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@github.com/abhishekmachag/msbuild.git
       
     #   # uses: actions/checkout@v3
     #   # with:
