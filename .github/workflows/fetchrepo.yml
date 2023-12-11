@@ -14,28 +14,29 @@ on:
 
 jobs:
   build-dev:
-    runs-on: windows-2019
+    runs-on: local
     # if: ${{ github.event.inputs.environment == 'dev' }}
     
     steps:
-    - name: Checkout First Repository
-      uses: actions/checkout@v3
-      with:
-        repository: abhishekmachag/environments
-        ref: main
-        path: ${{ github.workspace }}/environments
-        token: ${{ secrets.GITHUB_TOKEN }}
+    - run: Stop-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR"
+    # - name: Checkout First Repository
+    #   uses: actions/checkout@v3
+    #   with:
+    #     repository: abhishekmachag/environments
+    #     ref: main
+    #     path: ${{ github.workspace }}/environments
+    #     token: ${{ secrets.GITHUB_TOKEN }}
 
-    - run: Get-ChildItem
-    - run: Get-Location
-    - name: Checkout Second Repository
-      run: git clone https://abhishekmachag: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@github.com/abhishekmachag/msbuild.git
-      # uses: actions/checkout@v3
-      # with:
-      #   repository: abhishekmachag/msbuild
-      #   ref: master
-      #   path: ${{ github.workspace }}\msbuild
-      #   token: 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
+    # - run: Get-ChildItem
+    # - run: Get-Location
+    # - name: Checkout Second Repository
+    #   run: git clone https://abhishekmachag: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@github.com/abhishekmachag/msbuild.git
+    #   # uses: actions/checkout@v3
+    #   # with:
+    #   #   repository: abhishekmachag/msbuild
+    #   #   ref: master
+    #   #   path: ${{ github.workspace }}\msbuild
+    #   #   token: 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
 
-    - run: Get-ChildItem
-    - run: Get-Location
+    # - run: Get-ChildItem
+    # - run: Get-Location
