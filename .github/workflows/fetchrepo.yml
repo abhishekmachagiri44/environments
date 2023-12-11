@@ -21,12 +21,10 @@ jobs:
     - run: Get-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR"
     # - run: Start-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR" -PassThru
     - run: |
-          try {
-              Stop-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR" -PassThru -ErrorAction SilentlyContinue
-          } catch {
-              # Handle the error here or leave it empty to ignore
-          }
-               
+          Stop-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR" -PassThru -ErrorAction SilentlyContinue 2>$null
+      
+          powershell.exe -command ". '{0}'"
+          
     - run: Start-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR" -PassThru
 
     # - name: Checkout First Repository
