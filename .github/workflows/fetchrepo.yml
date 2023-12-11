@@ -14,7 +14,7 @@ on:
 
 jobs:
   build-dev:
-    runs-on: local
+    runs-on: Windows
     # if: ${{ github.event.inputs.environment == 'dev' }}
     
     steps:
