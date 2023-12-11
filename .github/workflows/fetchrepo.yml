@@ -1,0 +1,45 @@
+name: fetch-other repo
+
+on:
+  push:
+    branches:
+      -main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select environment (dev or prod)'
+        required: true
+        default: 'dev'
+        type: environment
+
+jobs:
+  build-dev:
+    runs-on: windows-2019
+    # if: ${{ github.event.inputs.environment == 'dev' }}
+    
+    
+    
+    
+    
+    steps:
+    # - name: Checkout First Repository
+    #   uses: actions/checkout@v3
+    #   with:
+    #     repository: abhishekmachag/
+    #     ref: main
+    #     path: ${{ github.workspace }}\Forms-RTNSF
+    #     token: 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
+
+    # - run: Get-ChildItem
+    # - run: Get-Location
+    
+    - name: Checkout Second Repository
+      uses: actions/checkout@v3
+      with:
+        repository: abhishekmachag/msbuild
+        ref: master
+        path: ${{ github.workspace }}\msbuild
+        token: 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
+
+    - run: Get-ChildItem
+    - run: Get-Location
