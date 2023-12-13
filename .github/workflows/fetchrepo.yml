@@ -18,6 +18,8 @@ jobs:
     # if: ${{ github.event.inputs.environment == 'dev' }}
     
     steps:
+    - run: $folderPath = "C:\win"; if (-not (Test-Path $folderPath -PathType Container)) { New-Item -Path $folderPath -ItemType Directory; Write-Host "Folder created successfully." } else { Write-Host "Folder already exists." }
+
     # - run: Copy-Item -Path C:\angular\angular1\Newfolder\* -Destination C:\Users\Newfolder -Recurse 
     # - run: Get-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR"
     # # - run: Start-Service -Name "actions.runner.abhishekmachag-environments.DESKTOP-CM9BQLR" -PassThru
