@@ -7,7 +7,7 @@ on:
         description: 'Select environment (dev or prod)'
         required: true
         default: 'dev'
-        # type: environment
+        type: environment
 
 jobs:
   build-dev:
@@ -32,11 +32,6 @@ jobs:
     environment:
       name: dev
 
-    steps:
-    - name: Deploy to Dev
-      run: |
-        # Add your deployment script or commands for the dev environment
-        echo "Deploying to Dev environment..."
     steps:
     - name: Deploy to Dev
       run: |
