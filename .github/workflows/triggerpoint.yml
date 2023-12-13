@@ -4,14 +4,11 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        # description: 'Select environment (dev or prod)'
-        # required: true
         type: environment
 
 jobs:
   build-dev:
     runs-on: windows-2019
-    # if: ${{ github.event.inputs.environment == 'dev' }}
 
     outputs:
       env: CONTINUE_JOBS
@@ -27,7 +24,7 @@ jobs:
   deploy-dev:
     runs-on: windows-2019
     needs: build-dev
-    if: success() && github.event.inputs.environment
+    if: github.event.inputs.environment == 'dev' && needs.build-dev.outputs.env == 'CONTINUE_JOBS'
     environment:
       name: dev
 
@@ -36,7 +33,6 @@ jobs:
       run: |
         # Add your deployment script or commands for the dev environment
         echo "Deploying to Dev environment..."
-
 
 
 
