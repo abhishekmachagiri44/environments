@@ -36,3 +36,34 @@ jobs:
       run: |
         # Add your deployment script or commands for the dev environment
         echo "Deploying to Dev environment..."
+
+
+  build-prod:
+    runs-on: windows-2019
+    if: ${{ github.event.inputs.environment == 'prod' }}
+
+    outputs:
+      env: CONTINUE_JOBS
+
+    steps:
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 'f'
+
+    # Your build steps go here
+
+  deploy-prod:
+    runs-on: windows-2019
+    needs: build-prod
+    if: success() && github.event.inputs.environment
+    environment:
+      name: dev
+
+    steps:
+    - name: Deploy to prod
+      run: |
+        # Add your deployment script or commands for the dev environment
+        echo "Deploying to Dev environment..."
+
+
