@@ -1,16 +1,16 @@
 name: fetch-other repo
 
 on:
-  push:
-    branches:
-      - main
-  # workflow_dispatch:
-  #   inputs:
-  #     environment:
-  #       description: 'Select environment (dev or prod)'
-  #       required: true
-  #       default: 'dev'
-  #       type: environment
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select environment (dev or prod)'
+        required: true
+        default: 'dev'
+        type: environment
 
 jobs:
   build-dev:
