@@ -10,8 +10,8 @@ jobs:
   build-dev:
     runs-on: windows-2019
 
-    outputs:
-      env: CONTINUE_JOBS
+    # outputs:
+    #   env: CONTINUE_JOBS
 
     steps:
     - name: Set up .NET
