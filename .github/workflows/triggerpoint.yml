@@ -5,8 +5,7 @@ on:
     inputs:
       environment:
         description: 'Select environment (dev or prod)'
-        required: true
-        default: 'dev'
+        required: false # Set to false to allow manual trigger after build succeeds
         type: environment
 
 jobs:
@@ -27,8 +26,8 @@ jobs:
 
   deploy-dev:
     runs-on: windows-2019
-    if: ${{ needs.build-dev.outputs.CONTINUE_JOBS == 'true' }}
     needs: build-dev
+    if: success() && github.event.inputs.environment
     environment:
       name: dev
 
