@@ -24,7 +24,7 @@ jobs:
   deploy-dev:
     runs-on: windows-2019
     needs: build-dev
-    if: github.event.inputs.environment == 'dev' && needs.build-dev.outputs.env == 'CONTINUE_JOBS'
+    if: github.event.inputs.environment == 'dev' && needs.build-dev.result == 'success'
     environment:
       name: dev
 
