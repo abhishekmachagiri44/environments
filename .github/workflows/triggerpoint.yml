@@ -21,7 +21,7 @@ jobs:
     - name: Set up .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 'l'  # You can adjust this version
+        dotnet-version: '5'  # You can adjust this version
 
     # - name: Restore dependencies
     #   run: dotnet restore
