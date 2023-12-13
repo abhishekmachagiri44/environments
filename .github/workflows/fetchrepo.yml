@@ -40,8 +40,8 @@ jobs:
     # - run: Get-ChildItem
     # - run: Get-Location
     
-    - name: Checkout Second Repository
-      run: git clone https://abhishekmachag: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@github.com/abhishekmachag/msbuild.git
+    # - name: Checkout Second Repository
+    #   run: git clone https://abhishekmachag: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@github.com/abhishekmachag/msbuild.git
       
     #   # uses: actions/checkout@v3
     #   # with:
