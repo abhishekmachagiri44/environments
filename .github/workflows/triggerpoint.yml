@@ -14,30 +14,29 @@ jobs:
     runs-on: windows-2019
     if: ${{ github.event.inputs.environment == 'dev' }}
 
-    steps:
-    # - name: Checkout Repository
-    #   uses: actions/checkout@v2
+    outputs:
+      env: CONTINUE_JOBS
 
+    steps:
     - name: Set up .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '5'  # You can adjust this version
+        dotnet-version: '5'
 
-    # - name: Restore dependencies
-    #   run: dotnet restore
+    # Your build steps go here
 
-    # - name: Build application
-    #   run: dotnet build --configuration Release
-
-    # - name: Publish artifact
-    #   run: dotnet publish -c Release -o $(Build.ArtifactStagingDirectory)
   deploy-dev:
-    if: ${{ needs.build-dev.outputs.CONTINUE_JOBS == 'true' }}
     runs-on: windows-2019
+    if: ${{ needs.build-dev.outputs.CONTINUE_JOBS == 'true' }}
     needs: build-dev
     environment:
       name: dev
-    
+
+    steps:
+    - name: Deploy to Dev
+      run: |
+        # Add your deployment script or commands for the dev environment
+        echo "Deploying to Dev environment..."
     steps:
     - name: Deploy to Dev
       run: |
