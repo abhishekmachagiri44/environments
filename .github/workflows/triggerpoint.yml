@@ -1,18 +1,17 @@
-
 name: triggerpoint
 
 on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Select environment (dev or prod)'
-        required: true
+        # description: 'Select environment (dev or prod)'
+        # required: true
         type: environment
 
 jobs:
   build-dev:
     runs-on: windows-2019
-    if: ${{ github.event.inputs.environment == 'dev' }}
+    # if: ${{ github.event.inputs.environment == 'dev' }}
 
     outputs:
       env: CONTINUE_JOBS
@@ -28,7 +27,7 @@ jobs:
   deploy-dev:
     runs-on: windows-2019
     needs: build-dev
-    if: needs.build-dev.outputs.CONTINUE_JOBS == 'true'
+    if: success() && github.event.inputs.environment
     environment:
       name: dev
 
@@ -37,10 +36,6 @@ jobs:
       run: |
         # Add your deployment script or commands for the dev environment
         echo "Deploying to Dev environment..."
-
-
-
-
 
 
 
