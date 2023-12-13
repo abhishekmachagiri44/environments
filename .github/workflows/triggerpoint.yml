@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-dev:
-    runs-on: windows-2019
+    runs-on: local
 
     # outputs:
     #   env: CONTINUE_JOBS
@@ -22,7 +22,7 @@ jobs:
     # Your build steps go here
 
   deploy-dev:
-    runs-on: windows-2019
+    runs-on: local
     needs: build-dev
     if: github.event.inputs.environment == 'dev' && needs.build-dev.result == 'success'
     environment:
