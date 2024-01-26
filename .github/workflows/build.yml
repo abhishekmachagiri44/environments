@@ -1,0 +1,31 @@
+name: build Workflow
+on:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select environment'
+        required: true
+        type: environment
+
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+    - name: build
+      run: |
+        # Add your deployment script or commands for the dev environment
+          echo "build script"
+
+  ReuseableMatrixJobForDeployment:
+    needs: build
+    strategy:
+      fail-fast: true
+      matrix:
+        target: [Development, Production ]
+    uses: ./.github/workflows/deployment.yml
+    with:
+      target-env: ${{ matrix.target }}
+    secrets: inherit
