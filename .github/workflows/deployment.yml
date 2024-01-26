@@ -19,7 +19,7 @@ jobs:
       # url: ${{ steps.step_id.outputs.url_output }}
     steps:
       - name: "Deploy to Azure Dev"
-        if: inputs.target-runner == 'windows-latest'
+        if: inputs.target-env == 'prod' && inputs.target-runner == 'windows-latest'
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-runner }}"
