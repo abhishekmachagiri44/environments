@@ -1,64 +1,64 @@
-name: 'GitHub-2 Workflow'
-on:
-  # push:
-  #   branches:
-  #     - main
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to run tests against'
-        type: environment
-        required: true
+# name: 'GitHub-2 Workflow'
+# on:
+#   # push:
+#   #   branches:
+#   #     - main
+#   workflow_dispatch:
+#     inputs:
+#       environment:
+#         description: 'Environment to run tests against'
+#         type: environment
+#         required: true
  
-jobs:
-  build:
-    runs-on: windows-2019
-    steps:
-      - name: Build
-        run: |
-          # Add your build script or commands for the dev environment
-          echo "Build script"
+# jobs:
+#   build:
+#     runs-on: windows-2019
+#     steps:
+#       - name: Build
+#         run: |
+#           # Add your build script or commands for the dev environment
+#           echo "Build script"
 
-  deploy-APP:
-    needs: build
-    runs-on: ${{ matrix.environment }}
-    strategy:
-      matrix:
-        environment: [windows-2019, windows-latest]
-      fail-fast: true
-    environment:
-      name: ${{ matrix.environment }}
-    env:
-      name: ${{vars.RUNNER}}
-    steps:
-      - run: echo "🎉 target evn ${{ matrix.environment}}"
-      - run: echo "${{env.name}}"
-      - name: Deploy to ${{ matrix.environment }}
-        # if: matrix.environment == ${{ matrix.environment }}
-        run: |
-          # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{ matrix.environment }}"
+#   deploy-APP:
+#     needs: build
+#     runs-on: ${{ matrix.environment }}
+#     strategy:
+#       matrix:
+#         environment: [windows-2019, windows-latest]
+#       fail-fast: true
+#     environment:
+#       name: ${{ matrix.environment }}
+#     env:
+#       name: ${{vars.RUNNER}}
+#     steps:
+#       - run: echo "🎉 target evn ${{ matrix.environment}}"
+#       - run: echo "${{env.name}}"
+#       - name: Deploy to ${{ matrix.environment }}
+#         # if: matrix.environment == ${{ matrix.environment }}
+#         run: |
+#           # Add your deployment script or commands for the chosen environment
+#           echo "Deploying to ${{ matrix.environment }}"
           
-  deploy-DB:
-    needs: build
-    runs-on: ${{ matrix.environment }}
-    strategy:
-      matrix:
-        # runner: [windows-latest, windows-2019, windows-2017]
-        environment: [ubuntu-latest]
-      fail-fast: true
-    environment:
-      name: ${{ matrix.environment }}
-    env:
-      name: ${{vars.RUNNER}}
-    steps:
-      - run: echo "🎉 target evn ${{ matrix.environment}}"
-      - run: echo "${{env.name}}"
-      - name: Deploy to ${{ matrix.environment }}
-        # if: matrix.environment == ${{ matrix.environment }}
-        run: |
-          # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{ matrix.environment }}"
+#   deploy-DB:
+#     needs: build
+#     runs-on: ${{ matrix.environment }}
+#     strategy:
+#       matrix:
+#         # runner: [windows-latest, windows-2019, windows-2017]
+#         environment: [ubuntu-latest]
+#       fail-fast: true
+#     environment:
+#       name: ${{ matrix.environment }}
+#     env:
+#       name: ${{vars.RUNNER}}
+#     steps:
+#       - run: echo "🎉 target evn ${{ matrix.environment}}"
+#       - run: echo "${{env.name}}"
+#       - name: Deploy to ${{ matrix.environment }}
+#         # if: matrix.environment == ${{ matrix.environment }}
+#         run: |
+#           # Add your deployment script or commands for the chosen environment
+#           echo "Deploying to ${{ matrix.environment }}"
 
 
   
@@ -241,45 +241,45 @@ jobs:
 
 
 
-# # name: env Workflow
-# # on:
-# #   workflow_dispatch:
-# #     inputs:
-# #       environment:
-# #         description: 'Select environment (dev or prod)'
-# #         required: true
-# #         default: 'dev'
-# #         type: environment
+name: env Workflow
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select environment (dev or prod)'
+        required: true
+        default: 'dev'
+        type: environment
 
-# # jobs:
-# #   build:
-# #     runs-on: windows-2019
-# #     steps:
-# #     - name: build
-# #       run: |
-# #         # Add your deployment script or commands for the dev environment
-# #           echo "build script"
-# #   deploy:
-# #     runs-on: ${{ vars.${{ github.event.inputs.environment }} }}
-# #     needs: build
-# #     # if: github.event.inputs.environment == ${{ github.event.inputs.environment }}
-# #     environment:
-# #       name: ${{ github.event.inputs.environment }}
-# #     steps:
-# #     - name: Deploy
-# #       run: |
-# #         # Add your deployment script or commands for the dev environment
-# #         echo ${{ vars.ENV }}
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+    - name: build
+      run: |
+        # Add your deployment script or commands for the dev environment
+          echo "build script"
+  deploy:
+    runs-on: ${{ vars.${{ github.event.inputs.environment }} }}
+    needs: build
+    # if: github.event.inputs.environment == ${{ github.event.inputs.environment }}
+    environment:
+      name: ${{ github.event.inputs.environment }}
+    steps:
+    - name: Deploy
+      run: |
+        # Add your deployment script or commands for the dev environment
+        echo ${{ vars.ENV }}
 
-#   # deploy-prod:
-#   #   runs-on: windows-2019
-#   #   needs: build
-#   #   if: ${{ github.event.inputs.environment == 'prod' }}
-#   #   environment:
-#   #     name: prod
-#   #   steps:
-#   #     - name: Deploy to Prod
-#   #       run: |
-#   #         # Add your deployment script or commands for the prod environment
-#   #         echo "Deploying to Prod environment..."
+  deploy-prod:
+    runs-on: windows-2019
+    needs: build
+    if: ${{ github.event.inputs.environment == 'prod' }}
+    environment:
+      name: prod
+    steps:
+      - name: Deploy to Prod
+        run: |
+          # Add your deployment script or commands for the prod environment
+          echo "Deploying to Prod environment..."
 
