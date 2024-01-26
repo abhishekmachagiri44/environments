@@ -1,0 +1,92 @@
+name: Reusable deployment workflow
+
+on:
+  workflow_call:
+    inputs:
+      target-env:
+        required: true
+        type: string
+      target-runner: 
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.target-env }}
+    runs-on: ${{ inputs.target-env }}
+    environment:
+      name: ${{ inputs.target-env }}
+      # url: ${{ steps.step_id.outputs.url_output }}
+
+    steps:
+      - run: echo "🎉 target evn ${{ inputs.target-env}}"
+      - run: echo "🎉 target evn inputs.target-env"
+      - run: echo "💡 get azure webapp name from secrets ${{ secrets.AZURE_WEBAPP_SERVICE_NAME }}"
+      - run: echo "🍏 is Dev  ${{ inputs.target-env }} == 'Development'"
+      - run: echo "🐧 is Prod  ${{ inputs.target-env }} == 'Production'"
+
+      - name: "Deploy to Azure Dev WebApp"
+        if:  inputs.target-env == 'Development'
+        run: |
+          # Add your deployment script or commands for the chosen environment
+          echo "Deploying to ${{ matrix.environment }}"
+
+      - name: "Deploy to Azure Prod WebApp"
+        if:  inputs.target-env == 'Production'
+        run: |
+          # Add your deployment script or commands for the chosen environment
+          echo "Deploying to ${{ matrix.environment }}"
+
+
+
+
+
+
+
+# name: Env Workflow
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+#     inputs:
+#       environment:
+#         description: 'Select environment'
+#         required: true
+#         type: environment
+
+# jobs:
+#   build:
+#     runs-on: windows-2019
+#     steps:
+#     - name: build
+#       run: |
+#         # Add your deployment script or commands for the dev environment
+#           echo "build script"
+#   deploy-APP:
+#     needs: build
+#     runs-on: ${{ matrix.environment }}
+#     strategy:
+#       matrix:
+#         environment: [windows-2019, windows-latest]
+#       fail-fast: true
+#     environment:
+#       name: ${{ matrix.environment }}
+#     steps:
+#       - run: echo "🎉 target evn ${{ matrix.environment}}"
+#       - run: echo "${{env.name}}"
+#       - name: Deploy to ${{ matrix.environment }}
+#         if: matrix.environment == 'windows-2019'
+#         run: |
+#           # Add your deployment script or commands for the chosen environment
+#           echo "Deploying to ${{ matrix.environment }}"
+
+#       - name: Deploy to ${{ matrix.environment }}
+#         if: matrix.environment == 'windows-latest'
+#         run: |
+#           # Add your deployment script or commands for the chosen environment
+#           echo "Deploying to ${{ matrix.environment }}"
+
+
+          
+
