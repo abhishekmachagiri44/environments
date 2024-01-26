@@ -25,24 +25,22 @@ jobs:
       fail-fast: true
       matrix:
         target: [dev, prod]
-        runner-ap: [ubuntu-latest,windows-latest]
-        runner-db: [windows-2019]
+        runner: [ubuntu-latest,windows-latest]
     uses: ./.github/workflows/deployment.yml
     with:
       target-env: ${{ matrix.target }}
-      target-ap-runner: ${{ matrix.runner-ap }}
-      target-db-runner: ${{ matrix.runner-db }}
+      target-runner: ${{ matrix.runner }}
     secrets: inherit
 
-  # Deploy-ab:
-  #   needs: build
-  #   strategy:
-  #     fail-fast: true
-  #     matrix:
-  #       target: [dev, prod]
-  #       runner: [ubuntu-latest,windows-latest]
-  #   uses: ./.github/workflows/deployment2.yml
-  #   with:
-  #     target-env: ${{ matrix.target }}
-  #     target-runner: ${{ matrix.runner }}
-  #   secrets: inherit
+  Deploy-ab:
+    needs: build
+    strategy:
+      fail-fast: true
+      matrix:
+        target: [dev, prod]
+        runner: [windows-2019]
+    uses: ./.github/workflows/deployment2.yml
+    with:
+      target-env: ${{ matrix.target }}
+      target-runner: ${{ matrix.runner }}
+    secrets: inherit
