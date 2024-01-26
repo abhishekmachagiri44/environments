@@ -25,8 +25,8 @@ jobs:
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-runner }}"
 
   deploy-ab:
-    name: Deploy to ${{ inputs.target-env }}
     needs: deploy
+    name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-runner }}
     environment:
       name: ${{ inputs.target-env }}
