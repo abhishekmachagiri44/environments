@@ -19,12 +19,12 @@ jobs:
         # Add your deployment script or commands for the dev environment
           echo "build script"
 
-  Deployment:
+  Deploy:
     needs: build
     strategy:
       fail-fast: true
       matrix:
-        target: [Development, Production]
+        target: [dev, prod]
         runner: [ubuntu-latest,windows-latest]
     uses: ./.github/workflows/deployment.yml
     with:
