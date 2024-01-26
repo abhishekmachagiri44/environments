@@ -29,5 +29,5 @@ jobs:
     uses: ./.github/workflows/deployment.yml
     with:
       target-env: ${{ matrix.target }}
-      target-runner: ${{ matrix.target }}
+      target-runner: ${{ matrix.runner }}
     secrets: inherit
