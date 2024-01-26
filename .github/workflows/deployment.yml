@@ -17,7 +17,6 @@ jobs:
     environment:
       name: ${{ inputs.target-env }}
       # url: ${{ steps.step_id.outputs.url_output }}
-
     steps:
       - name: "Deploy to Azure Dev"
         if: inputs.target-runner == 'windows-latest'
@@ -27,8 +26,8 @@ jobs:
 
   deploy-ab:
     name: Deploy to ${{ inputs.target-env }}
-    runs-on: ${{ inputs.target-runner }}
     needs: deploy
+    runs-on: ${{ inputs.target-runner }}
     environment:
       name: ${{ inputs.target-env }}
       # url: ${{ steps.step_id.outputs.url_output }}
