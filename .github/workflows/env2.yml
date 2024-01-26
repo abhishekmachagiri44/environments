@@ -1,0 +1,285 @@
+name: 'GitHub-2 Workflow'
+on:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
+ 
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+      - name: Build
+        run: |
+          # Add your build script or commands for the dev environment
+          echo "Build script"
+
+  deploy-APP:
+    needs: build
+    runs-on: ${{ matrix.environment }}
+    strategy:
+      matrix:
+        environment: [windows-2019, windows-latest]
+      fail-fast: true
+    environment:
+      name: ${{ matrix.environment }}
+    env:
+      name: ${{vars.RUNNER}}
+    steps:
+      - run: echo "🎉 target evn ${{ matrix.environment}}"
+      - run: echo "${{env.name}}"
+      - name: Deploy to ${{ matrix.environment }}
+        # if: matrix.environment == ${{ matrix.environment }}
+        run: |
+          # Add your deployment script or commands for the chosen environment
+          echo "Deploying to ${{ matrix.environment }}"
+          
+  deploy-DB:
+    needs: build
+    runs-on: ${{ matrix.environment }}
+    strategy:
+      matrix:
+        # runner: [windows-latest, windows-2019, windows-2017]
+        environment: [ubuntu-latest]
+      fail-fast: true
+    environment:
+      name: ${{ matrix.environment }}
+    env:
+      name: ${{vars.RUNNER}}
+    steps:
+      - run: echo "🎉 target evn ${{ matrix.environment}}"
+      - run: echo "${{env.name}}"
+      - name: Deploy to ${{ matrix.environment }}
+        # if: matrix.environment == ${{ matrix.environment }}
+        run: |
+          # Add your deployment script or commands for the chosen environment
+          echo "Deploying to ${{ matrix.environment }}"
+
+
+  
+  # deploy:
+  #   needs: build
+  #   runs-on: "${{ matrix.runner }}"
+  #   # runs-on: windows-latest
+  #   strategy:
+  #     matrix:
+  #       runner: [ubuntu-latest, windows-latest]
+  #       environment: [dev, prod, windows-2019]
+  #     fail-fast: true
+  #     # max-parallel: 1
+  #   # runs-on: "${{ inputs.runner }}"
+  #   # runs-on: ${{ matrix.environment }}
+  
+  #     # max-parallel: 1
+  #   # # set the environment to use (environment must exist and be named the same as the stage here)
+  #   environment:
+  #     name: ${{ matrix.environment }}
+  #   steps:
+  #   # use environment specific secrets here for each stage
+  #     - name: Deploy to ${{ matrix.environment }}
+  #       if: matrix.environment == 'dev' && matrix.runner == 'ubuntu.latest'
+  #       run: |
+  #         # Add your deployment script or commands for the chosen environment
+  #         echo "Deploying to ${{ matrix.environment }}"
+
+
+
+
+          
+  # deploy:
+  #   runs-on: ${{ matrix.runner }}
+  #   strategy:
+  #       matrix:
+  #           os: [self-hosted-1, self-hosted-2]
+  #           environment: [dev, staging, prod]
+  #           runner:
+  #             - self-hosted-dev-1
+  #             - self-hosted-dev-2
+  #             - self-hosted-staging-1
+  #             - self-hosted-staging-2
+  #             - self-hosted-prod-1
+  #             - self-hosted-prod-2
+
+
+# jobs:
+#   build:
+#     runs-on: ${{ matrix.os }}
+#     strategy:
+#         matrix:
+#             os: [self-hosted-1, self-hosted-2]
+
+
+
+
+
+
+
+
+          
+  # deploy:
+  #   needs: build
+  #   # runs-on: "${{ inputs.environment }}"
+  #   runs-on: windows-latest
+  #   strategy:
+  #     matrix:
+  #       # os: [macos-latest, windows-latest]
+  #       # environment: [dev, prod, windows-2019]
+  #       environment: ["${{ inputs.environment }}"]
+  #     fail-fast: true
+  #     max-parallel: 1
+  #   # runs-on: "${{ inputs.runner }}"
+  #   # runs-on: ${{ matrix.environment }}
+  
+  #     # max-parallel: 1
+  #   # # set the environment to use (environment must exist and be named the same as the stage here)
+  #   environment:
+  #     name: ${{ matrix.environment }}
+  #   steps:
+  #   # use environment specific secrets here for each stage
+  #     - name: Deploy to ${{ matrix.environment }}
+  #       run: |
+  #         # Add your deployment script or commands for the chosen environment
+  #         echo "Deploying to ${{ matrix.environment }}"
+
+
+
+
+# strategy:
+#   matrix:
+#     os: [macos-latest, windows-latest]
+#     version: [12, 14, 16]
+#     environment: [staging, production]
+#     exclude:
+#       - os: macos-latest
+#         version: 12
+#         environment: production
+#       - os: windows-latest
+#         version: 16
+# runs-on: ${{ matrix.os }}
+
+
+
+
+
+
+
+
+
+# name: 'Github Workflow'
+# run-name: 'ENV-Workflow'
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+#     inputs:
+#       Environment:  
+#         description: 'Environment'
+#         required: True
+#         options:
+#           - dev
+#           - prod
+#           - windows-2019
+
+# jobs:
+#   build:
+#     runs-on: windows-2019
+#     steps:
+#       - name: build
+#         run: |
+#           # Add your build script or commands for the dev environment
+#           echo "build script"
+
+#   deploy:
+#     needs: build
+#     runs-on: ${{ vars.Runner }}
+#     environment: ${{ inputs.Environment }}
+#     steps:
+#       - name: Deploy
+#         run: |
+#           # Add your deployment script or commands for the chosen environment
+#           echo "Deploying to ${{ github.event.inputs.environment }}"
+
+
+
+
+
+
+
+
+
+
+
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       chosen-os:
+#         required: true
+#         type: choice
+#         options:
+#         - Ubuntu
+#         - macOS
+
+# jobs:
+#   test:
+#     runs-on: [self-hosted, "${{ inputs.chosen-os }}"]
+#     steps:
+#     - run: echo Hello world!
+
+
+
+
+
+
+
+
+
+
+# # name: env Workflow
+# # on:
+# #   workflow_dispatch:
+# #     inputs:
+# #       environment:
+# #         description: 'Select environment (dev or prod)'
+# #         required: true
+# #         default: 'dev'
+# #         type: environment
+
+# # jobs:
+# #   build:
+# #     runs-on: windows-2019
+# #     steps:
+# #     - name: build
+# #       run: |
+# #         # Add your deployment script or commands for the dev environment
+# #           echo "build script"
+# #   deploy:
+# #     runs-on: ${{ vars.${{ github.event.inputs.environment }} }}
+# #     needs: build
+# #     # if: github.event.inputs.environment == ${{ github.event.inputs.environment }}
+# #     environment:
+# #       name: ${{ github.event.inputs.environment }}
+# #     steps:
+# #     - name: Deploy
+# #       run: |
+# #         # Add your deployment script or commands for the dev environment
+# #         echo ${{ vars.ENV }}
+
+#   # deploy-prod:
+#   #   runs-on: windows-2019
+#   #   needs: build
+#   #   if: ${{ github.event.inputs.environment == 'prod' }}
+#   #   environment:
+#   #     name: prod
+#   #   steps:
+#   #     - name: Deploy to Prod
+#   #       run: |
+#   #         # Add your deployment script or commands for the prod environment
+#   #         echo "Deploying to Prod environment..."
+
