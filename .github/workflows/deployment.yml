@@ -19,18 +19,19 @@ jobs:
       # url: ${{ steps.step_id.outputs.url_output }}
 
     steps:
-      - run: echo "🎉 target evn ${{ inputs.target-env}}"
-      - run: echo "🎉 target evn inputs.target-env"
-      - run: echo "💡 get azure webapp name from secrets ${{ secrets.AZURE_WEBAPP_SERVICE_NAME }}"
-      - run: echo "🍏 is Dev  ${{ inputs.target-env }} == 'Development'"
-      - run: echo "🐧 is Prod  ${{ inputs.target-env }} == 'Production'"
-
       - name: "Deploy to Azure Dev"
         if: inputs.target-runner == 'windows-latest'
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-runner }}"
 
+  deploy-ab:
+    name: Deploy to ${{ inputs.target-env }}
+    runs-on: ${{ inputs.target-runner }}
+    environment:
+      name: ${{ inputs.target-env }}
+      # url: ${{ steps.step_id.outputs.url_output }}
+    steps:
       - name: "Deploy to Azure Prod"
         if: inputs.target-runner == 'ubuntu-latest'
         run: |
