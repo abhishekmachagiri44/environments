@@ -26,13 +26,13 @@ jobs:
       - run: echo "🐧 is Prod  ${{ inputs.target-env }} == 'Production'"
 
       - name: "Deploy to Azure Dev"
-        if:  inputs.target-env == 'dev' && inputs.target-runner == 'windows-latest'
+        if: inputs.target-runner == 'windows-latest'
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ matrix.environment }}"
 
       - name: "Deploy to Azure Prod"
-        if:  inputs.target-env == 'prod' && inputs.target-runner == 'ubuntu-latest'
+        if: inputs.target-runner == 'ubuntu-latest'
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ matrix.environment }}"
