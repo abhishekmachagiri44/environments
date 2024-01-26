@@ -241,7 +241,7 @@
 
 
 
-name: env Workflow
+name: Env Workflow
 on:
   push:
     branches:
