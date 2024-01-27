@@ -22,18 +22,16 @@ jobs:
   Deploy:
     needs: build
     strategy:
-      # fail-fast: true
+      fail-fast: true
       matrix:
         target: [windows-latest, ubuntu-latest]
-        # experimental: [false]
     uses: ./.github/workflows/deployment.yml
     with:
       target-env: ${{ matrix.target }}
-      # target-exp: ${{matrix.experimental}}
     secrets: inherit
 
   Deploy-ab:
-    needs: Deploy
+    needs: build
     strategy:
       fail-fast: true
       matrix:
