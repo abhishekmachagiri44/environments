@@ -18,12 +18,14 @@ jobs:
     environment:
       name: ${{ inputs.target-env }}
       # url: ${{ steps.step_id.outputs.url_output }}
+    env:
+      name: ${{vars.RUNNER}}
     steps:
-      - name: "Deploy to Dev"
-        # if: inputs.target-env == 'dev'
+      - run: echo "${{env.name}}"
+      - name: "Deploy to Prod"
         run: |
           # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{ inputs.target-env }}"
+          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
 
 
 
