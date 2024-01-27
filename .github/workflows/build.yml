@@ -1,8 +1,8 @@
 name: build Workflow
 on:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       environment:
@@ -22,7 +22,7 @@ jobs:
   Deploy:
     needs: build
     strategy:
-      fail-fast: true
+      # fail-fast: true
       matrix:
         target: [dev, prod]
     uses: ./.github/workflows/deployment.yml
@@ -30,15 +30,15 @@ jobs:
       target-env: ${{ matrix.target }}
     secrets: inherit
 
-  # Deploy-ab:
-  #   needs: build
-  #   strategy:
-  #     fail-fast: true
-  #     matrix:
-  #       target: [dev, prod]
-  #       runner: [windows-2019]
-  #   uses: ./.github/workflows/deployment2.yml
-  #   with:
-  #     target-env: ${{ matrix.target }}
-  #     target-runner: ${{ matrix.runner }}
-  #   secrets: inherit
+  Deploy-ab:
+    needs: build
+    strategy:
+      fail-fast: true
+      matrix:
+        target: [int,stag]
+        # runner: [windows-2019]
+    uses: ./.github/workflows/deployment2.yml
+    with:
+      target-env: ${{ matrix.target }}
+      # target-runner: ${{ matrix.runner }}
+    secrets: inherit
