@@ -13,16 +13,16 @@ on:
 jobs:
   deploy:
     name: Deploy to ${{ inputs.target-env }}
-    runs-on: ${{ inputs.target-runner }}
+    runs-on: ${{ inputs.target-env }}
     environment:
       name: ${{ inputs.target-env }}
       # url: ${{ steps.step_id.outputs.url_output }}
     steps:
-      - name: "Deploy to Azure Dev"
-        if: inputs.target-env == 'dev' && inputs.target-runner == 'windows-latest'
+      - name: "Deploy to Dev"
+        # if: inputs.target-env == 'dev'
         run: |
           # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-runner }}"
+          echo "Deploying to ${{ inputs.target-env }}"
 
 
 
