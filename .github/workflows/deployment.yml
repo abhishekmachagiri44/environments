@@ -6,15 +6,15 @@ on:
       target-env:
         required: true
         type: string
-      target-exp: 
-        required: true
-        type: string
+      # target-exp: 
+      #   required: true
+      #   type: string
 
 jobs:
   deploy:
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-env }}
-    continue-on-error: false
+    continue-on-error: true
     environment:
       name: ${{ inputs.target-env }}
       # url: ${{ steps.step_id.outputs.url_output }}
