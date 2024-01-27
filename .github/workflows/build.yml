@@ -31,7 +31,7 @@ jobs:
     secrets: inherit
 
   Deploy-ab:
-    needs: build
+    needs: Deploy
     strategy:
       fail-fast: true
       matrix:
