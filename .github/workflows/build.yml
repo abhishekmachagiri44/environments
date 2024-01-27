@@ -24,7 +24,7 @@ jobs:
     strategy:
       # fail-fast: true
       matrix:
-        target: [dev, prod]
+        target: [windows-latest, ubuntu-latest]
     uses: ./.github/workflows/deployment.yml
     with:
       target-env: ${{ matrix.target }}
@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        target: [int,stag]
+        target: [windows-2019]
         # runner: [windows-2019]
     uses: ./.github/workflows/deployment2.yml
     with:
