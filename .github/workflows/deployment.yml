@@ -21,7 +21,7 @@ jobs:
     env:
       name: ${{vars.RUNNER}}
     steps:
-      - run: echo "${{env.name}}"
+      - run: echo "${{env.dev}}"
       - name: "Deploy to Prod"
         run: |
           # Add your deployment script or commands for the chosen environment
