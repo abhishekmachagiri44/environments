@@ -1,0 +1,30 @@
+
+name: trigger-any-branch
+
+on:
+  push:
+    branches:
+      - '*'
+  workflow_dispatch:
+    # inputs:
+      # environment:
+      #   description: 'Select environment (dev or prod)'
+      #   required: true
+      #   default: 'dev'
+      #   type: environment
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.ref }}
+
+    - name: Set up Node.js
+      run: echo "Deploying to ${{ github.ref }}"
+
+
+
+
