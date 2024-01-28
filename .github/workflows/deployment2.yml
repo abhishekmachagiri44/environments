@@ -9,8 +9,7 @@ on:
 
 jobs:
   job1:
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.target-env }}
+    runs-on: ${{ inputs.target-env }}
     outputs:
       approved: ${{ steps.set-outputs.outputs.approved }}
     steps:
@@ -29,9 +28,6 @@ jobs:
       name: ${{vars.RUNNER}}
     steps:
       - run: echo "${{env.name}}"
-      - name: Environment Approval
-        id: approval
-        run: echo "Check approval status"
       - name: "Deploy to Prod"
         if: ${{ needs.job1.outputs.approved == inputs.target-env }}
         run: |
