@@ -22,6 +22,7 @@ jobs:
           
 
   deploy-ab:
+    needs: job1
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-env }}
     if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
