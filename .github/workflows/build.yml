@@ -24,15 +24,22 @@ jobs:
   Deploy-ab:
     needs: build
     strategy:
-      fail-fast: false
       matrix:
-        target: [windows-2019,ubuntu-latest]
-        # runner: [windows-2019]
-    uses: ./.github/workflows/deployment2.yml
+        include:
+          - environment: dev
+            runner-ap: windows-2019
+            runner-dp: windows-latest 
+          - environment: prod
+            runner: ubuntu-latest
+          - environment: int
+            runner: windows-latest     
+          
+    uses: ./.github/workflows/deployment.yml
     with:
-      target-env: ${{ matrix.target }}
-      # target-runner: ${{ matrix.runner }}
-    # secrets: inherit
+      target-ap: ${{ matrix.runner-ap }}
+      target-dp: ${{ matrix.runner-dp }}
+      target-env: ${{ matrix.environment }}
+      
 
 
 
