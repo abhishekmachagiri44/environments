@@ -41,9 +41,9 @@ jobs:
       name: ${{ inputs.target-env }}
       # url: ${{ steps.step_id.outputs.url_output }}
     env:
-      name2: ${{vars.RUNNER}}
+      name: ${{vars.RUNNER2}}
     steps:
-      - run: echo "${{env.name2}}"
+      - run: echo "${{env.name}}"
       # - name: Set up .NET
       #   uses: actions/setup-dotnet@1
       #   with:
