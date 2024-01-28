@@ -25,10 +25,10 @@ jobs:
       fail-fast: true
       matrix:
         target: [windows-latest, ubuntu-latest]
-        experimental: [true]
+        # experimental: [true]
     uses: ./.github/workflows/deployment.yml
     with:
-      target-exp: ${{ matrix.experimental }}
+      # target-exp: ${{ matrix.experimental }}
       target-env: ${{ matrix.target }}
     # secrets: inherit
 
