@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.target-env }}
     outputs:
-      approved: ${{ steps.set-outputs.outputs.${{ inputs.target-env }} }}
+      approved: ${{ steps.set-outputs.outputs.approved }}
     steps:
       - name: Set outputs
         id: set-outputs
