@@ -12,19 +12,19 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.target-env }}
     outputs:
-      approved: ${{ steps.set-outputs.${{ inputs.target-env }} }}
+      approved: ${{ steps.set-outputs.outputs.${{ inputs.target-env }} }}
     steps:
       - name: Set outputs
         id: set-outputs
         run: |
           echo "${{ inputs.target-env }}" >> $GITHUB_OUTPUT
+
   deploy-ab:
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-env }}
-    continue-on-error: true
+    # continue-on-error: true
     environment:
       name: ${{ inputs.target-env }}
-      # url: ${{ steps.step_id.outputs.url_output }}
     env:
       name: ${{vars.RUNNER}}
     steps:
@@ -33,7 +33,49 @@ jobs:
         id: approval
         run: echo "Check approval status"
       - name: "Deploy to Prod"
-        if: ${{ job1.outputs.approved == '${{ inputs.target-env }}' }}
+        if: ${{ needs.job1.outputs.approved == inputs.target-env }}
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
+
+
+
+# name: Reusable-2 workflow
+
+# on:
+#   workflow_call:
+#     inputs:
+#       target-env:
+#         required: true
+#         type: string
+
+# jobs:
+#   job1:
+#     runs-on: ubuntu-latest
+#     environment: ${{ inputs.target-env }}
+#     outputs:
+#       approved: ${{ steps.set-outputs.${{ inputs.target-env }} }}
+#     steps:
+#       - name: Set outputs
+#         id: set-outputs
+#         run: |
+#           echo "${{ inputs.target-env }}" >> $GITHUB_OUTPUT
+#   deploy-ab:
+#     name: Deploy to ${{ inputs.target-env }}
+#     runs-on: ${{ inputs.target-env }}
+#     continue-on-error: true
+#     environment:
+#       name: ${{ inputs.target-env }}
+#       # url: ${{ steps.step_id.outputs.url_output }}
+#     env:
+#       name: ${{vars.RUNNER}}
+#     steps:
+#       - run: echo "${{env.name}}"
+#       - name: Environment Approval
+#         id: approval
+#         run: echo "Check approval status"
+#       - name: "Deploy to Prod"
+#         if: ${{ job1.outputs.approved == '${{ inputs.target-env }}' }}
+#         run: |
+#           # Add your deployment script or commands for the chosen environment
+#           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
