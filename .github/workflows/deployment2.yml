@@ -37,6 +37,7 @@ jobs:
       - run: echo "${{env.name}}"
       - name: "Deploy to Prod"
         run: |
+          loude ki ball
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
 
