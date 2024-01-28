@@ -6,15 +6,15 @@ on:
       target-env:
         required: true
         type: string
-      # target-exp: 
-      #   required: true
-      #   type: boolean
+      target-exp: 
+        required: true
+        type: boolean
 
 jobs:
   deploy:
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-env }}
-    # continue-on-error: ${{ inputs.target-exp }}
+    continue-on-error: ${{ inputs.target-exp }}
     environment:
       name: ${{ inputs.target-env }}
       # url: ${{ steps.step_id.outputs.url_output }}
@@ -23,7 +23,7 @@ jobs:
     steps:
       - run: echo "${{env.dev}}"
       - name: Set up .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@1
         with:
           dotnet-version: '2'
       - name: "Deploy to Prod"
