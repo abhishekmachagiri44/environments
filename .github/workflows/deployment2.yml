@@ -13,18 +13,18 @@ jobs:
     environment:
       name: ${{ inputs.target-env }}
     outputs:
-      approved: ${{ steps.set-outputs.outputs.approved }}
+      approved: ${{ steps.set-outputs.approved }}
     steps:
       - name: Set outputs
         id: set-outputs
         run: |
           echo "approved=${{ inputs.target-env }}" >> $GITHUB_OUTPUT
-          type $GITHUB_OUTPUT
+          
 
   deploy-ab:
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-env }}
-    if: needs.job1.outputs.approved == ${{ inputs.target-env }}
+    if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
     # continue-on-error: true
     env:
       name: ${{vars.RUNNER}}
