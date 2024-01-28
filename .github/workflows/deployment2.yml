@@ -29,7 +29,7 @@ jobs:
     steps:
       - run: echo "${{env.name}}"
       - name: "Deploy to Prod"
-        if: job1.outputs.approved == 'inputs.target-env'
+        if: job1.outputs.approved == inputs.target-env
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
