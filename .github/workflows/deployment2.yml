@@ -19,7 +19,7 @@ jobs:
         id: set-outputs
         run: |
           echo "inputs.target-env=${{ inputs.target-env }}" >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
+          type $GITHUB_OUTPUT
 
   # deploy-ab:
   #   name: Deploy to ${{ inputs.target-env }}
