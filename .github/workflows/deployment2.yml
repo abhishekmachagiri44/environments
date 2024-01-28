@@ -24,6 +24,7 @@ jobs:
           
 
   deploy-ab:
+    needs: job1
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-env }}
     environment:
