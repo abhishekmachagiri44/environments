@@ -26,9 +26,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - environment: dev
-            runner-ap: windows-2019
-            runner-dp: windows-latest 
+          - { environment: dev, runner-ap: windows-2019, runner-dp: windows-latest }
+          # - environment: dev
+          #   runner-ap: windows-2019
+          #   runner-dp: windows-latest 
           # - environment: prod
           #   runner: ubuntu-latest
           # - environment: int
