@@ -79,15 +79,15 @@ jobs:
 
 
 
-  Deploy-ab:
-    needs: build
-    strategy:
-      fail-fast: false
-      matrix:
-        target: [windows-2019]
-        # runner: [windows-2019]
-    uses: ./.github/workflows/deployment2.yml
-    with:
-      target-env: ${{ matrix.target }}
-      # target-runner: ${{ matrix.runner }}
-    secrets: inherit
+  # Deploy-ab:
+  #   needs: build
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       target: [windows-2019]
+  #       # runner: [windows-2019]
+  #   uses: ./.github/workflows/deployment2.yml
+  #   with:
+  #     target-env: ${{ matrix.target }}
+  #     # target-runner: ${{ matrix.runner }}
+  #   secrets: inherit
