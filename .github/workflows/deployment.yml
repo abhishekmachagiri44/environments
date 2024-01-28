@@ -23,12 +23,12 @@ jobs:
     env:
       name: ${{vars.RUNNER}}
     steps:
-      - run: echo "${{env.dev}}"
+      - run: echo "${{env.name}}"
       # - name: Set up .NET
       #   uses: actions/setup-dotnet@1
       #   with:
       #     dotnet-version: '2'
-      - name: "Deploy to ${{ inputs.target-env }}"
+      - name: "Deploy to ${{ inputs.target-ap }}"
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-ap }}"
@@ -48,7 +48,7 @@ jobs:
       #   uses: actions/setup-dotnet@1
       #   with:
       #     dotnet-version: '2'
-      - name: "Deploy to ${{ inputs.target-env }}"
+      - name: "Deploy to ${{ inputs.target-dp }}"
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-dp }}"
