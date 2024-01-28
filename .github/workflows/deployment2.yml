@@ -8,36 +8,36 @@ on:
         type: string
 
 jobs:
-  job1:
-    runs-on: ${{ inputs.target-env }}
-    environment:
-      name: ${{ inputs.target-env }}
-    outputs:
-      approved: ${{ steps.set-outputs.approved }}
-    continue-on-error: true
-    steps:
-      - name: Set outputs
-        id: set-outputs
-        run: |
-          echo "approved=${{ inputs.target-env }}" >> $GITHUB_OUTPUT
+  # job1:
+  #   runs-on: ${{ inputs.target-env }}
+  #   environment:
+  #     name: ${{ inputs.target-env }}
+  #   outputs:
+  #     approved: ${{ steps.set-outputs.approved }}
+  #   continue-on-error: true
+  #   steps:
+  #     - name: Set outputs
+  #       id: set-outputs
+  #       run: |
+  #         echo "approved=${{ inputs.target-env }}" >> $GITHUB_OUTPUT
 
           
 
   deploy-ab:
-    needs: job1
+    # needs: job1
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-env }}
     environment:
-      name: int
-    if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
-    # continue-on-error: true
+      name: ${{ inputs.target-env }}
+    # if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
+    continue-on-error: true
     env:
       name: ${{vars.RUNNER}}
     steps:
       - run: echo "${{env.name}}"
       - name: "Deploy to Prod"
         run: |
-          
+          dirdd
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
 
