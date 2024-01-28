@@ -24,7 +24,7 @@ jobs:
   deploy-ab:
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-env }}
-    if: needs.job1.outputs.approved == '${{ inputs.target-env }}'
+    if: needs.job1.outputs.approved == ${{ inputs.target-env }}
     # continue-on-error: true
     env:
       name: ${{vars.RUNNER}}
