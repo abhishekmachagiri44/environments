@@ -6,14 +6,17 @@ on:
       target-env:
         required: true
         type: string
-      target-runner: 
+      target-ap: 
+        required: true
+        type: string
+      target-dp: 
         required: true
         type: string
 
 jobs:
   deploy:
     name: Deploy to ${{ inputs.target-env }}
-    runs-on: ${{ inputs.target-runner }}
+    runs-on: ${{ inputs.target-ap }}
     environment:
       name: ${{ inputs.target-env }}
       # url: ${{ steps.step_id.outputs.url_output }}
@@ -25,11 +28,30 @@ jobs:
       #   uses: actions/setup-dotnet@1
       #   with:
       #     dotnet-version: '2'
-      - name: "Deploy to Prod"
+      - name: "Deploy to ${{ inputs.target-env }}"
         run: |
           # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
+          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-ap }}"
 
+
+  deploy-DB:
+    name: Deploy to ${{ inputs.target-env }}
+    runs-on: ${{ inputs.target-dp }}
+    environment:
+      name: ${{ inputs.target-env }}
+      # url: ${{ steps.step_id.outputs.url_output }}
+    env:
+      name: ${{vars.RUNNER}}
+    steps:
+      - run: echo "${{env.dev}}"
+      # - name: Set up .NET
+      #   uses: actions/setup-dotnet@1
+      #   with:
+      #     dotnet-version: '2'
+      - name: "Deploy to ${{ inputs.target-env }}"
+        run: |
+          # Add your deployment script or commands for the chosen environment
+          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-dp }}"
 
 
 
