@@ -17,7 +17,7 @@ jobs:
       - name: Set outputs
         id: set-outputs
         run: |
-          echo "${{ inputs.target-env }}" >> $GITHUB_OUTPUT
+          echo "inputs.target-env=${{ inputs.target-env }}" >> $GITHUB_OUTPUT
 
   deploy-ab:
     name: Deploy to ${{ inputs.target-env }}
@@ -33,7 +33,7 @@ jobs:
         id: approval
         run: echo "Check approval status"
       - name: "Deploy to Prod"
-        if: ${{ needs.job1.outputs.approved == "${{ inputs.target-env }}" }}
+        if: ${{ needs.job1.outputs.approved == inputs.target-env }}
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
