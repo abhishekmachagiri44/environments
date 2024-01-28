@@ -19,6 +19,22 @@ jobs:
         # Add your deployment script or commands for the dev environment
           echo "build script"
 
+
+  Deploy-ab:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [windows-2019,ubuntu-latest]
+        # runner: [windows-2019]
+    uses: ./.github/workflows/deployment2.yml
+    with:
+      target-env: ${{ matrix.target }}
+      # target-runner: ${{ matrix.runner }}
+    # secrets: inherit
+
+
+
   # Deploy:
   #   needs: build
   #   strategy:
