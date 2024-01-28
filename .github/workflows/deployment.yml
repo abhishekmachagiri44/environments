@@ -6,15 +6,14 @@ on:
       target-env:
         required: true
         type: string
-      target-exp: 
+      target-runner: 
         required: true
-        type: boolean
+        type: string
 
 jobs:
   deploy:
     name: Deploy to ${{ inputs.target-env }}
-    runs-on: ${{ inputs.target-env }}
-    continue-on-error: ${{ inputs.target-exp }}
+    runs-on: ${{ inputs.target-runner }}
     environment:
       name: ${{ inputs.target-env }}
       # url: ${{ steps.step_id.outputs.url_output }}
@@ -28,7 +27,6 @@ jobs:
       #     dotnet-version: '2'
       - name: "Deploy to Prod"
         run: |
-          dix
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
 
