@@ -19,28 +19,60 @@ jobs:
         # Add your deployment script or commands for the dev environment
           echo "build script"
 
-  Deploy:
+  # Deploy:
+  #   needs: build
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       target: [windows-latest, ubuntu-latest]
+  #       experimental: [true]
+  #   uses: ./.github/workflows/deployment.yml
+  #   with:
+  #     target-exp: ${{ matrix.experimental }}
+  #     target-env: ${{ matrix.target }}
+  #   # secrets: inherit
+
+
+deploy-prod:
+    name: Deploy prod
     needs: build
     strategy:
-      fail-fast: false
       matrix:
-        target: [windows-latest, ubuntu-latest]
-        experimental: [true]
+        include:
+          - environment: windows-latest
+            # url: https://europe.my.service
+          - runner: windows-latest
+          - environment: ubuntu-latest
+            # url: https://europe.my.service
+          - runner: ubuntu-latest
+          # - env:
+          #     name: ${{vars.RUNNER}}
+    environment:
+      # url: ${{ matrix.url }}
+      name: ${{ matrix.environment }}
+    steps:
+      - uses: actions/checkout@v2
+  - name: deploy
     uses: ./.github/workflows/deployment.yml
     with:
-      target-exp: ${{ matrix.experimental }}
-      target-env: ${{ matrix.target }}
-    # secrets: inherit
+      # version: ${{ needs.deploy-staging.outputs.version }}
+      target-env: ${{ matrix.environment }}
+      target-runner: ${{ matrix.runner }}
 
-  Deploy-ab:
-    needs: build
-    strategy:
-      fail-fast: false
-      matrix:
-        target: [windows-2019]
-        # runner: [windows-2019]
-    uses: ./.github/workflows/deployment2.yml
-    with:
-      target-env: ${{ matrix.target }}
-      # target-runner: ${{ matrix.runner }}
-    secrets: inherit
+
+
+
+
+
+  # Deploy-ab:
+  #   needs: build
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       target: [windows-2019]
+  #       # runner: [windows-2019]
+  #   uses: ./.github/workflows/deployment2.yml
+  #   with:
+  #     target-env: ${{ matrix.target }}
+  #     # target-runner: ${{ matrix.runner }}
+  #   secrets: inherit
