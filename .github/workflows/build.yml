@@ -22,7 +22,7 @@ jobs:
   Deploy:
     needs: build
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         target: [windows-latest, ubuntu-latest]
         experimental: [true]
@@ -35,7 +35,7 @@ jobs:
   Deploy-ab:
     needs: build
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         target: [windows-2019]
         # runner: [windows-2019]
