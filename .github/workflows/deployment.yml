@@ -22,12 +22,13 @@ jobs:
       name: ${{vars.RUNNER}}
     steps:
       - run: echo "${{env.dev}}"
-      - name: Set up .NET
-        uses: actions/setup-dotnet@1
-        with:
-          dotnet-version: '2'
+      # - name: Set up .NET
+      #   uses: actions/setup-dotnet@1
+      #   with:
+      #     dotnet-version: '2'
       - name: "Deploy to Prod"
         run: |
+          dix
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
 
