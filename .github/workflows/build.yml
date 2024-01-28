@@ -1,14 +1,14 @@
 name: build Workflow
-# on:
+on:
 #   push:
 #     branches:
 #       - main
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Select environment'
-        required: true
-        type: environment
+    # inputs:
+    #   environment:
+    #     description: 'Select environment'
+    #     required: true
+    #     type: environment
 
 jobs:
   build:
