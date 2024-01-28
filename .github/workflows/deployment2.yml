@@ -14,6 +14,7 @@ jobs:
       name: ${{ inputs.target-env }}
     outputs:
       approved: ${{ steps.set-outputs.approved }}
+    continue-on-error: true
     steps:
       - name: Set outputs
         id: set-outputs
@@ -23,11 +24,10 @@ jobs:
           
 
   deploy-ab:
-    needs: job1
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-env }}
     environment:
-      name: ${{ inputs.target-env }}
+      name: int
     if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
     # continue-on-error: true
     env:
