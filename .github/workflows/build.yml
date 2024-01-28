@@ -68,7 +68,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [windows-2019,windows-latest, ubuntu-latest]
+        target: [windows-2019]
         # runner: [windows-2019]
     uses: ./.github/workflows/deployment2.yml
     with:
