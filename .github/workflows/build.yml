@@ -51,13 +51,12 @@ deploy-prod:
       # url: ${{ matrix.url }}
       name: ${{ matrix.environment }}
     steps:
-      - uses: actions/checkout@v2
-  - name: deploy
-    uses: ./.github/workflows/deployment.yml
-    with:
-      # version: ${{ needs.deploy-staging.outputs.version }}
-      target-env: ${{ matrix.environment }}
-      target-runner: ${{ matrix.runner }}
+    - name: deploy
+      uses: ./.github/workflows/deployment.yml
+      with:
+        # version: ${{ needs.deploy-staging.outputs.version }}
+        target-env: ${{ matrix.environment }}
+        target-runner: ${{ matrix.runner }}
 
 
 
