@@ -8,15 +8,15 @@ on:
         type: string
 
 jobs:
-  job1:
-    runs-on: ${{ inputs.target-env }}
-    outputs:
-      approved: ${{ steps.set-outputs.outputs.approved }}
-    steps:
-      - name: Set outputs
-        id: set-outputs
-        run: |
-          echo "inputs.target-env=${{ inputs.target-env }}" >> $GITHUB_OUTPUT
+  # job1:
+  #   runs-on: ${{ inputs.target-env }}
+  #   outputs:
+  #     approved: ${{ steps.set-outputs.outputs.approved }}
+  #   steps:
+  #     - name: Set outputs
+  #       id: set-outputs
+  #       run: |
+  #         echo "inputs.target-env=${{ inputs.target-env }}" >> $GITHUB_OUTPUT
 
   deploy-ab:
     name: Deploy to ${{ inputs.target-env }}
@@ -29,7 +29,7 @@ jobs:
     steps:
       - run: echo "${{env.name}}"
       - name: "Deploy to Prod"
-        if: needs.job1.outputs.approved == inputs.target-env
+        if: needs.job1.outputs.approved == '${{ inputs.target-env }}'
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
