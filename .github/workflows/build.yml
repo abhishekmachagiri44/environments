@@ -35,16 +35,6 @@ jobs:
     with:
       target-ap: ${{ matrix.runner-ap }}
       target-env: ${{ matrix.environment }}
-
-
-
-  # final:
-  #   needs: Deploy
-  #   runs-on: ubuntu-latest
-  #   if: ${{ needs.approval.outputs.env_status == 'success' }}
-  #   steps:
-  #     - name: Final Step
-  #       run: echo "Workflow passed!"
         
   results:
     if: ${{ always() }}
