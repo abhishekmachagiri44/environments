@@ -33,7 +33,7 @@ jobs:
     environment:
       name: ${{ inputs.target-env }}
     # if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
-    # continue-on-error: true
+    continue-on-error: true
     env:
       name: ${{vars.RUNNER}}
     steps:
