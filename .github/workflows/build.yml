@@ -24,7 +24,7 @@ jobs:
   Deploy:
     needs: build
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         # experimental: [false]
         include:
