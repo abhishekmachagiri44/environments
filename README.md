@@ -1,4 +1,4 @@
-   # GitHub Actions Manual Approval
+     # GitHub Actions Manual Approval
 
 Code sample for utilizing GitHub Actions with Environments, enabling manual approvals, and environment specific secrets.
 
