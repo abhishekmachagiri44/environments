@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    if: github.ref == 'refs/heads/dev' # run this job only for the dev branch
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
