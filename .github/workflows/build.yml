@@ -19,43 +19,22 @@ jobs:
       run: |
         # Add your deployment script or commands for the dev environment
           echo "build script"
+      
 
-
-  deploy:
+  Deploy:
     needs: build
-    outputs:
-      env_status: ${{ needs.build.outputs.env_status }}
     strategy:
+      fail-fast: false
       matrix:
+        # experimental: [false]
         include:
           - { environment: dev, runner-ap: windows-2019 }
           - { environment: qa, runner-ap: windows-2019 } 
           
-    runs-on: ${{ matrix.runner-ap }}
-    
-    steps:
-      - name: Deploy
-        uses: ./.github/workflows/deployment2.yml
-        with:
-          target-ap: ${{ matrix.runner-ap }}
-          target-env: ${{ matrix.environment }}
-      
-      - name: Use env_status
-        run: |
-          echo "The environment status is: ${{ needs.deploy.outputs.env_status }}"
-  
-  # Deploy:
-  #   needs: build
-  #   strategy:
-  #     matrix:
-  #       include:
-  #         - { environment: dev, runner-ap: windows-2019 }
-  #         - { environment: qa, runner-ap: windows-2019 } 
-          
-  #   uses: ./.github/workflows/deployment2.yml
-  #   with:
-  #     target-ap: ${{ matrix.runner-ap }}
-  #     target-env: ${{ matrix.environment }}
+    uses: ./.github/workflows/deployment2.yml
+    with:
+      target-ap: ${{ matrix.runner-ap }}
+      target-env: ${{ matrix.environment }}
 
 
 
