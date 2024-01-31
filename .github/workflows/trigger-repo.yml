@@ -1,54 +1,23 @@
-name: CI
+name: 15 - Push Dev
 
-on: [push]
+on:
+  push:
+    branches:
+    - 'dev'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/dev' # run this job only for the dev branch
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-# name: trigger-any-branch
-
-# on:
-#   push:
-#     branches:
-#       - dev
-#   workflow_dispatch:
-#     inputs:
-#       # environment:
-#       #   description: 'Select environment (dev or prod)'
-#       #   required: true
-#       #   default: 'dev'
-#       #   type: environment
-#       branch:
-#         description: 'Specify the branch for artifact upload (optional)'
-#         required: false
-#         default: ''
-#         type: string
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Debug Info
-#       run: |
-#         echo "Event name: ${{ github.event_name }}"
-#         echo "Branch: ${{ github.ref }}"
-#         echo "Input branch: ${{ github.event.inputs.branch || github.ref }}"
-        
-#     - name: Checkout code
-#       uses: actions/checkout@v4
-#       # with:
-#       #   ref: ${{ github.event.inputs.branch || github.ref }}
-        
-#     - name: Set up Node.js
-#       run: echo "Deploying to ${{ github.event.inputs.branch || github.ref }}"
-      
-#     - name: Upload Artifacts
-#       if: ${{ github.event.inputs.branch != '' && github.event.inputs.branch == github.ref }}
-#       run: |
-#         echo "Uploading artifacts for branch ${{ github.event.inputs.branch }}"
-#         # Your artifact upload commands here
+      - name: Run Commands
+        run: |
+          echo "Hello World"
+          echo "This workflow only runs for push to the dev branch"
+          
+  test:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/dev' }}
+    steps:
+      - name: Run Commands
+        run: echo "This workflow also only runs for push to the dev branch"
