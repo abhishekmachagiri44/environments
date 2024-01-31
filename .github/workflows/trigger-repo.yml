@@ -6,11 +6,11 @@ on:
       - '*'
   workflow_dispatch:
     inputs:
-      environment:
-        description: 'Select environment (dev or prod)'
-        required: true
-        default: 'dev'
-        type: environment
+      # environment:
+      #   description: 'Select environment (dev or prod)'
+      #   required: true
+      #   default: 'dev'
+      #   type: environment
       branch:
         description: 'Specify the branch for artifact upload (optional)'
         required: false
@@ -31,7 +31,7 @@ jobs:
       run: echo "Deploying to ${{ github.event.inputs.branch || github.ref }}"
 
     - name: Upload Artifacts
-      if: ${{ github.event.inputs.branch != '' }}
+      if: ${{ github.event.inputs.branch != '' && github.event.inputs.branch == github.ref }}
       run: |
         # Your artifact upload commands here
         echo "Uploading artifacts for branch ${{ github.event.inputs.branch }}"
