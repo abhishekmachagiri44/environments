@@ -1,17 +1,22 @@
-
 name: trigger-any-branch
 
 on:
-  # push:
-  #   branches:
-  #     - '*'
+  push:
+    branches:
+      - '*'
   workflow_dispatch:
-    # inputs:
-      # environment:
-      #   description: 'Select environment (dev or prod)'
-      #   required: true
-      #   default: 'dev'
-      #   type: environment
+    inputs:
+      environment:
+        description: 'Select environment (dev or prod)'
+        required: true
+        default: 'dev'
+        type: environment
+      branch:
+        description: 'Specify the branch for artifact upload (optional)'
+        required: false
+        default: ''
+        type: string
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,11 +25,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        ref: ${{ github.ref }}
+        ref: ${{ github.event.inputs.branch || github.ref }}
 
     - name: Set up Node.js
-      run: echo "Deploying to ${{ github.ref }}"
+      run: echo "Deploying to ${{ github.event.inputs.branch || github.ref }}"
 
-
-
-
+    - name: Upload Artifacts
+      if: ${{ github.event.inputs.branch != '' }}
+      run: |
+        # Your artifact upload commands here
+        echo "Uploading artifacts for branch ${{ github.event.inputs.branch }}"
