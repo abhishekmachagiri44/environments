@@ -25,7 +25,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        ref: ${{ github.event.inputs.branch || github.ref }}
+        ref: ${{ github.ref }}
 
     - name: Set up Node.js
       run: echo "Deploying to ${{ github.event.inputs.branch || github.ref }}"
