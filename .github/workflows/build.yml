@@ -50,7 +50,7 @@ jobs:
   deploy-ab:
     needs: build
     runs-on: ${{ vars.RUNNER }}
-    name: Deploy to ${{ inputs.target-env }}
+    name: Deploy to ${{ vars.ENVIRONMENT }}
     strategy:
       matrix:
         environment: [ "${{ vars.ENVIRONMENT }}" ]
@@ -63,7 +63,7 @@ jobs:
       - name: "Deploy to Prod"
         run: |
           # Add your deployment script or commands for the chosen environment
-          echo "Deploying to "
+          echo "Deploying to ${{matrix.environment}} "
 
   # example_matrix:
   #   strategy:
