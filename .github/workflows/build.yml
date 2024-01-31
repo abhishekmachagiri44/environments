@@ -20,24 +20,75 @@ jobs:
         # Add your deployment script or commands for the dev environment
           echo "build script"
       
+  # Deploy-ab:
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     matrix:
+  #       target: [windows-2019]
+        # runner: [windows-2019]
+    # uses: ./.github/workflows/deployment2.yml
+    # with:
+    #   target-env: ${{ matrix.target }}
+    #   # target-runner: ${{ matrix.runner }}
+    # secrets: inherit
 
-  Deploy:
+  # build:
+  #   runs-on: ${{ matrix.os }}
+  #   strategy:
+  #     matrix:
+  #       os: [ubuntu-latest, windows-latest]
+  #       node: [14, 16]
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         node-version: ${{ matrix.node }}
+
+
+
+
+  deploy-ab:
     needs: build
+    runs-on: ${{ matrix.environment }}
+    name: Deploy to ${{ inputs.target-env }}
     strategy:
-      fail-fast: true
       matrix:
-        environment: ${{ vars.ENVIRONMENT }}
-        runner: ${{ vars.RUNNER }}
+        environment: [ "${{ vars.ENVIRONMENT }}" ]
+    # if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
+    # continue-on-error: true
+    env:
+      name: ${{vars.RUNNER}}
+    steps:
+      - run: echo "${{env.name}}"
+      - name: "Deploy to Prod"
+        run: |
+          # Add your deployment script or commands for the chosen environment
+          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
 
-        # experimental: [false]
-        # include:
-          # - { environment: ${{ vars.ENVIRONMENT }}, runner-ap: ${{ vars.RUNNER }} }
-          # - { environment: qa, runner-ap: windows-2019 } 
+  # example_matrix:
+  #   strategy:
+  #     matrix:
+  #       os: [windows-latest, ubuntu-latest]
+  #       node: [14, 16]
+  #   runs-on: ${{ matrix.os }}
+
+  # Deploy:
+  #   needs: build
+  #   strategy:
+  #     fail-fast: true
+  #     matrix:
+  #       environment: ${{ vars.ENVIRONMENT }}
+  #       runner: ${{ vars.RUNNER }}
+
+  #       # experimental: [false]
+  #       # include:
+  #         # - { environment: ${{ vars.ENVIRONMENT }}, runner-ap: ${{ vars.RUNNER }} }
+  #         # - { environment: qa, runner-ap: windows-2019 } 
           
-    uses: ./.github/workflows/deployment2.yml
-    with:
-      target-ap: ${{ matrix.runner }}
-      target-env: ${{ matrix.environment }}
+  #   uses: ./.github/workflows/deployment2.yml
+  #   with:
+  #     target-ap: ${{ matrix.runner }}
+  #     target-env: ${{ matrix.environment }}
         
   # results:
   #   if: ${{ always() }}
