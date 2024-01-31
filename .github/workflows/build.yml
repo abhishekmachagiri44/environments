@@ -59,7 +59,7 @@ jobs:
     environment:
       name: ${{matrix.environment}}
     steps:
-      - run: echo "${{env.name}}"
+      - run: echo "${{matrix.environment}}"
       - name: "Deploy to Prod"
         run: |
           # Add your deployment script or commands for the chosen environment
