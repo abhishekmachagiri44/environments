@@ -53,7 +53,7 @@ jobs:
     name: Deploy to ${{ vars.ENVIRONMENT }}
     strategy:
       matrix:
-        environment: [ "${{ vars.ENVIRONMENT }}" ]
+        environment: [ dev ]
     # if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
     # continue-on-error: true
     env:
