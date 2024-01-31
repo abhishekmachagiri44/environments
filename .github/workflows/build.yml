@@ -46,15 +46,20 @@ jobs:
   #     - name: Final Step
   #       run: echo "Workflow passed!"
         
-  buildall:
+  results:
     if: ${{ always() }}
     runs-on: ubuntu-latest
-    name: Build (matrix)
-    needs: Deploy
+    name: Final Results
+    needs: [Deploy]
     steps:
-      - name: Check build matrix status
-        if: ${{ needs.Deploy.result == 'success' }}
-        run: exit 1
+      - run: exit 1
+        # see https://stackoverflow.com/a/67532120/4907315
+        if: >-
+          ${{
+               contains(needs.*.result, 'failure')
+            || contains(needs.*.result, 'cancelled')
+            || contains(needs.*.result, 'skipped')
+          }}
 
 
   # Deploy-ab:
