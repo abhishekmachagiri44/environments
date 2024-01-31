@@ -1,9 +1,9 @@
 name: trigger-any-branch
 
 on:
-  push:
-    branches:
-      - '*'
+  # push:
+  #   branches:
+  #     - '*'
   workflow_dispatch:
     inputs:
       branch:
