@@ -20,18 +20,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
+    - name: Debug Info
+      run: |
+        echo "Event name: ${{ github.event_name }}"
+        echo "Branch: ${{ github.ref }}"
+        echo "Input branch: ${{ github.event.inputs.branch || github.ref }}"
+        
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        ref: ${{ github.ref }}
-
+        ref: ${{ github.event.inputs.branch || github.ref }}
+        
     - name: Set up Node.js
       run: echo "Deploying to ${{ github.event.inputs.branch || github.ref }}"
-
+      
     - name: Upload Artifacts
       if: ${{ github.event.inputs.branch != '' && github.event.inputs.branch == github.ref }}
       run: |
-        # Your artifact upload commands here
         echo "Uploading artifacts for branch ${{ github.event.inputs.branch }}"
+        # Your artifact upload commands here
