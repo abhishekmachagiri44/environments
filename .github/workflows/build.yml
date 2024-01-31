@@ -26,30 +26,33 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
+        environment: ${{ vars.ENVIRONMENT }}
+        runner: ${{ vars.RUNNER }}
+
         # experimental: [false]
-        include:
-          - { environment: dev, runner-ap: windows-2019 }
-          - { environment: qa, runner-ap: windows-2019 } 
+        # include:
+          # - { environment: ${{ vars.ENVIRONMENT }}, runner-ap: ${{ vars.RUNNER }} }
+          # - { environment: qa, runner-ap: windows-2019 } 
           
     uses: ./.github/workflows/deployment2.yml
     with:
-      target-ap: ${{ matrix.runner-ap }}
+      target-ap: ${{ matrix.runner }}
       target-env: ${{ matrix.environment }}
         
-  results:
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
-    name: Final Results
-    needs: [Deploy]
-    steps:
-      - run: exit 1
-        # see https://stackoverflow.com/a/67532120/4907315
-        if: >-
-          ${{
-               contains(needs.*.result, 'failure')
-            || contains(needs.*.result, 'cancelled')
-            || contains(needs.*.result, 'skipped')
-          }}
+  # results:
+  #   if: ${{ always() }}
+  #   runs-on: ubuntu-latest
+  #   name: Final Results
+  #   needs: [Deploy]
+  #   steps:
+  #     - run: exit 1
+  #       # see https://stackoverflow.com/a/67532120/4907315
+  #       if: >-
+  #         ${{
+  #              contains(needs.*.result, 'failure')
+  #           || contains(needs.*.result, 'cancelled')
+  #           || contains(needs.*.result, 'skipped')
+  #         }}
 
 
   # Deploy-ab:
