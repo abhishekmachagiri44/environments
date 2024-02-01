@@ -20,21 +20,26 @@ jobs:
       name: ${{ inputs.target-env }}
     steps: 
       - name: var
-        if: inputs.target-env != 'windows-2019'
+        if: inputs.target-env == 'windows-2019'
         run: echo "${{ inputs.target-env }}"
-      - name: "Deploy to dev"
-        if: inputs.target-env != 'windows-2019'
-        run: |
-          # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
+      # - name: "Deploy to dev"
+      #   if: inputs.target-env != 'windows-2019'
+      #   run: |
+      #     # Add your deployment script or commands for the chosen environment
+      #     echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
       - name: var
-        if: inputs.target-env == 'windows-2019'
+        if: inputs.target-env == 'windows-latest'
         run: echo "${{ inputs.target-env }}"
-      - name: "Deploy to prod"
-        if: inputs.target-env == 'windows-2019'
-        run: |
-          # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
+
+      - name: var
+        if: inputs.target-env == 'ubuntu-latest'
+        run: echo "${{ inputs.target-env }}"
+        
+      # - name: "Deploy to prod"
+      #   if: inputs.target-env == 'windows-2019'
+      #   run: |
+      #     # Add your deployment script or commands for the chosen environment
+      #     echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
 
 
   # deploy-ab:
