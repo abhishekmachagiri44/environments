@@ -22,7 +22,7 @@ jobs:
       name: ${{vars.RUNNER}}
     steps: 
       - name: var
-        # if:  inputs.target-db == ${{ inputs.target-db }}
+        if:  inputs.target-db == ${{ inputs.target-db }}
         run: echo "${{env.name}}"
       - name: "Deploy to dev"
         run: |
