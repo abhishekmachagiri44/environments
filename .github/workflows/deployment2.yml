@@ -18,23 +18,16 @@ jobs:
     runs-on: ${{ inputs.target-db }}
     environment:
       name: ${{ inputs.target-env }}
-    # outputs:
-    #   approved: ${{ steps.set-outputs.approved }}
-    # # continue-on-error: true
-    # steps:
-    #   - name: Set outputs
-    #     id: set-outputs
-    #     run: |
-    #       echo "approved=${{ inputs.target-db }}" >> $GITHUB_OUTPUT
-
     env:
       name: ${{vars.RUNNER}}
-    steps:
-      - run: echo "${{env.name}}"
+    steps: 
+      - name: var
+        # if:  inputs.target-db == ${{ inputs.target-db }}
+        run: echo "${{env.name}}"
       - name: "Deploy to dev"
         run: |
           # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{ inputs.target-dp }} and ${{ inputs.target-env }}"
+          echo "Deploying to ${{ inputs.target-dp }} and ${{ inputs.target-db }}"
 
 
   deploy-ab:
@@ -52,7 +45,7 @@ jobs:
       - name: "Deploy to Prod"
         run: |
           # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
+          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-ap }}"
 
 
 
