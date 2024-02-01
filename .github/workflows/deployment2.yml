@@ -40,6 +40,7 @@ jobs:
   deploy-ab:
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-ap }}
+    if: inputs.target-ap == ${{ inputs.target-ap }}
     environment:
       name: ${{ inputs.target-env }}
     # if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
