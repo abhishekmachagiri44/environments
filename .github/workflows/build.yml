@@ -52,25 +52,25 @@ jobs:
       matrix:
         include:
           - { environment: dev, runner-ap: windows-2019 }
-          - { environment: qa, runner-ap: windows-2019, runner-db: ubuntu-latest }
+          
     uses: ./.github/workflows/deployment2.yml
     with:
       target-ap: ${{ matrix.runner-ap }}
       target-db: ${{ matrix.runner-db }}
       target-env: ${{ matrix.environment }}
 
-  # deplo2:
-  #   needs: build
-  #   strategy:
-  #     fail-fast: true
-  #     matrix:
-  #       include:
-  #         - { environment: qa, runner-ap: windows-2019, runner-db: ubuntu-latest }
-  #   uses: ./.github/workflows/deployment2.yml
-  #   with:
-  #     target-ap: ${{ matrix.runner-ap }}
-  #     target-db: ${{ matrix.runner-db }}
-  #     target-env: ${{ matrix.environment }}
+  deplo2:
+    needs: build
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - { environment: qa, runner-ap: windows-2019, runner-db: ubuntu-latest }
+    uses: ./.github/workflows/deployment2.yml
+    with:
+      target-ap: ${{ matrix.runner-ap }}
+      target-db: ${{ matrix.runner-db }}
+      target-env: ${{ matrix.environment }}
 
     
   # Deploy-ab:
