@@ -14,6 +14,7 @@ on:
         type: string
 jobs:
   job1:
+    if: inputs.target-db == ${{ inputs.target-db }}
     runs-on: ${{ inputs.target-db }}
     environment:
       name: ${{ inputs.target-env }}
@@ -37,7 +38,6 @@ jobs:
 
 
   deploy-ab:
-    needs: job1
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-ap }}
     environment:
