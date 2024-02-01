@@ -45,19 +45,19 @@ jobs:
         # Add your deployment script or commands for the dev environment
           echo "build script"
 
-  # deploy:
-  #   needs: build
-  #   strategy:
-  #     fail-fast: true
-  #     matrix:
-  #       include:
-  #         - { environment: dev, runner-ap: windows-2019 }
+  deploy:
+    needs: build
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - { environment: dev, runner-ap: windows-2019 }
           
-  #   uses: ./.github/workflows/deployment2.yml
-  #   with:
-  #     target-ap: ${{ matrix.runner-ap }}
-  #     target-db: ${{ matrix.runner-db }}
-  #     target-env: ${{ matrix.environment }}
+    uses: ./.github/workflows/deployment2.yml
+    with:
+      target-ap: ${{ matrix.runner-ap }}
+      # target-db: ${{ matrix.runner-db }}
+      target-env: ${{ matrix.environment }}
 
   deplo2:
     needs: build
@@ -65,13 +65,13 @@ jobs:
       # fail-fast: true
       matrix:
         include:
-          - environment: dev
-            runner-ap: windows-2019
-          - environment: qa
-            runner-ap: windows-2019
-            runner-db: ubuntu-latest
+          # - environment: dev
+          #   runner-ap: windows-2019
+          # - environment: qa
+          #   runner-ap: windows-2019
+          #   runner-db: ubuntu-latest
           # - { environment: dev, runner-ap: windows-2019 }
-          # - { environment: qa, runner-ap: windows-2019, runner-db: ubuntu-latest }
+          - { environment: qa, runner-ap: windows-2019, runner-db: ubuntu-latest }
     uses: ./.github/workflows/deployment2.yml
     with:
       target-ap: ${{ matrix.runner-ap }}
