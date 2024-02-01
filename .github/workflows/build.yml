@@ -64,9 +64,9 @@ jobs:
     strategy:
       # fail-fast: true
       matrix:
-        environment: [windows-latest, ubuntu-latest]
-        include:
-          - environment: windows-2019
+        environment: [windows-latest, ubuntu-latest, windows-2019]
+        # include:
+          # - environment: 
           #   runner-ap: windows-2019
           # - environment: qa
           #   runner-ap: windows-2019
