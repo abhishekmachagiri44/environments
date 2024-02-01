@@ -7,14 +7,14 @@ on:
         required: true
         type: string
       target-ap: 
-        required: false
+        required: true
         type: string
       target-db: 
-        required: false
+        required: true
         type: string
 jobs:
   job1:
-    if: inputs.target-db == ${{ inputs.target-db }}
+    # if: inputs.target-db == ${{ inputs.target-db }}
     runs-on: ${{ inputs.target-db }}
     environment:
       name: ${{ inputs.target-env }}
@@ -22,7 +22,7 @@ jobs:
     #   name: ${{vars.RUNNER}}
     steps: 
       - name: var
-        # if:  inputs.target-db == ${{ inputs.target-db }}
+        if:  inputs.target-db == ${{ inputs.target-db }}
         run: echo "${{ inputs.target-db }}"
       - name: "Deploy to dev"
         run: |
@@ -33,15 +33,17 @@ jobs:
   deploy-ab:
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-ap }}
-    if: inputs.target-ap == ${{ inputs.target-ap }}
+    
     environment:
       name: ${{ inputs.target-env }}
     # if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
     # continue-on-error: true
-    env:
-      name: ${{vars.RUNNER}}
-    steps:
-      - run: echo "${{env.name}}"
+    # env:
+    #   name: ${{vars.RUNNER}}
+    steps: 
+      - name: var
+        if: inputs.target-ap == ${{ inputs.target-ap }}
+        run: echo "${{ inputs.target-ap }}"
       - name: "Deploy to Prod"
         run: |
           # Add your deployment script or commands for the chosen environment
