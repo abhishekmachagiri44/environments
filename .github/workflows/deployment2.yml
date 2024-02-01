@@ -13,23 +13,23 @@ on:
         required: false
         type: string
 jobs:
-  # job1:
-  #   runs-on: ${{ inputs.target-env }}
-  #   environment:
-  #     name: ${{ inputs.target-env }}
-  #   outputs:
-  #     approved: ${{ steps.set-outputs.approved }}
-  #   continue-on-error: true
-  #   steps:
-  #     - name: Set outputs
-  #       id: set-outputs
-  #       run: |
-  #         echo "approved=${{ inputs.target-env }}" >> $GITHUB_OUTPUT
+  job1:
+    runs-on: ${{ inputs.target-db }}
+    environment:
+      name: ${{ inputs.target-env }}
+    outputs:
+      approved: ${{ steps.set-outputs.approved }}
+    # continue-on-error: true
+    steps:
+      - name: Set outputs
+        id: set-outputs
+        run: |
+          echo "approved=${{ inputs.target-db }}" >> $GITHUB_OUTPUT
 
           
 
   deploy-ab:
-    # needs: job1
+    needs: job1
     name: Deploy to ${{ inputs.target-env }}
     runs-on: ${{ inputs.target-ap }}
     environment:
