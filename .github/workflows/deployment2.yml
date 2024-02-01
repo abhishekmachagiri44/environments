@@ -6,48 +6,56 @@ on:
       target-env:
         required: true
         type: string
-      target-ap: 
-        required: true
-        type: string
-      target-db: 
-        required: true
-        type: string
+      # target-ap: 
+      #   required: true
+      #   type: string
+      # target-db: 
+      #   required: true
+      #   type: string
 jobs:
   job1:
     # if: inputs.target-db == ${{ inputs.target-db }}
-    runs-on: ${{ inputs.target-db }}
+    runs-on: ${{ inputs.target-env }}
     environment:
       name: ${{ inputs.target-env }}
     # env:
     #   name: ${{vars.RUNNER}}
     steps: 
       - name: var
-        if:  inputs.target-db == ${{ inputs.target-db }}
-        run: echo "${{ inputs.target-db }}"
+        if:  inputs.target-env =! 'windows-2019'
+        run: echo "${{ inputs.target-env }}"
       - name: "Deploy to dev"
+        if:  inputs.target-env =! 'windows-2019'
         run: |
           # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-db }}"
-
-
-  deploy-ab:
-    name: Deploy to ${{ inputs.target-env }}
-    runs-on: ${{ inputs.target-ap }}
-    
-    environment:
-      name: ${{ inputs.target-env }}
-    # if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
-    # continue-on-error: true
-    # env:
-    #   name: ${{vars.RUNNER}}
-    steps: 
+          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
       - name: var
-        if: inputs.target-ap == ${{ inputs.target-ap }}
-        run: echo "${{ inputs.target-ap }}"
-      - name: "Deploy to Prod"
+        if:  inputs.target-env == '${{ inputs.target-env }}'
+        run: echo "${{ inputs.target-env }}"
+      - name: "Deploy to dev"
+        if:  inputs.target-env == '${{ inputs.target-env }}'
         run: |
           # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-ap }}"
+          echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-env }}"
+
+  # deploy-ab:
+  #   name: Deploy to ${{ inputs.target-env }}
+  #   runs-on: ${{ inputs.target-ap }}
+    
+  #   environment:
+  #     name: ${{ inputs.target-env }}
+  #   # if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
+  #   # continue-on-error: true
+  #   # env:
+  #   #   name: ${{vars.RUNNER}}
+  #   steps: 
+  #     - name: var
+  #       if: inputs.target-ap == ${{ inputs.target-ap }}
+  #       run: echo "${{ inputs.target-ap }}"
+  #     - name: "Deploy to Prod"
+  #       run: |
+  #         # Add your deployment script or commands for the chosen environment
+  #         echo "Deploying to ${{ inputs.target-env }} and ${{ inputs.target-ap }}"
 
 
 
