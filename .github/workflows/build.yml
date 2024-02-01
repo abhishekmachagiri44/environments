@@ -52,6 +52,19 @@ jobs:
       matrix:
         include:
           - { environment: dev, runner-ap: windows-2017 }
+          # - { environment: qa, runner-ap: windows-2019, runner-db: windows-2017 }
+    uses: ./.github/workflows/deployment2.yml
+    with:
+      target-ap: ${{ matrix.runner-ap }}
+      target-db: ${{ matrix.runner-db }}
+      target-env: ${{ matrix.environment }}
+
+  deplo2:
+    needs: build
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
           - { environment: qa, runner-ap: windows-2019, runner-db: windows-2017 }
     uses: ./.github/workflows/deployment2.yml
     with:
