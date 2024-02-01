@@ -64,19 +64,20 @@ jobs:
     strategy:
       # fail-fast: true
       matrix:
+        environment: [windows-latest, ubuntu-latest]
         include:
-          # - environment: dev
+          - environment: windows-2019
           #   runner-ap: windows-2019
           # - environment: qa
           #   runner-ap: windows-2019
           #   runner-db: ubuntu-latest
           # - { environment: dev, runner-ap: windows-2019 }
-          - { environment: qa, runner-ap: windows-2019, runner-db: ubuntu-latest }
+          # - { environment: qa, runner-ap: windows-2019, runner-db: ubuntu-latest }
           # - { environment: dev, runner-ap: windows-2019, runner-db: '' }
     uses: ./.github/workflows/deployment2.yml
     with:
-      target-ap: ${{ matrix.runner-ap }}
-      target-db: ${{ matrix.runner-db }}
+      # target-ap: ${{ matrix.runner-ap }}
+      # target-db: ${{ matrix.runner-db }}
       target-env: ${{ matrix.environment }}
 
     
