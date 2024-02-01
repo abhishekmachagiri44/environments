@@ -1,61 +1,76 @@
-name: Stringified input workflow
-on:
-  workflow_dispatch:
-    inputs:
-      OS:
-        description: provide all OS in stringified array format
-        required: true
-        default: "['ubuntu-latest','windows-latest']"
-      NODE_VERSION:
-        description: provide all node versions in stringified array format
-        required: true
-        default: "['10','16']"
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: '${{ matrix.OS }} ${{ matrix.NODE_VERSION }}'
-    strategy:
-      fail-fast: false
-      matrix:
-        OS: ${{ fromJSON(github.event.inputs.OS) }}
-        NODE_VERSION: ${{ fromJSON(github.event.inputs.NODE_VERSION) }}
-    steps:
-      - name: running
-        run: echo "running job with ${{ matrix.OS }} ${{ matrix.NODE_VERSION }}"
-
-# name: build Workflow
+# name: Stringified input workflow
 # on:
-#   push:
-#     branches:
-#       - main
 #   workflow_dispatch:
-#     # inputs:
-#     #   environment:
-#     #     description: 'Select environment' 
-#     #     required: true
-#     #     type: environment
- 
+#     inputs:
+#       OS:
+#         description: provide all OS in stringified array format
+#         required: true
+#         default: "['ubuntu-latest','windows-latest']"
+#       NODE_VERSION:
+#         description: provide all node versions in stringified array format
+#         required: true
+#         default: "['10','16']"
 # jobs:
 #   build:
-#     runs-on: windows-2019
-#     # continue-on-error: true
+#     runs-on: ubuntu-latest
+#     name: '${{ matrix.OS }} ${{ matrix.NODE_VERSION }}'
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         OS: ${{ fromJSON(github.event.inputs.OS) }}
+#         NODE_VERSION: ${{ fromJSON(github.event.inputs.NODE_VERSION) }}
 #     steps:
-#     - name: build
-#       run: |
-#         # Add your deployment script or commands for the dev environment
-#           echo "build script"
-      
+#       - name: running
+#         run: echo "running job with ${{ matrix.OS }} ${{ matrix.NODE_VERSION }}"
+
+name: build Workflow
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    # inputs:
+    #   environment:
+    #     description: 'Select environment' 
+    #     required: true
+    #     type: environment
+ 
+jobs:
+  build:
+    runs-on: windows-2019
+    # continue-on-error: true
+    steps:
+    - name: build
+      run: |
+        # Add your deployment script or commands for the dev environment
+          echo "build script"
+
+  deploy:
+    needs: build
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - { environment: dev, runner-ap: windows-2017 }
+          - { environment: qa, runner-ap: windows-2019, runner-db: windows-2017 }
+    uses: ./.github/workflows/deployment2.yml
+    with:
+      target-ap: ${{ matrix.runner-ap }}
+      target-db: ${{ matrix.runner-db }}
+      target-env: ${{ matrix.environment }}
+
+    
   # Deploy-ab:
-  #   runs-on: ${{ matrix.os }}
+  #   runs-on: ${{ matrix.target }}
   #   strategy:
   #     matrix:
   #       target: [windows-2019]
-        # runner: [windows-2019]
-    # uses: ./.github/workflows/deployment2.yml
-    # with:
-    #   target-env: ${{ matrix.target }}
-    #   # target-runner: ${{ matrix.runner }}
-    # secrets: inherit
+  #       runner: [windows-2019]
+  #   uses: ./.github/workflows/deployment2.yml
+  #   with:
+  #     target-env: ${{ matrix.target }}
+  #     # target-runner: ${{ matrix.runner }}
+  #   secrets: inherit
 
   # build:
   #   runs-on: ${{ matrix.os }}
@@ -97,24 +112,22 @@ jobs:
   #       node: [14, 16]
   #   runs-on: ${{ matrix.os }}
 
-  # Deploy:
-  #   needs: build
-  #   strategy:
-  #     fail-fast: true
-  #     matrix:
-  #       environment: ${{ vars.ENVIRONMENT }}
-  #       runner: ${{ vars.RUNNER }}
-
-  #       # experimental: [false]
-  #       # include:
-  #         # - { environment: ${{ vars.ENVIRONMENT }}, runner-ap: ${{ vars.RUNNER }} }
-  #         # - { environment: qa, runner-ap: windows-2019 } 
-          
-  #   uses: ./.github/workflows/deployment2.yml
-  #   with:
-  #     target-ap: ${{ matrix.runner }}
-  #     target-env: ${{ matrix.environment }}
-        
+# deploy:
+#   needs: build
+#   strategy:
+#     fail-fast: true
+#     matrix:
+#       environment: ${{ vars.ENVIRONMENT }}
+#       runner: ${{ vars.RUNNER }}
+#       experimental: [false]
+#       include:
+#         - { environment: dev, runner-ap: windows-2017 }
+#         - { environment: qa, runner-ap: windows-2019 }
+#   uses: ./.github/workflows/deployment2.yml
+#   with:
+#     target-ap: ${{ matrix.runner }}
+#     target-env: ${{ matrix.environment }}
+            
   # results:
   #   if: ${{ always() }}
   #   runs-on: ubuntu-latest
