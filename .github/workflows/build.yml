@@ -1,24 +1,49 @@
-name: build Workflow
+name: Stringified input workflow
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
-    # inputs:
-    #   environment:
-    #     description: 'Select environment' 
-    #     required: true
-    #     type: environment
- 
+    inputs:
+      OS:
+        description: provide all OS in stringified array format
+        required: true
+        default: "['ubuntu-latest','windows-latest']"
+      NODE_VERSION:
+        description: provide all node versions in stringified array format
+        required: true
+        default: "['10','16']"
 jobs:
   build:
-    runs-on: windows-2019
-    # continue-on-error: true
+    runs-on: ubuntu-latest
+    name: '${{ matrix.OS }} ${{ matrix.NODE_VERSION }}'
+    strategy:
+      fail-fast: false
+      matrix:
+        OS: ${{ fromJSON(github.event.inputs.OS) }}
+        NODE_VERSION: ${{ fromJSON(github.event.inputs.NODE_VERSION) }}
     steps:
-    - name: build
-      run: |
-        # Add your deployment script or commands for the dev environment
-          echo "build script"
+      - name: running
+        run: echo "running job with ${{ matrix.OS }} ${{ matrix.NODE_VERSION }}"
+
+# name: build Workflow
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
+#     # inputs:
+#     #   environment:
+#     #     description: 'Select environment' 
+#     #     required: true
+#     #     type: environment
+ 
+# jobs:
+#   build:
+#     runs-on: windows-2019
+#     # continue-on-error: true
+#     steps:
+#     - name: build
+#       run: |
+#         # Add your deployment script or commands for the dev environment
+#           echo "build script"
       
   # Deploy-ab:
   #   runs-on: ${{ matrix.os }}
@@ -47,23 +72,23 @@ jobs:
 
 
 
-  deploy-ab:
-    needs: build
-    runs-on: ${{ vars.RUNNER }}
-    name: Deploy to ${{ vars.ENVIRONMENT }}
-    strategy:
-      matrix:
-        environment: ${{ vars.ENVIRONMENT }}
-    # if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
-    # continue-on-error: true
-    environment:
-      name: ${{matrix.environment}}
-    steps:
-      - run: echo "${{matrix.environment}}"
-      - name: "Deploy to Prod"
-        run: |
-          # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{matrix.environment}} "
+  # deploy-ab:
+  #   needs: build
+  #   runs-on: ${{ vars.RUNNER }}
+  #   name: Deploy to ${{ vars.ENVIRONMENT }}
+  #   strategy:
+  #     matrix:
+  #       environment: ${{ vars.ENVIRONMENT }}
+  #   # if: needs.job1.outputs.approved == "${{ inputs.target-env }}"
+  #   # continue-on-error: true
+  #   environment:
+  #     name: ${{matrix.environment}}
+  #   steps:
+  #     - run: echo "${{matrix.environment}}"
+  #     - name: "Deploy to Prod"
+  #       run: |
+  #         # Add your deployment script or commands for the chosen environment
+  #         echo "Deploying to ${{matrix.environment}} "
 
   # example_matrix:
   #   strategy:
