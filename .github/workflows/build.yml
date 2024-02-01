@@ -72,7 +72,7 @@ jobs:
           #   runner-db: ubuntu-latest
           # - { environment: dev, runner-ap: windows-2019 }
           - { environment: qa, runner-ap: windows-2019, runner-db: ubuntu-latest }
-          - { environment: dev, runner-ap: windows-2019, runner-db: '' }
+          # - { environment: dev, runner-ap: windows-2019, runner-db: '' }
     uses: ./.github/workflows/deployment2.yml
     with:
       target-ap: ${{ matrix.runner-ap }}
