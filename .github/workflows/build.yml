@@ -80,27 +80,20 @@ jobs:
         id: step1
         # run: echo "matrix=${{env.VERSIONS}}" >> $GITHUB_OUTPUT
         run: |
-          projectVersion=$(cat runners.json | grep -o '"target": *"[^"]*' | awk -F'"' '{ print $4 }')
+          projectVersion=$(cat runners.json)
           echo "PROJECT_VERSION=$projectVersion" >> $GITHUB_ENV
 
-  deploy-gke:
-    name: Deploy to GKE
-    runs-on: ubuntu-latest
-    needs: [prepare-matrix]
-    strategy: 
-      max-parallel: 2
-      matrix: 
-        version: ${{ fromJSON(needs.prepare-matrix.outputs.all_versions) }}
-    steps:
-  #     ...(several steps to complete job)....
-  # # run-matrix:
-  # #   needs: setup
-  # #   runs-on: ubuntu-latest
-  # #   strategy:
-  # #     matrix: ${{fromJson(needs.setup.outputs.mymatrix)}}
+  # deploy-gke:
+  #   name: Deploy to GKE
+  #   runs-on: ubuntu-latest
+  #   needs: [prepare-matrix]
+  #   strategy: 
+  #     max-parallel: 2
+  #     matrix: 
+  #       version: ${{ fromJSON(needs.prepare-matrix.outputs.all_versions) }}
   #   steps:
-      - name: Display target
-        run: echo "${{ matrix.version }}"
+  #     - name: Display target
+  #       run: echo "${{ matrix.version }}"
 
 
 
