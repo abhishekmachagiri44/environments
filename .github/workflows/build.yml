@@ -23,12 +23,12 @@
 #       - name: running
 #         run: echo "running job with ${{ matrix.OS }} ${{ matrix.NODE_VERSION }}"
 
-name: build Workflow
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
+# name: build Workflow
+# on:
+#   push:
+#     branches:
+#       - main
+#   workflow_dispatch:
     # inputs:
     #   environment:
     #     description: 'Select environment' 
@@ -59,10 +59,15 @@ on:
 #         with:
 #           node-version: ${{ matrix.node }}
 
-
+name: build Workflow
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 jobs:
   set:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       matrix: ${{steps.list_dirs.outputs.matrix}}
     steps:
