@@ -86,9 +86,8 @@ jobs:
       - name: Set up matrix
         id: dataStep
         run: |
-          cat runners.json  # Display content for debugging
-          TARGETS=$(<runners.json)
-          echo "myoutput=$(jq -cn --argjson environments "$TARGETS" '{target: $environments}')" >> $GITHUB_ENV
+          myoutput=$(cat runners.json)
+          echo "myoutput=$myoutput" >> $GITHUB_ENV
 
   deploy-gke:
     name: Deploy to GKE
