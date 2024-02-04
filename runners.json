@@ -1,0 +1,10 @@
+{
+  "runners": [
+    {
+      "os": "Windows"
+    },
+    {
+      "os": "Ubuntu"
+    },
+  ]
+}

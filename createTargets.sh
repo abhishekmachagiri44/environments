@@ -1,3 +1,0 @@
-{
-    "target": ["dev", "qa", "prod"]
-}
