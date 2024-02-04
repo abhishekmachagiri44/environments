@@ -70,32 +70,30 @@ on:
       - main
 
 jobs:
-  matrix:
-    name: Generate test matrix
+  setup:
     runs-on: ubuntu-latest
     outputs:
-      matrix-json: ${{ steps.set-matrix.outputs.matrix }}
+      mymatrix: ${{ steps.dataStep.outputs.myoutput }}
     steps:
-      - uses: actions/checkout@v2
-      - id: set-matrix
-        shell: pwsh
-        # Use a small PowerShell script to generate the test matrix
-        run: "& .github/workflows/matrix.ps1"
-
-  run-matrix:
-    needs: [matrix]
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJson(needs.matrix.outputs.matrix-json) }}
-    name: "${{ matrix.job_name }}"
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v2
-      - name: Run Command
-        shell: pwsh
+      - id: dataStep
         run: |
-          Write-Host "Run '${{ matrix.command }}'"
+          TARGETS=$(./createTargets.sh)
+          echo "myoutput=$(jq -cn --argjson environments "$TARGETS" '{target: $environments}')" >> $GITHUB_OUTPUT 
+
+  # run-matrix:
+  #   needs: [matrix]
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       include: ${{ fromJson(needs.matrix.outputs.matrix-json) }}
+  #   name: "${{ matrix.job_name }}"
+  #   runs-on: ${{ matrix.os }}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Run Command
+  #       shell: pwsh
+  #       run: |
+  #         Write-Host "Run '${{ matrix.command }}'"
 
 
 
