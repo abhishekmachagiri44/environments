@@ -72,17 +72,19 @@ jobs:
 
     outputs:
       id: runner-names
-      set: ${{ steps.set-runner-names.outputs.runner_names }}
+      set: ${{ steps.set-runner-names.outputs.env_file }}
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Extract Runner Names
         run: |
           runnerNames=$(cat runners.json | jq -r '.runners[].os')
           echo "RUNNER_NAMES=$runnerNames" >> $GITHUB_ENV
-          echo "::set-output name=runner_names::$runnerNames"
+          echo "RUNNER_NAMES_FILE=${{ runner.workspace }}/runner_names" >> $GITHUB_ENV
+          echo "$runnerNames" > ${{ runner.workspace }}/runner_names
+          echo "::set-output name=env_file::${{ runner.workspace }}/runner_names"
 
   use-runner-names:
     needs: extract-runner-names
@@ -90,16 +92,17 @@ jobs:
 
     strategy:
       matrix:
-        os: ${{fromJson(needs.extract-runner-names.outputs.runner_names)}}
+        os: ${{ needs.extract-runner-names.outputs.runner_names_file }}
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Use Runner Names in Matrix
         run: |
           echo "Using runner names in the matrix:"
           echo "Matrix OS: ${{ matrix.os }}"
+
 
 
 
