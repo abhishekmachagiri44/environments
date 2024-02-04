@@ -66,8 +66,8 @@ on:
     branches:
       - main
 
-env:
-  VERSIONS: "['9.0.0', '11.0.0']"
+# env:
+#   VERSIONS: "['9.0.0', '11.0.0']"
 
 jobs:
   prepare-matrix:
