@@ -66,28 +66,36 @@ on:
     branches:
       - main
 
+env:
+  VERSIONS: '[9.0.0, 11.0.0]'
+
 jobs:
-  setup:
+  prepare-matrix:
+    name: Prepare Matrix Output
     runs-on: ubuntu-latest
-    outputs:
-      mymatrix: ${{ steps.dataStep.outputs.myoutput }}
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
+    outputs: 
+      all_versions: ${{ steps.step1.outputs.matrix }}
+    steps: 
+      - name: Create Matrix Variable
+        id: step1
+        run: echo "matrix=$(jq -cr '@json' <<< "$VERSIONS")" >> $GITHUB_OUTPUT
 
-      - name: Set up matrix
-        id: dataStep
-        run: |
-          cat runners.json  # Display content for debugging
-          TARGETS=$(<runners.json)
-          echo "myoutput=$(jq -cn --argjson environments "$TARGETS" '{target: $TARGETS}')" >> $GITHUB_ENV
-
-  run-matrix:
-    needs: setup
+  deploy-gke:
+    name: Deploy to GKE
     runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{fromJson(needs.setup.outputs.mymatrix)}}
+    needs: [prepare-matrix]
+    strategy: 
+      max-parallel: 2
+      matrix: 
+        version: ${{ fromJSON(needs.prepare-matrix.outputs.all_versions) }}
     steps:
+  #     ...(several steps to complete job)....
+  # # run-matrix:
+  # #   needs: setup
+  # #   runs-on: ubuntu-latest
+  # #   strategy:
+  # #     matrix: ${{fromJson(needs.setup.outputs.mymatrix)}}
+  #   steps:
       - name: Display target
         run: echo ${{ matrix.target }}
 
