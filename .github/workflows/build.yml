@@ -66,7 +66,7 @@ jobs:
     outputs:
       matrix: ${{steps.list_dirs.outputs.matrix}}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - id: list_dirs
         run: echo "matrix=$(ls|jq -cnR '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
 
