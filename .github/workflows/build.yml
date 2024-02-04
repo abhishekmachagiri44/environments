@@ -90,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: ${{fromJson(needs.setup.outputs.mymatrix).target}}
+        target: ${{ fromJson(needs.setup.outputs.mymatrix) }}
     steps:
       - name: Display target
         run: echo ${{ matrix.target }}
