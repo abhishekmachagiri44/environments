@@ -76,7 +76,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Extract Runner Names
         run: |
@@ -86,7 +86,7 @@ jobs:
 
   use-runner-names:
     needs: extract-runner-names
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -94,12 +94,13 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Use Runner Names in Matrix
         run: |
           echo "Using runner names in the matrix:"
           echo "Matrix OS: ${{ matrix.os }}"
+
 
 
   # run-matrix:
