@@ -87,10 +87,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: ${{fromJson(env.mymatrix).target}}
+        target: ${{fromJson(needs.setup.outputs.mymatrix).target}}
     steps:
       - name: Display target
         run: echo ${{ matrix.target }}
+
 
 
 
