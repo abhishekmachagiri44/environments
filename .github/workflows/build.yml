@@ -84,17 +84,17 @@ jobs:
         #   projectVersion=$(cat runners.json)
         #   echo "PROJECT_VERSION=$projectVersion" >> $GITHUB_ENV
 
-  # deploy-gke:
-  #   name: Deploy to GKE
-  #   runs-on: ubuntu-latest
-  #   needs: [prepare-matrix]
-  #   strategy: 
-  #     max-parallel: 2
-  #     matrix: 
-  #       version: ${{ fromJSON(needs.prepare-matrix.outputs.all_versions) }}
-  #   steps:
-  #     - name: Display target
-  #       run: echo "${{ matrix.version }}"
+  deploy-gke:
+    name: Deploy to GKE
+    runs-on: ubuntu-latest
+    needs: [prepare-matrix]
+    strategy: 
+      max-parallel: 2
+      matrix: 
+        version: ${{ fromJSON(needs.prepare-matrix.outputs.all_versions) }}
+    steps:
+      - name: Display target
+        run: echo "${{ matrix.version }}"
 
 
 
