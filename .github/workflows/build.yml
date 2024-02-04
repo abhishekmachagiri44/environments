@@ -75,22 +75,19 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Display repository contents
-        run: ls -R
-
       - name: Set up matrix
         id: dataStep
         run: |
           cat runners.json  # Display content for debugging
           TARGETS=$(<runners.json)
-          echo "myoutput=$(jq -cn --argjson environments "$TARGETS" '{target: $environments}')" >> $GITHUB_ENV
+          echo "myoutput=$(jq -cn --argjson environments "$TARGETS" '{target: $TARGETS}')" >> $GITHUB_ENV
 
   run-matrix:
     needs: setup
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: ${{ fromJson(needs.setup.outputs.mymatrix) }}
+        target: ${{fromJson(env.mymatrix).target}}
     steps:
       - name: Display target
         run: echo ${{ matrix.target }}
