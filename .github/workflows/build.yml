@@ -67,43 +67,32 @@ on:
       - main
 
 jobs:
-  extract-runner-names:
+  setup:
     runs-on: ubuntu-latest
-
     outputs:
-      id: runner-names
-      set: ${{ steps.set-runner-names.outputs.env_file }}
-
+      mymatrix: ${{ steps.dataStep.outputs.myoutput }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Extract Runner Names
+      - id: dataStep
         run: |
-          runnerNames=$(cat runners.json | jq -r '.runners[].os')
-          echo "RUNNER_NAMES=$runnerNames" >> $GITHUB_ENV
-          echo "RUNNER_NAMES_FILE=${{ runner.workspace }}/runner_names" >> $GITHUB_ENV
-          echo "$runnerNames" > ${{ runner.workspace }}/runner_names
-          echo "::set-output name=env_file::${{ runner.workspace }}/runner_names"
+          TARGETS=$(<runners.json)
+          echo "myoutput=$(jq -cn --argjson environments "$TARGETS" '{target: $TARGETS}')" >> $GITHUB_ENV
 
-  use-runner-names:
-    needs: extract-runner-names
+  run-matrix:
+    needs: setup
     runs-on: ubuntu-latest
-
     strategy:
-      matrix:
-        os: ${{ needs.extract-runner-names.outputs.runner_names_file }}
-
+      matrix: ${{ fromJson(needs.setup.outputs.mymatrix).target }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Use Runner Names in Matrix
-        run: |
-          echo "Using runner names in the matrix:"
-          echo "Matrix OS: ${{ matrix.os }}"
+      - run: echo ${{ matrix.value }}
 
 
+      # - name: Extract Runner Names
+      #   run: |
+      #     runnerNames=$(cat runners.json | jq -r '.runners[].os')
+      #     echo "RUNNER_NAMES=$runnerNames" >> $GITHUB_ENV
+      #     echo "RUNNER_NAMES_FILE=${{ runner.workspace }}/runner_names" >> $GITHUB_ENV
+      #     echo "$runnerNames" > ${{ runner.workspace }}/runner_names
+      #     echo "::set-output name=env_file::${{ runner.workspace }}/runner_names"
 
 
   # run-matrix:
