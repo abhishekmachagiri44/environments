@@ -67,7 +67,7 @@ on:
       - main
 
 env:
-  VERSIONS: '[9.0.0, 11.0.0]'
+  VERSIONS: "['9.0.0', '11.0.0']"
 
 jobs:
   prepare-matrix:
@@ -78,7 +78,7 @@ jobs:
     steps: 
       - name: Create Matrix Variable
         id: step1
-        run: echo "matrix=$(jq -cr '@json' <<< "$VERSIONS")" >> $GITHUB_OUTPUT
+        run: echo "matrix=${{env.VERSIONS}}" >> $GITHUB_OUTPUT
 
   deploy-gke:
     name: Deploy to GKE
