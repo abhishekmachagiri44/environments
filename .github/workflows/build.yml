@@ -76,9 +76,7 @@ jobs:
       mymatrix: ${{ steps.dataStep.outputs.myoutput }}
     steps:
       - id: dataStep
-        run: |
-          TARGETS=$(./createTargets.sh)
-          echo "myoutput=$(jq -cn --argjson environments "$TARGETS" '{target: $environments}')" >> $GITHUB_OUTPUT 
+        run: echo "matrix=$(ls|jq -cnR '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
 
   # run-matrix:
   #   needs: [matrix]
