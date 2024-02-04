@@ -45,6 +45,20 @@ jobs:
         # Add your deployment script or commands for the dev environment
           echo "build script"
 
+
+  build1:
+    needs: build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [14, 16]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
   # deploy:
   #   needs: build
   #   strategy:
@@ -59,26 +73,26 @@ jobs:
   #     # target-db: ${{ matrix.runner-db }}
   #     target-env: ${{ matrix.environment }}
 
-  deplo2:
-    needs: build
-    strategy:
-      # fail-fast: true
-      matrix:
-        environment: [windows-latest, ubuntu-latest, windows-2019]
-        # include:
-          # - environment: 
-          #   runner-ap: windows-2019
-          # - environment: qa
-          #   runner-ap: windows-2019
-          #   runner-db: ubuntu-latest
-          # - { environment: dev, runner-ap: windows-2019 }
-          # - { environment: qa, runner-ap: windows-2019, runner-db: ubuntu-latest }
-          # - { environment: dev, runner-ap: windows-2019, runner-db: '' }
-    uses: ./.github/workflows/deployment2.yml
-    with:
-      # target-ap: ${{ matrix.runner-ap }}
-      # target-db: ${{ matrix.runner-db }}
-      target-env: ${{ matrix.environment }}
+  # deplo2:
+  #   needs: build
+  #   strategy:
+  #     # fail-fast: true
+  #     matrix:
+  #       environment: [windows-latest, ubuntu-latest, windows-2019]
+  #       # include:
+  #         # - environment: 
+  #         #   runner-ap: windows-2019
+  #         # - environment: qa
+  #         #   runner-ap: windows-2019
+  #         #   runner-db: ubuntu-latest
+  #         # - { environment: dev, runner-ap: windows-2019 }
+  #         # - { environment: qa, runner-ap: windows-2019, runner-db: ubuntu-latest }
+  #         # - { environment: dev, runner-ap: windows-2019, runner-db: '' }
+  #   uses: ./.github/workflows/deployment2.yml
+  #   with:
+  #     # target-ap: ${{ matrix.runner-ap }}
+  #     # target-db: ${{ matrix.runner-db }}
+  #     target-env: ${{ matrix.environment }}
 
     
   # Deploy-ab:
