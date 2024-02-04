@@ -35,30 +35,58 @@ on:
     #     required: true
     #     type: environment
  
+# jobs:
+#   build:
+#     runs-on: windows-2019
+#     # continue-on-error: true
+#     steps:
+#     - name: build
+#       run: |
+#         # Add your deployment script or commands for the dev environment
+#           echo "build script"
+
+
+#   build1:
+#     needs: build
+#     runs-on: ${{ matrix.os }}
+#     strategy:
+#       matrix:
+#         os: [ubuntu-latest, windows-latest]
+#         node: [14, 16]
+#     steps:
+#       - uses: actions/checkout@v4
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: ${{ matrix.node }}
+
+
 jobs:
-  build:
-    runs-on: windows-2019
-    # continue-on-error: true
-    steps:
-    - name: build
-      run: |
-        # Add your deployment script or commands for the dev environment
-          echo "build script"
-
-
-  build1:
-    needs: build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        node: [14, 16]
+  set:
+    runs-on: ubuntu-20.04
+    outputs:
+      matrix: ${{steps.list_dirs.outputs.matrix}}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node }}
+      - id: list_dirs
+        run: echo "matrix=$(ls|jq -cnR '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
 
+  get:
+    runs-on: ubuntu-20.04
+    needs: set
+    strategy:
+      matrix:
+        subdir: ${{fromJson(needs.set.outputs.matrix)}}
+
+
+
+
+
+
+
+
+
+
+          
   # deploy:
   #   needs: build
   #   strategy:
