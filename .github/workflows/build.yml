@@ -78,7 +78,10 @@ jobs:
     steps: 
       - name: Create Matrix Variable
         id: step1
-        run: echo "matrix=${{env.VERSIONS}}" >> $GITHUB_OUTPUT
+        # run: echo "matrix=${{env.VERSIONS}}" >> $GITHUB_OUTPUT
+        run: |
+          projectVersion=$(cat runners.json | grep -o '"target": *"[^"]*' | awk -F'"' '{ print $4 }')
+          echo "PROJECT_VERSION=$projectVersion" >> $GITHUB_ENV
 
   deploy-gke:
     name: Deploy to GKE
