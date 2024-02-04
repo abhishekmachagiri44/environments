@@ -59,37 +59,32 @@
 #         with:
 #           node-version: ${{ matrix.node }}
 
-name: Build Workflow
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
+name: Sample Run Include Syntax Json Format
+on: push
+# The Trigger event 
 jobs:
-  set:
+  job1:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.list_dirs.outputs.matrix }}
+	# Making use of job.output
+       matrix: ${{ steps.setmatrix.outputs.matrix }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: List Directories
-        id: list_dirs
-        run: echo "matrix=$(ls | jq -cnR '[inputs | select(length>0)]')" >> $GITHUB_ENV
-
-  get:
-    runs-on: ubuntu-20.04
-    needs: set
+      - name: Set Dynamic Matrix
+        id: setmatrix
+        run: |
+           matrixStringifiedObject="{\"include\":[{\"run\":\"run1\"},{\"run\":\"run2\"}]}"
+           echo "::set-output name=matrix::$matrixStringifiedObject"
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
     strategy:
-      matrix:
-        subdir: ${{ fromJson(needs.set.outputs.matrix) }}
+		# Making use of fromJson (JSON syntax)
+      matrix: ${{ fromJson(needs.job1.outputs.matrix) }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-      - name: Use Subdirectory
-        run: cd ${{ matrix.subdir }} && echo "Working in ${{ matrix.subdir }}"
+    - run: echo Run ${{ matrix.run }}
+    - run: date
+    - run: sleep 1
+    - run: date  
 
 
 
