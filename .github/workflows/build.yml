@@ -65,10 +65,8 @@ on:
   push:
     branches:
       - main
-
 env:
   VERSIONS: "['9.0.0', '11.0.0']"
-
 jobs:
   prepare-matrix:
     name: Prepare Matrix Output
@@ -87,7 +85,7 @@ jobs:
         id: dataStep
         run: |
           myoutput=$(cat runners.json)
-          echo "myoutput=$myoutput" >> $GITHUB_ENV
+          echo "myoutput=$myoutput" >> $GITHUB_OUTPUT
 
   deploy-gke:
     name: Deploy to GKE
