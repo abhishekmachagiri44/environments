@@ -76,13 +76,19 @@ jobs:
     outputs: 
       all_versions: ${{ steps.step1.outputs.matrix }}
     steps: 
-      - name: Create Matrix Variable
-        id: step1
-        run: echo "matrix=${{env.VERSIONS}}" >> $GITHUB_OUTPUT
+      # - name: Create Matrix Variable
+      #   id: step1
+      #   run: echo "matrix=${{env.VERSIONS}}" >> $GITHUB_OUTPUT
         # run: echo "matrix=$(jq -cr '@json' <<< "${{ env.VERSIONS }}")" >> $GITHUB_OUTPUT
         # run: |
         #   projectVersion=$(cat runners.json)
         #   echo "PROJECT_VERSION=$projectVersion" >> $GITHUB_ENV
+      - name: Set up matrix
+        id: dataStep
+        run: |
+          cat runners.json  # Display content for debugging
+          TARGETS=$(<runners.json)
+          echo "myoutput=$(jq -cn --argjson environments "$TARGETS" '{target: $environments}')" >> $GITHUB_ENV
 
   deploy-gke:
     name: Deploy to GKE
