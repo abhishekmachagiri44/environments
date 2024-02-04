@@ -74,7 +74,7 @@ jobs:
     steps:
       - id: dataStep
         run: |
-          TARGETS=$(<runners.json)
+          TARGETS=$(runners.json)
           echo "myoutput=$(jq -cn --argjson environments "$TARGETS" '{target: $TARGETS}')" >> $GITHUB_ENV
 
   run-matrix:
