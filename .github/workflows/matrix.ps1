@@ -8,4 +8,7 @@ $Jobs = @()
   }
 }
 
-Write-Host "::set-output name=matrix::$($Jobs | ConvertTo-JSON -Compress))"
+$matrixJson = $Jobs | ConvertTo-JSON -Compress
+$matrixJson | Out-File -Append -FilePath "matrix.json"
+
+Write-Host "Matrix appended to matrix.json file."
