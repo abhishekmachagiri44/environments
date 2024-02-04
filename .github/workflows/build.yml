@@ -66,16 +66,16 @@ jobs:
     outputs:
       matrix: ${{steps.list_dirs.outputs.matrix}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - id: list_dirs
-        run: echo "matrix=$(ls|jq -cnR '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
+        # run: echo "matrix=$(ls|jq -cnR '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
 
-  get:
-    runs-on: ubuntu-20.04
-    needs: set
-    strategy:
-      matrix:
-        subdir: ${{fromJson(needs.set.outputs.matrix)}}
+  # get:
+  #   runs-on: ubuntu-20.04
+  #   needs: set
+  #   strategy:
+  #     matrix:
+  #       subdir: ${{fromJson(needs.set.outputs.matrix)}}
 
 
 
