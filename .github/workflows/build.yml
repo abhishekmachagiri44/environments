@@ -59,32 +59,43 @@
 #         with:
 #           node-version: ${{ matrix.node }}
 
-name: Sample Run Include Syntax Json Format
-on: push
+name: dynamic-test-matrix
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  job1:
+  matrix:
+    name: Generate test matrix
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.setmatrix.outputs.matrix }}
+      matrix-json: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - name: Set Dynamic Matrix
-        id: setmatrix
-        run: |
-          matrixStringifiedObject="{\"include\":[{\"run\":\"run1\"},{\"run\":\"run2\"}]}"
-          echo "::set-output name=matrix::$matrixStringifiedObject"
+      - uses: actions/checkout@v2
+      - id: set-matrix
+        shell: pwsh
+        # Use a small PowerShell script to generate the test matrix
+        run: "& .github/workflows/matrix.ps1"
 
-  job2:
-    needs: job1
-    runs-on: ubuntu-latest
+  run-matrix:
+    needs: [matrix]
     strategy:
-      matrix: ${{ fromJson(needs.job1.outputs.matrix) }}
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.matrix.outputs.matrix-json) }}
+    name: "${{ matrix.job_name }}"
+    runs-on: ${{ matrix.os }}
     steps:
-      - run: echo Run ${{ matrix.run }}
-      - run: date
-      - run: sleep 1
-      - run: date
-
+      - uses: actions/checkout@v2
+      - name: Run Command
+        shell: pwsh
+        run: |
+          Write-Host "Run '${{ matrix.command }}'"
 
 
 
