@@ -59,28 +59,38 @@
 #         with:
 #           node-version: ${{ matrix.node }}
 
-name: build Workflow
+name: Build Workflow
+
 on:
   push:
     branches:
       - main
   workflow_dispatch:
+
 jobs:
   set:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{steps.list_dirs.outputs.matrix}}
+      matrix: ${{ steps.list_dirs.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
-      - id: list_dirs
-        # run: echo "matrix=$(ls|jq -cnR '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: List Directories
+        id: list_dirs
+        run: echo "matrix=$(ls | jq -cnR '[inputs | select(length>0)]')" >> $GITHUB_ENV
 
-  # get:
-  #   runs-on: ubuntu-20.04
-  #   needs: set
-  #   strategy:
-  #     matrix:
-  #       subdir: ${{fromJson(needs.set.outputs.matrix)}}
+  get:
+    runs-on: ubuntu-20.04
+    needs: set
+    strategy:
+      matrix:
+        subdir: ${{ fromJson(needs.set.outputs.matrix) }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Use Subdirectory
+        run: cd ${{ matrix.subdir }} && echo "Working in ${{ matrix.subdir }}"
+
 
 
 
