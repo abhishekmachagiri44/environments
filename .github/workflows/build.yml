@@ -83,7 +83,7 @@ jobs:
         run: |
           cat runners.json  # Display content for debugging
           TARGETS=$(<runners.json)
-          echo "myoutput=$(jq -cn --argjson environments "$TARGETS" '{target: $TARGETS}')" >> $GITHUB_ENV
+          echo "myoutput=$(jq -cn --argjson environments "$TARGETS" '{target: $environments}')" >> $GITHUB_ENV
 
   run-matrix:
     needs: setup
