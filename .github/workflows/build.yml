@@ -59,24 +59,48 @@
 #         with:
 #           node-version: ${{ matrix.node }}
 
-name: dynamic-test-matrix
+name: Multi-Job Workflow
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  setup:
+  extract-runner-names:
     runs-on: ubuntu-latest
+
     outputs:
-      mymatrix: ${{ steps.dataStep.outputs.myoutput }}
+      id: runner-names
+      set: ${{ steps.set-runner-names.outputs.runner_names }}
+
     steps:
-      - id: dataStep
-        run: echo "matrix=$(ls|jq -cnR '[inputs | select(length>0)]')" >> $GITHUB_OUTPUT
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Extract Runner Names
+        run: |
+          runnerNames=$(cat runners.json | jq -r '.runners[].os')
+          echo "RUNNER_NAMES=$runnerNames" >> $GITHUB_ENV
+          echo "::set-output name=runner_names::$runnerNames"
+
+  use-runner-names:
+    needs: extract-runner-names
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: ${{fromJson(needs.extract-runner-names.outputs.runner_names)}}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Use Runner Names in Matrix
+        run: |
+          echo "Using runner names in the matrix:"
+          echo "Matrix OS: ${{ matrix.os }}"
+
 
   # run-matrix:
   #   needs: [matrix]
