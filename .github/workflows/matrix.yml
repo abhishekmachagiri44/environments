@@ -46,7 +46,7 @@ jobs:
     needs: [build-n-test,matrix_prep1]
     runs-on: windows-latest
     strategy:
-      matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
+      matrix: ${{fromJson(needs.matrix_prep1.outputs.matrix)}}
     environment: windows-latest
     env:
       environment: windows-latest
