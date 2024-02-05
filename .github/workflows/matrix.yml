@@ -2,21 +2,32 @@ name: Configurable Build Matrix
 
 on: push
 jobs:
+#   matrix_prep:
+#     runs-on: ubuntu-latest
+#     outputs:
+#       matrix: ${{ steps.set-matrix.outputs.matrix }}
+#     steps:
+#     - name: Check out code into the Go module directory
+#       uses: actions/checkout@v2
+#     - id: set-matrix
+#       run: | 
+#         matrix=$(jq -r '[.[] | .runs_on] | unique | join(",")' matrix_includes.json)                             
+#         echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_OUTPUT
+#   build-n-test:
+#     needs: matrix_prep
+#     runs-on: ${{ matrix.runs_on }}
+#     strategy:
+#       matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
+#     steps:    
+#     - run: echo "Hello ${{ matrix.someValue }}"
   matrix_prep:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-    - id: set-matrix
-      run: | 
-        matrix=$(jq -r '[.[] | .runs_on] | unique | join(",")' matrix_includes.json)                             
-        echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_OUTPUT
-  build-n-test:
-    needs: matrix_prep
-    runs-on: ${{ matrix.runs_on }}
-    strategy:
-      matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
-    steps:    
-    - run: echo "Hello ${{ matrix.someValue }}"
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+      - id: set-matrix
+        run: | 
+          matrix=$(jq -n --arg runs_on "$(jq -r '[.[] | .runs_on] | unique | join(",")' matrix_includes.json)" '{"include": $runs_on}')                             
+          echo "matrix=${matrix}" >> $GITHUB_ENV
