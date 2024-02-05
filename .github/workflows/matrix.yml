@@ -31,6 +31,7 @@ jobs:
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{env.environment}} "
   matrix_prep1:
+    needs: build-n-test
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -43,7 +44,7 @@ jobs:
           echo "$matrix"
           echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_OUTPUT
   build-n-test-windows:
-    needs: [build-n-test,matrix_prep1]
+    needs: matrix_prep1
     runs-on: windows-latest
     strategy:
       matrix: ${{fromJson(needs.matrix_prep1.outputs.matrix)}}
