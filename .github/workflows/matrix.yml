@@ -17,6 +17,7 @@ jobs:
           echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_OUTPUT
 
   build-n-test:
+    needs: matrix_prep
     runs-on: ${{ matrix.runs_on }}
     strategy:
       matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
