@@ -20,7 +20,7 @@ jobs:
     needs: matrix_prep
     runs-on: ${{ matrix.runs_on }}
     strategy:
-      matrix:
-        os: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
+      matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
+    environment: ubuntu-latest
     steps:    
     - run: echo "Hello ${{fromJson(needs.matrix_prep.outputs.matrix)}}"
