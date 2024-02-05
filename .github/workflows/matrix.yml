@@ -14,10 +14,13 @@ jobs:
         run: |
           branchName=$(echo '${{ github.ref }}' | sed 's,refs/heads/,,g')
           matrix=$(jq --arg branchName "$branchName" -c . matrix_includes.json)
-          echo "::set-output name=matrix::{\"include\":$matrix}"
+          echo "::set-output name=matrix::$matrix"
 
   build-n-test:
     needs: matrix_prep
-    runs-on: ${{fromJson(needs.matrix_prep.outputs.matrix).include.runs_on}}
+    runs-on: ${{fromJson(needs.matrix_prep.outputs.matrix).runs_on}}
+    strategy:
+      matrix:
+        include: ${{fromJson(needs.matrix_prep.outputs.matrix).include}}
     steps:
       - run: echo "Hello ${{ matrix.runs_on }}"
