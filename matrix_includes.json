@@ -1,11 +1,11 @@
 [
     {
-        "runs_on":"ubuntu-16.04"
+        "runs_on":"ubuntu-latest"
     },
     {
-        "runs_on":"ubuntu-18.04"
+        "runs_on":"windows-latest"
     },
     {
-        "runs_on":"ubuntu-20.04"
+        "runs_on":"windows-2019"
     }
 ]
