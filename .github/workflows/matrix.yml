@@ -12,9 +12,8 @@ jobs:
     - id: set-matrix
       run: |
         branchName=$(echo '${{ github.ref }}' | sed 's,refs/heads/,,g')  
-        matrix=$(jq --arg branchName "$branchName" 'map( 
-            . | select((.runOn==$branchName) or (.runOn=="always"))
-        )' matrix_includes.json)                
+          matrix=$(jq -c '[.[] | select(.runs_on) | .runs_on]' matrix_includes.json)
+          # echo "matrix=$matrix" >> $GITHUB_ENV              
         echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_OUTPUT
   build-n-test:
     needs: matrix_prep
