@@ -13,11 +13,16 @@ jobs:
       run: |
         matrix=$(jq -c '[.[] | select(.runs_on) | .runs_on]' matrix_includes.json)                
         echo "matrix={\"include\":$matrix}" >> $GITHUB_OUTPUT
-  build-n-test:
-    needs: matrix_prep
-    runs-on: ${{ matrix.runs_on }}
-    strategy:
-      matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
-    steps:    
-    - run: echo "Hello ${{ matrix.someValue }}"
+
+    - id: check-output
+      run: |
+        cat $GITHUB_OUTPUT
+        
+  # build-n-test:
+  #   needs: matrix_prep
+  #   runs-on: ${{ matrix.runs_on }}
+  #   strategy:
+  #     matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
+  #   steps:    
+  #   - run: echo "Hello ${{ matrix.someValue }}"
 
