@@ -32,7 +32,7 @@ jobs:
           echo "Deploying to ${{env.environment}} "
 
   build-n-test-windows:
-    needs: matrix_prep
+    needs: build-n-test
     runs-on: windows-latest
     strategy:
       matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
