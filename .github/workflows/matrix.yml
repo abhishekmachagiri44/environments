@@ -24,17 +24,12 @@ jobs:
     runs-on: ${{ matrix.runs_on }}
     strategy:
       matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
-    environment: ubuntu-latest
     steps:
-      - run: echo "${{environment}}"
+      - run: echo "${{fromJson(needs.matrix_prep.outputs.matrix)}}"
       - name: "Deploy to Prod"
         run: |
           # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{environment}}"
+          echo "Deploying to ${{fromJson(needs.matrix_prep.outputs.matrix)}}"
       - name: "Set $GITHUB_OUTPUT"
         run: echo "::set-output name=GITHUB_OUTPUT::${GITHUB_OUTPUT}"
 
-      - name: "Deploy to Prod"
-        run: |
-          # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{environment}} "
