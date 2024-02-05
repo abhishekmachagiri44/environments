@@ -20,9 +20,11 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
     environment: ubuntu-latest
+    env:
+      environment: ubuntu-latest
     steps:    
-      - run: echo "${{environment}}"
-      - name: "Deploy to Prod"
+      - run: echo "${{env.environment}}"
+      - name: "Deploy to ${{env.environment}}"
         run: |
           # Add your deployment script or commands for the chosen environment
-          echo "Deploying to ${{environment}} "
+          echo "Deploying to ${{env.environment}} "
