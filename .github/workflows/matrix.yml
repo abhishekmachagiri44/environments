@@ -7,19 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
-    env:
-      MATRIX: ''
     steps:
       - name: Check out code into the Go module directory
         uses: actions/checkout@v4
       - id: set-matrix
-        run: |
-          branchName=$(echo '${{ github.ref }}' | sed 's,refs/heads/,,g')  
-          matrix=$(jq --arg branchName "$branchName" 'map( 
-              . | select((.runOn==$branchName) or (.runOn=="always"))
-          )' matrix_includes.json)                
-          echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_ENV
-          echo "MATRIX=${matrix}" >> $GITHUB_ENV
+        run: matrix=$(jq -r '.[].runs_on' matrix_includes.json)
 
   build-n-test:
     needs: matrix_prep
@@ -32,4 +24,5 @@ jobs:
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{fromJson(needs.matrix_prep.outputs.matrix)}}"
+
 
