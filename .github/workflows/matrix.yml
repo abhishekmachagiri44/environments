@@ -17,7 +17,6 @@ jobs:
           echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_OUTPUT
 
   build-n-test:
-    needs: matrix_prep
     runs-on: ${{ matrix.runs_on }}
     strategy:
       matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
@@ -30,9 +29,14 @@ jobs:
         run: |
           # Add your deployment script or commands for the chosen environment
           echo "Deploying to ${{env.environment}} "
+      - name: Set matrix success flag
+        id: set-matrix-success
+        run: echo "matrix-success=true" >> $GITHUB_ENV
+
   matrix_prep1:
     needs: build-n-test
     runs-on: ubuntu-latest
+    if: success()
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -43,9 +47,13 @@ jobs:
           matrix=$(jq '.' matrix_includes1.json)
           echo "$matrix"
           echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_OUTPUT
+      - name: Check if matrix_prep succeeded
+        run: echo "Matrix preparation succeeded"
+
   build-n-test-windows:
     needs: matrix_prep1
     runs-on: windows-latest
+    if: success()
     strategy:
       matrix: ${{fromJson(needs.matrix_prep1.outputs.matrix)}}
     environment: windows-latest
