@@ -35,7 +35,6 @@ jobs:
         run: echo "matrix-success=true" >> $GITHUB_ENV
 
   matrix_prep1:
-    needs: build-n-test
     runs-on: ubuntu-latest
     if: success()
     outputs:
