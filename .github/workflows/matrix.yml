@@ -1,22 +1,25 @@
 name: Configurable Build Matrix
 
 on: push
+
 jobs:
   matrix_prep:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-    - name: Check out code into the Go module directory
-      uses: actions/checkout@v2
-    - id: set-matrix
-      run: |
-        matrix=$(jq -c '[.[] | select(.runs_on) | .runs_on]' matrix_includes.json)                
-        echo "matrix={\"include\":$matrix}" >> $GITHUB_OUTPUT
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v4
 
-    - id: check-output
-      run: |
-        cat $GITHUB_OUTPUT
+      - id: set-matrix
+        run: |
+          matrix=$(jq -c '[.[] | select(.runs_on) | .runs_on]' matrix_includes.json)
+          echo "matrix=$matrix" >> $GITHUB_ENV
+
+      - name: Check Matrix Output
+        run: |
+          echo "Matrix from previous step: ${{ env.matrix }}"
+
         
   # build-n-test:
   #   needs: matrix_prep
