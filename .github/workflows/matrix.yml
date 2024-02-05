@@ -18,14 +18,13 @@ jobs:
 
       - name: Check Matrix Output
         run: |
-          echo "Matrix from previous step: ${{ env.matrix }}"
-
-        
-  # build-n-test:
-  #   needs: matrix_prep
-  #   runs-on: ${{ matrix.runs_on }}
-  #   strategy:
-  #     matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
-  #   steps:    
-  #   - run: echo "Hello ${{ matrix.someValue }}"
+          echo "Matrix from previous step: ${{ env.matrix }}"     
+          
+  build-n-test:
+    needs: matrix_prep
+    runs-on: ${{ matrix.runs_on }}
+    strategy:
+      matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
+    steps:    
+    - run: echo "Hello ${{ matrix.someValue }}"
 
