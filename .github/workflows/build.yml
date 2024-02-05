@@ -62,9 +62,10 @@
 name: Multi-Job Workflow
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
 env:
   VERSIONS: "['9.0.0', '11.0.0']"
 jobs:
