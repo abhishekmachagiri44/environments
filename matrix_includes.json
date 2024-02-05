@@ -1,6 +1,14 @@
 [
-    {"runs_on": "ubuntu-latest"},
-    {"runs_on": "windows-2019"},
-    {"runs_on": "windows-latest"}
+    {
+        "runs_on":"ubuntu-latest",
+        "runOn":"always"
+    },
+    {
+        "runs_on":"windows-2019",
+        "runOn":"v2.1-Release"
+    },
+    {
+        "runs_on":"windows-latest",
+        "runOn":"v2.1-Release"
+    }
 ]
-
