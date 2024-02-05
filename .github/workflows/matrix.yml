@@ -33,9 +33,9 @@ jobs:
     runs-on: ${{ matrix.runs_on }}
     strategy:
       matrix: ${{fromJson(needs.matrix_prep.outputs.matrix)}}
-    environment: ubuntu-latest
+    environment: windows-latest
     env:
-      environment: ubuntu-latest
+      environment: windows-latest
     steps:    
       - run: echo "${{env.environment}}"
       - name: "Deploy to ${{env.environment}}"
