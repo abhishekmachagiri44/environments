@@ -79,10 +79,9 @@ jobs:
     steps:
     - id: step1
       run: |
-          echo ${{vars.RUNNERS}}
-          echo " ${{ env.RUNNERS }} "
-          export SAM=12
+          SAM = $((echo ${{vars.RUNNERS}}))
           echo $SAM
+
 
 
   
