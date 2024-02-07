@@ -5,7 +5,7 @@ on:
     branches:
       - main  # Change this to the branch you want to trigger the workflow on
 
-jobs:
+# jobs:
 #   # get-runners:
 #   #   runs-on: ubuntu-latest
 #   #   environment: ubuntu-latest
@@ -51,27 +51,22 @@ jobs:
 #     steps:
 #       - run: ${{ steps.set-matrix.outputs.matrix }} 
   
-  matrix_prep:
+jobs:
+  job1:
     runs-on: ubuntu-latest
-    environment: ubuntu-latest
+    # Expose step outputs as job outputs
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.step2.outputs.test }}
     steps:
-      - name: Check out code into the Go module directory
-        uses: actions/checkout@v4
-      - id: set-matrix
-        run: |
-          echo '["ubuntu-latest", "windows-latest"]' >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
-  
-  Deploy:
-    needs: matrix_prep
+    - id: step1
+      run: echo "test=hello" >> "$GITHUB_OUTPUT"
+    - id: step2
+      run: echo "test=world" >> "$GITHUB_OUTPUT"
+  job2:
     runs-on: ubuntu-latest
-    environment: ubuntu-latest
+    needs: job1
     steps:
-      - name: Display matrix values
-        run: |
-          echo "Matrix values:"
-          echo "${{ needs.matrix_prep.outputs.matrix }}"
+    - run: echo ${{needs.job1.outputs.output1}} ${{needs.job1.outputs.output2}}
 
   
