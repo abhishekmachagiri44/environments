@@ -80,7 +80,7 @@ jobs:
     - id: step1
       run: |
           echo ${{vars.RUNNERS}}
-          echo $RUNNERS
+          echo " ${{ env.RUNNERS }} "
           export SAM=12
           echo $SAM
 
