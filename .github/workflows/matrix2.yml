@@ -86,9 +86,9 @@ jobs:
       run: echo "env variable is $APPLICATION_VERSION_NO "
       env:  
         APPLICATION_VERSION_NO: ${{ steps.step1.outputs.Runners }}
-    - id: step2
-      run: |
-        echo "::set-output name=matrix::${{ steps.step1.outputs.Runners }}"
+    # - id: step2
+    #   run: |
+    #     echo "::set-output name=matrix::${{ steps.step1.outputs.Runners }}"
   job2:
     runs-on: ubuntu-latest
     needs: job1
