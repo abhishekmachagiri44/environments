@@ -86,14 +86,14 @@ jobs:
       run: echo "env variable is $APPLICATION_VERSION_NO "
       env:  
         APPLICATION_VERSION_NO: ${{ steps.step1.outputs.Runners }}
-    # - id: step2
-    #   run: |
-    #     echo "::set-output name=matrix::${{ steps.step1.outputs.Runners }}"
+    - id: step2
+      run: |
+        echo "matrix=$(jq -cr '@json' <<< "${{ steps.step1.outputs.Runners }}")" >> $GITHUB_OUTPUT
   job2:
     runs-on: ubuntu-latest
     needs: job1
     strategy:
-      matrix: ${{ fromJSON(needs.job1.outputs.output1) }}
+      matrix: ${{ fromJSON(needs.job1.outputs.output2) }}
     steps:
     - run: echo ${{needs.job1.outputs.output1}}
  
