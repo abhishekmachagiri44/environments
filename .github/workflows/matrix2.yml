@@ -78,7 +78,7 @@ jobs:
     #   output2: ${{ steps.step2.outputs.test }}
     steps:
     - id: step1
-      run: env
+      run: echo $RUNNERS
 
 
   
