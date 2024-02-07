@@ -1,0 +1,37 @@
+name: Get Runners
+
+on:
+  workflow_run:
+    workflows: ["Your-Workflow-Name"]
+    types:
+      - completed
+
+jobs:
+  get-runners:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Get Runners
+      id: get-runners
+      run: |
+        TOKEN="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"
+        ORG="environments"
+
+        response=$(curl -s -L \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer $TOKEN" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          https://api.github.com/orgs/$ORG/actions/runners)
+
+        runners=$(echo "$response" | jq -r '.runners')
+
+        echo "::set-output name=runners::$runners"
+
+    - name: Use Runners in Next Step
+      run: |
+        runners=$("${{ steps.get-runners.outputs.runners }}")
+        # Use $runners in your subsequent steps
+        echo "Runners: $runners"
