@@ -87,8 +87,10 @@ jobs:
       env:  
         APPLICATION_VERSION_NO: ${{ steps.step1.outputs.Runners }}
     - id: step2
+      env:  
+        demo: ${{ steps.step1.outputs.Runners }}
       run: |
-        echo "matrix=$(jq -cr '@json' <<< "${{ steps.step1.outputs.Runners }}")" >> $GITHUB_OUTPUT
+        echo "matrix=$(jq -cr '@json' <<< "${{ env.demo }}")" >> $GITHUB_OUTPUT
   job2:
     runs-on: ubuntu-latest
     needs: job1
