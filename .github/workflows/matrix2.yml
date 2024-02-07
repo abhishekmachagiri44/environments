@@ -73,31 +73,21 @@ jobs:
     runs-on: ubuntu-latest
     environment: ubuntu-latest
     # Expose step outputs as job outputs
-    outputs:
-      output1: ${{ steps.step1.outputs.Runners }}
-      output2: ${{ steps.step2.outputs.matrix }}
+    # outputs:
+    #   output2: ${{ steps.step2.outputs.matrix }}
     steps:
     - id: step1
       run: |
-          echo "Runners=${{vars.RUNNERS}}" >> "$GITHUB_OUTPUT"
-          echo "$GITHUB_OUTPUT"
-  
-    - name: setup env variable
-      run: echo "env variable is $APPLICATION_VERSION_NO "
-      env:  
-        APPLICATION_VERSION_NO: ${{ steps.step1.outputs.Runners }}
-    - id: step2
-      env:  
-        demo: ${{ steps.step1.outputs.Runners }}
-      run: |
-        echo "matrix=$(jq -cr '@json' <<< "${{ env.demo }}")" >> $GITHUB_OUTPUT
+          echo "Runners=${{vars.RUNNERS}}" >> "$GITHUB_ENV"
+          echo "$GITHUB_ENV"
   job2:
     runs-on: ubuntu-latest
     needs: job1
     strategy:
-      matrix: ${{ fromJSON(needs.job1.outputs.output2) }}
+      matrix: 
+        runner: ${{ fromJSON(env.Runners) }}
     steps:
-    - run: echo ${{needs.job1.outputs.output1}}
+    - run: echo ${{matrix.runner}}
  
 
  
