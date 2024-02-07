@@ -77,8 +77,10 @@ jobs:
     steps:
       - id: set-matrix
         run: |
-          matrix="${{ toJson(${{vars.RUNNERS}}) }}"
-          echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_ENV
+          matrix="${{vars.RUNNERS}}"
+          echo "$matrix"
+          echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_OUTPUT
+          echo "${{ steps.job1.outputs.matrix }}"
 
   job2:
     runs-on: ubuntu-latest
