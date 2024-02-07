@@ -79,9 +79,8 @@ jobs:
     steps:
     - id: step1
       run: |
-          sam = $((${{vars.RUNNERS}}))
-          
-          echo $sam
+          echo ${{vars.RUNNERS}} >> "$GITHUB_OUTPUT"
+          echo "$GITHUB_OUTPUT"
 
 
 
