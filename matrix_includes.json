@@ -1,11 +1,1 @@
-[
-  {
-    "runs_on": "ubuntu-latest"
-  },
-  {
-    "runs_on": "windows-2019"
-  },
-  {
-    "runs_on": "windows-latest"
-  }
-]
+'["risk-dev-int", "om-lmc1-int", "om-lmc2-int"]'
