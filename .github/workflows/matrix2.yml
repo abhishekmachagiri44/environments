@@ -81,14 +81,15 @@ jobs:
           matrix="${{vars.RUNNERS}}"
           echo "$matrix"
           echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_OUTPUT
-  job2:
-    runs-on: ubuntu-latest
-    needs: job1
-    strategy:
-      matrix: 
-        runner: ${{fromJson(needs.job1.outputs.matrix)}}
-    steps:
-    - run: echo ${{matrix.runner}}
+          echo "${{ steps.job1.outputs.matrix }}"
+  # job2:
+  #   runs-on: ubuntu-latest
+  #   needs: job1
+  #   strategy:
+  #     matrix: 
+  #       runner: ${{fromJson(needs.job1.outputs.matrix)}}
+  #   steps:
+  #   - run: echo ${{matrix.runner}}
  
 
  
