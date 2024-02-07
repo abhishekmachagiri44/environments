@@ -87,7 +87,7 @@ jobs:
     needs: job1
     strategy:
       matrix: 
-        runner: ${{fromJson(needs.job1.outputs.matrix)}}
+        runner: ${{ steps.job1.outputs.matrix }}
     steps:
     - run: echo ${{matrix.runner}}
  
