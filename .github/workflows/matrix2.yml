@@ -101,7 +101,7 @@ jobs:
         id: set-matrix
         run: |
           matrix='["risk-dev-int", "om-lmc1-int", "om-lmc2-int"]'
-          echo "matrix={\"include\":$(echo $matrix)}" >> $GITHUB_ENV
+          echo "matrix=$(echo $matrix)" >> $GITHUB_ENV
           echo "${{ matrix }}"
       - name: Echo matrix in job1
         run: echo "${{ steps.set-matrix.outputs.matrix }}"
@@ -115,5 +115,5 @@ jobs:
     steps:
       - name: Echo matrix in job2
         run: echo "${{ matrix.runner }}"
- 
+
   
