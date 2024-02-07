@@ -1,6 +1,6 @@
 name: Configurable Build Matrix
 
-on: push
+on: workflow_dispatch
 
 jobs:
   matrix_prep:
