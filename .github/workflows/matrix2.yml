@@ -40,7 +40,7 @@ jobs:
             echo $GITHUB_OUTPUT
         
   Deploy:
-    # needs: matrix_prep
+    needs: matrix_prep
     # # if: github.ref == 'refs/heads/develop'        
     # uses: ./.github/workflows/Deploy.yml
     # with:
