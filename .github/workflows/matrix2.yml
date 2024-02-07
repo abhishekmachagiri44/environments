@@ -61,7 +61,7 @@ jobs:
         uses: actions/checkout@v4
       - id: set-matrix
         run: |
-          echo "${{ vars.RUNNER }}" >> $GITHUB_OUTPUT
+          echo "${{ vars.RUNNERS }}" >> $GITHUB_OUTPUT
           echo $GITHUB_OUTPUT
 
   Deploy:
