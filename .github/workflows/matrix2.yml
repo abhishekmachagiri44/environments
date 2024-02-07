@@ -76,7 +76,6 @@ jobs:
     outputs:
       matrix: ${{ steps.job1.outputs.matrix }}
     steps:
-      - name: Check out code into the Go module directory
       - id: set-matrix
         run: |
           matrix=${{vars.RUNNERS}}
