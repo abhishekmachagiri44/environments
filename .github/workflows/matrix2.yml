@@ -78,7 +78,10 @@ jobs:
     #   output2: ${{ steps.step2.outputs.test }}
     steps:
     - id: step1
-      run: echo $RUNNERS
+      run: |
+          echo ${{vars.RUNNERS}}
+          export SAM=12
+          echo $SAM
 
 
   
