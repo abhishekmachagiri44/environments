@@ -79,8 +79,9 @@ jobs:
     steps:
     - id: step1
       run: |
-          SAM = ${{vars.RUNNERS}}
-          echo $SAM
+          sam = $((${{vars.RUNNERS}}))
+          
+          echo $sam
 
 
 
