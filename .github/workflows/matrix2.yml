@@ -74,7 +74,7 @@ jobs:
     environment: ubuntu-latest
     # Expose step outputs as job outputs
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.job1.outputs.matrix }}
     steps:
       - name: Check out code into the Go module directory
       - id: set-matrix
