@@ -1,10 +1,6 @@
 name: Get Runners
 
-on:
-  workflow_run:
-    workflows: ["Your-Workflow-Name"]
-    types:
-      - completed
+on: push
 
 jobs:
   get-runners:
