@@ -1,14 +1,16 @@
 name: Get Runners
 
-on: push
+on:
+  push:
+    branches:
+      - main  # Change this to the branch you want to trigger the workflow on
 
 jobs:
   get-runners:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+
 
     - name: Get Runners
       id: get-runners
