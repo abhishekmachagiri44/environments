@@ -77,10 +77,9 @@ jobs:
     steps:
       - id: set-matrix
         run: |
-          matrix="${{vars.RUNNERS}}"
-          
+          matrix="${{vars.RUNNERS}}" 
           echo "$matrix"
-          echo '"matrix={\"include\":$(echo $matrix)}" >> $GITHUB_OUTPUT'
+          echo "matrix={\"include\":$(echo $matrix)} >> $GITHUB_OUTPUT"
           echo "${{ steps.job1.outputs.matrix }}"
 
   # job2:
