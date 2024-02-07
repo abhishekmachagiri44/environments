@@ -79,7 +79,7 @@ jobs:
     steps:
     - id: step1
       run: |
-          echo "Runners=${{vars.RUNNERS}}" >> "$GITHUB_OUTPUT"
+          echo "Runners=$(jq -cr '@json' <<< "${{vars.RUNNERS}}")" >> "$GITHUB_OUTPUT"
           echo "$GITHUB_OUTPUT"
   
     - name: setup env variable
