@@ -61,9 +61,9 @@ jobs:
         uses: actions/checkout@v4
       - id: set-matrix
         run: |
-          echo "${{ vars.RUNNERS }}" >> $GITHUB_OUTPUT
+          echo '["ubuntu-latest", "windows-latest"]' >> $GITHUB_OUTPUT
           echo $GITHUB_OUTPUT
-
+  
   Deploy:
     needs: matrix_prep
     runs-on: ubuntu-latest
