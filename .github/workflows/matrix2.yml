@@ -68,19 +68,19 @@ on:
 #     steps:
 #     - run: echo ${{needs.job1.outputs.output1}}}
 
-jobs:
-  job1:
-    runs-on: ubuntu-latest
-    environment: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.job1.outputs.matrix }}
-    steps:
-      - id: set-matrix
-        run: |
-          matrix="${{vars.RUNNERS}}" 
-          echo "$matrix"
-          echo matrix: ${{ toJson({"include":${{vars.RUNNERS}}}) }} >> $GITHUB_OUTPUT"
-          echo "${{ steps.job1.outputs.matrix }}"
+# jobs:
+#   job1:
+#     runs-on: ubuntu-latest
+#     environment: ubuntu-latest
+#     outputs:
+#       matrix: ${{ steps.job1.outputs.matrix }}
+#     steps:
+#       - id: set-matrix
+#         run: |
+#           matrix="${{vars.RUNNERS}}" 
+#           echo "$matrix"
+#           echo matrix: ${{ toJson({"include":${{vars.RUNNERS}}}) }} >> $GITHUB_OUTPUT"
+#           echo "${{ steps.job1.outputs.matrix }}"
 
   # job2:
   #   runs-on: ubuntu-latest
@@ -91,6 +91,18 @@ jobs:
   #   steps:
   #     - run: echo ${{ matrix.runner }}
 
+env:
+  runners: '["risk-dev-int", "om-lmc1-int", "om-lmc2-int"]'
 
+jobs:
+
+  
+  Deploy:
+    runs-on: ${{ matrix.environment }}
+    strategy:
+      fail-fast: true
+      max-parallel: 1 
+      matrix:
+        environment: ${{ fromJson(env.runners) }}
 
   
