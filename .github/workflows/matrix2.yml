@@ -1,9 +1,9 @@
-name: Get Runners
+# name: Get Runners
 
-on:
-  push:
-    branches:
-      - main  # Change this to the branch you want to trigger the workflow on
+# on:
+#   push:
+#     branches:
+#       - main  # Change this to the branch you want to trigger the workflow on
 
 # jobs:
 #   # get-runners:
@@ -90,19 +90,35 @@ on:
   #       runner: ${{fromJson(needs.job1.outputs.matrix)}}
   #   steps:
   #     - run: echo ${{ matrix.runner }}
+# env:
+#   runners: '["risk-dev-int", "om-lmc1-int", "om-lmc2-int"]'
 
-env:
-  runners: '["risk-dev-int", "om-lmc1-int", "om-lmc2-int"]'
-
-jobs:
+# jobs:
 
   
+#   Deploy:
+#     runs-on: ${{ matrix.environment }}
+#     strategy:
+#       fail-fast: true
+#       max-parallel: 1 
+#       matrix:
+#         environment: ${{ fromJson(env.runners) }}
+name: Your Workflow Name
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  runners: '["risk-dev-int", "om-lmc1-int", "om-lmc2-int"]' 
+jobs:  
   Deploy:
-    runs-on: ${{ matrix.environment }}
     strategy:
       fail-fast: true
       max-parallel: 1 
       matrix:
         environment: ${{ fromJson(env.runners) }}
+    runs-on: ${{ matrix.environment }}
 
   
