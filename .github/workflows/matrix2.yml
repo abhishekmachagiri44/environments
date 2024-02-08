@@ -111,14 +111,20 @@ on:
       - main
 
 env:
-  runners: '["risk-dev-int", "om-lmc1-int", "om-lmc2-int"]' 
-jobs:  
+  runners: '["risk-dev-int", "om-lmc1-int", "om-lmc2-int"]'
+
+jobs:
   Deploy:
+    runs-on: ${{ matrix.environment }}
     strategy:
       fail-fast: true
       max-parallel: 1 
       matrix:
         environment: ${{ fromJson(env.runners) }}
-    runs-on: ${{ matrix.environment }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Add your deployment steps here
 
   
