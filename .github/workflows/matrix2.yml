@@ -8,21 +8,36 @@ jobs:
     runs-on: ubuntu-latest
     environment: ubuntu-latest 
     outputs:
-      matrix: ${{ steps.demo.outputs.sample }}
+      matrix1: ${{ steps.demo.outputs.sample }}
+      matrix2: ${{ steps.demo.outputs.sample }}
     steps:
     - name: Run tests
       run: echo "${{ vars.RUNNERS }}"
     - name: demo
       id: demo
       run: echo "sample=${{ vars.RUNNERS }}" >> $GITHUB_OUTPUT
+    - name: demo1
+      id: demo1
+      run: echo "sample1=${{ vars.RUNNERS2 }}" >> $GITHUB_OUTPUT
 
   example_matrix:
     runs-on: ${{ matrix.version }}
     needs: build
-    environment: demo
+    environment: ubuntu-latest
     strategy:
       matrix:
-        version: ${{fromJSON(needs.build.outputs.matrix)}}
+        version: ${{fromJSON(needs.build.outputs.matrix1)}}
     steps:
     - name: devil
       run: echo "sample"
+
+  example_matrix1:
+    runs-on: ${{ matrix.version }}
+    needs: build
+    environment: ubuntu-latest
+    strategy:
+      matrix:
+        version: ${{fromJSON(needs.build.outputs.matrix2)}}
+    steps:
+    - name: devil
+      run: echo "sample2"
