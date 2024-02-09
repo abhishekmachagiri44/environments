@@ -13,6 +13,8 @@ jobs:
     steps:
     - name: Run tests
       run: echo "${{ vars.RUNNERS }}"
+    - name: Run tests2
+      run: echo "${{ vars.RUNNERS2 }}"
     - name: demo
       id: demo
       run: echo "sample=${{ vars.RUNNERS }}" >> $GITHUB_OUTPUT
