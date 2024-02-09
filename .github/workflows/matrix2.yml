@@ -9,7 +9,7 @@ jobs:
     environment: ubuntu-latest 
     outputs:
       matrix1: ${{ steps.demo.outputs.sample }}
-      matrix2: ${{ steps.demo.outputs.sample1 }}
+      matrix2: ${{ steps.demo1.outputs.sample1 }}
     steps:
     - name: Run tests
       run: echo "${{ vars.RUNNERS }}"
