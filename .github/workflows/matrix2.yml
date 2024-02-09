@@ -1,130 +1,28 @@
-# name: Get Runners
-
-# on:
-#   push:
-#     branches:
-#       - main  # Change this to the branch you want to trigger the workflow on
-
-# jobs:
-#   # get-runners:
-#   #   runs-on: ubuntu-latest
-#   #   environment: ubuntu-latest
-#   #   steps:
-#   #   - name: Get Runners
-#   #     id: get-runners
-#   #     run: |
-#   #       TOKEN="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"
-#   #       ORG="environments"
-
-#   #       response=$(curl -s -L \
-#   #         -H "Accept: application/vnd.github+json" \
-#   #         -H "Authorization: Bearer $TOKEN" \
-#   #         -H "X-GitHub-Api-Version: 2022-11-28" \
-#   #         https://api.github.com/orgs/$ORG/actions/runners)
-
-#   #       runners=$(echo "$response" | jq -r '.runners')
-
-#   #       echo "::set-output name=runners::$runners"
-
-#   matrix_prep:
-#     runs-on: ubuntu-latest
-#     environment: ubuntu-latest
-#     outputs:
-#       matrix: ${{ steps.set-matrix.outputs.matrix }}
-#     steps:
-#       - name: Check out code into the Go module directory
-#         uses: actions/checkout@v4
-#       - id: set-matrix
-#         run: |
-#             echo "${{vars.RUNNERS}}" >> $GITHUB_OUTPUT
-#             echo $GITHUB_OUTPUT
-        
-#   Deploy:
-#     needs: matrix_prep
-#     # # if: github.ref == 'refs/heads/develop'        
-#     # uses: ./.github/workflows/Deploy.yml
-#     # with:
-#     #   environment: ${{ steps.set-matrix.outputs.matrix }}
-    
-#     runs-on: ubuntu-latest
-#     environment: ubuntu-latest
-#     steps:
-#       - run: ${{ steps.set-matrix.outputs.matrix }} 
-  
-# jobs:
-#   job1:
-#     runs-on: ubuntu-latest
-#     environment: ubuntu-latest
-#     # Expose step outputs as job outputs
-#     outputs:
-#       output1: ${{ steps.step1.outputs.test }}
-#       output2: ${{ steps.step2.outputs.test }}
-#     steps:
-#     - id: step1
-#       run: echo '${{vars.RUNNERS}} >> "$GITHUB_OUTPUT"'
-#   job2:
-#     runs-on: ubuntu-latest
-#     needs: job1
-#     steps:
-#     - run: echo ${{needs.job1.outputs.output1}}}
-
-# jobs:
-#   job1:
-#     runs-on: ubuntu-latest
-#     environment: ubuntu-latest
-#     outputs:
-#       matrix: ${{ steps.job1.outputs.matrix }}
-#     steps:
-#       - id: set-matrix
-#         run: |
-#           matrix="${{vars.RUNNERS}}" 
-#           echo "$matrix"
-#           echo matrix: ${{ toJson({"include":${{vars.RUNNERS}}}) }} >> $GITHUB_OUTPUT"
-#           echo "${{ steps.job1.outputs.matrix }}"
-
-  # job2:
-  #   runs-on: ubuntu-latest
-  #   needs: job1
-  #   strategy:
-  #     matrix:
-  #       runner: ${{fromJson(needs.job1.outputs.matrix)}}
-  #   steps:
-  #     - run: echo ${{ matrix.runner }}
-# env:
-#   runners: '["risk-dev-int", "om-lmc1-int", "om-lmc2-int"]'
-
-# jobs:
-
-  
-#   Deploy:
-#     runs-on: ${{ matrix.environment }}
-#     strategy:
-#       fail-fast: true
-#       max-parallel: 1 
-#       matrix:
-#         environment: ${{ fromJson(env.runners) }}
-name: Your Workflow Name
-
+name:  NodeJS CI
 on:
   push:
     branches:
-      - main
-
-env:
-  runners: '["risk-dev-int", "om-lmc1-int", "om-lmc2-int"]'
-
+      - "*"
 jobs:
-  Deploy:
-    runs-on: ${{ matrix.environment }}
-    strategy:
-      fail-fast: true
-      max-parallel: 1 
-      matrix:
-        environment: ${{ fromJson(env.runners) }}
+  build:
+    runs-on: ubuntu-latest
+    environment: ubuntu-latest 
+    outputs:
+      matrix: ${{ steps.demo.outputs.sample }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Run tests
+      run: echo "${{ vars.RUNNERS }}"
+    - name: demo
+      id: demo
+      run: echo "sample=${{ vars.RUNNERS }}" >> $GITHUB_OUTPUT
 
-      # Add your deployment steps here
-
-  
+  example_matrix:
+    runs-on: ${{ matrix.version }}
+    needs: build
+    environment: demo
+    strategy:
+      matrix:
+        version: ${{fromJSON(needs.build.outputs.matrix)}}
+    steps:
+    - name: devil
+      run: echo "sample"
