@@ -1,8 +1,9 @@
 name:  NodeJS CI
 on:
-  push:
-    branches:
-      - "*"
+  # push:
+  #   branches:
+  #     - "*"
+  workflow_call:
 jobs:
   build:
     runs-on: ubuntu-latest
