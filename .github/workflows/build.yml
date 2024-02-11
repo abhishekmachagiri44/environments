@@ -1,5 +1,4 @@
 
-
 name: build Workflow
 on:
   push:
@@ -15,7 +14,6 @@ on:
 jobs:
   runners-list:
     runs-on: ubuntu-latest
-    environment: ubuntu-latest 
     outputs:
       matrix1: ${{ steps.demo.outputs.sample }}
     steps:
