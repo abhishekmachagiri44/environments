@@ -310,18 +310,28 @@ jobs:
 #         target-runner: ${{ matrix.runner }}
 
 
+  build:
+    runs-on: ubuntu-latest
+    environment: ubuntu-latest 
+    outputs:
+      matrix1: ${{ steps.demo.outputs.sample }}
+    steps:
+    - name: Run tests
+      run: echo "${{ vars.ENV }}"
+    - name: demo
+      id: demo
+      run: echo "sample=${{ vars.ENV }}" >> $GITHUB_OUTPUT
 
 
 
 
   Deploy-ab:
-    # strategy:
-    #   fail-fast: false
-    #   matrix:
-    #     target: [windows-2019]
-    #     # runner: [windows-2019]
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ${{fromJSON(needs.build.outputs.matrix1)}}
     uses: ./.github/workflows/matrix2.yml
-    # with:
-    #   target-env: ${{ matrix.target }}
-    #   # target-runner: ${{ matrix.runner }}
+    with:
+      env: ${{ matrix.target }}
     # secrets: inherit
