@@ -4,10 +4,15 @@ on:
   #   branches:
   #     - "*"
   workflow_call:
+    inputs:
+      target-env:
+        required: true
+        type: string
+      
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: ubuntu-latest 
+    environment: ${{ inputs.target-env }}
     outputs:
       matrix1: ${{ steps.demo.outputs.sample }}
       matrix2: ${{ steps.demo1.outputs.sample1 }}
@@ -26,7 +31,7 @@ jobs:
   example_matrix:
     runs-on: ${{ matrix.version }}
     needs: build
-    environment: ubuntu-latest
+    environment: ${{ inputs.target-env }}
     strategy:
       matrix:
         version: ${{fromJSON(needs.build.outputs.matrix1)}}
@@ -37,7 +42,7 @@ jobs:
   example_matrix1:
     runs-on: ${{ matrix.version }}
     needs: build
-    environment: ubuntu-latest
+    environment: ${{ inputs.target-env }}
     strategy:
       matrix:
         version: ${{fromJSON(needs.build.outputs.matrix2)}}
