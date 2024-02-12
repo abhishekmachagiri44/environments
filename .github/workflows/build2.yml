@@ -13,7 +13,6 @@ jobs:
         run: |
           # read the content of .env file in PowerShell
           $envContent = Get-Content 'C:\actions-runner\.env'
-
           # loop through each line and set as GitHub ENV variable
           $envContent | ForEach-Object {
             $line = $_
@@ -23,9 +22,8 @@ jobs:
             echo "$key=$value" >> $GITHUB_ENV
           }
 
-      - name: Echo Content of .env file
+      - name: Echo string with env.format
         run: |
-          # retrieve the GitHub ENV variables and echo the content
-          echo "FORMS_DB_PUBLISHPROFILE=$FORMS_DB_PUBLISHPROFILE"
-          echo "FORMS_DB_DACPAC=$FORMS_DB_DACPAC"
-          echo "FORMS_DB_CONNECTIONSTRING=$FORMS_DB_CONNECTIONSTRING"
+          echo "FORMS-DB_PUBLISHPROFILE=${FORMS-DB_PUBLISHPROFILE}"
+          echo "FORMS-DB_DACPAC=${FORMS-DB_DACPAC}"
+          echo "FORMS-DB_CONNECTIONSTRING=${FORMS-DB_CONNECTIONSTRING}"
