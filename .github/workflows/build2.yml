@@ -24,6 +24,6 @@ jobs:
 
       - name: Echo string with env.format
         run: |
-          echo "FORMS-DB_PUBLISHPROFILE=${FORMS-DB_PUBLISHPROFILE}"
-          echo "FORMS-DB_DACPAC=${FORMS-DB_DACPAC}"
-          echo "FORMS-DB_CONNECTIONSTRING=${FORMS-DB_CONNECTIONSTRING}"
+          echo "FORMS-DB_PUBLISHPROFILE=$env:FORMS-DB_PUBLISHPROFILE"
+          echo "FORMS-DB_DACPAC=$env:FORMS-DB_DACPAC"
+          echo "FORMS-DB_CONNECTIONSTRING=$env:FORMS-DB_CONNECTIONSTRING"
