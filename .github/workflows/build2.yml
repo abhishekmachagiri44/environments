@@ -8,5 +8,5 @@ jobs:
   job1:
     runs-on: self-hosted
     steps:
-      - run: env
-      - run: echo $VAR
+      # - run: env
+      - run: $VAR
