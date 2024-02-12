@@ -15,7 +15,7 @@ jobs:
           $tests = Get-Content 'C:\actions-runner\.env' | Out-String
   
           # set the content as a GitHub ENV variable
-          echo "Tests=$tests" >> $GITHUB_ENV
+          echo "T=$tests" >> $GITHUB_ENV
   
           # echo the content of the .env file
-          echo "$Tests"
+          echo "$T"
