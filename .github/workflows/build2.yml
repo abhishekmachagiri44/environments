@@ -13,13 +13,18 @@ jobs:
         run: |
           # read the content of .env file in PowerShell
           $envContent = Get-Content 'C:\actions-runner\.env'
+          
           # loop through each line and echo the content
           foreach ($line in $envContent) {
             echo $line
           }
 
-      - name: Echo environment variables
-        run: |
-          echo "FORMS-DB_PUBLISHPROFILE=$env:FORMS-DB_PUBLISHPROFILE"
-          echo "FORMS-DB_DACPAC=$env:FORMS-DB_DACPAC"
-          echo "FORMS-DB_CONNECTIONSTRING=$env:FORMS-DB_CONNECTIONSTRING"
+          # Assign each variable its respective value
+          $FORMS_DB_PUBLISHPROFILE = $envContent | Select-String 'FORMS-DB_PUBLISHPROFILE' | ForEach-Object { ($_ -split ': ')[1] }
+          $FORMS_DB_DACPAC = $envContent | Select-String 'FORMS-DB_DACPAC' | ForEach-Object { ($_ -split ': ')[1] }
+          $FORMS_DB_CONNECTIONSTRING = $envContent | Select-String 'FORMS-DB_CONNECTIONSTRING' | ForEach-Object { ($_ -split ': ')[1] }
+
+          # Echo each variable separately
+          echo "FORMS-DB_PUBLISHPROFILE: $FORMS_DB_PUBLISHPROFILE"
+          echo "FORMS-DB_DACPAC: $FORMS_DB_DACPAC"
+          echo "FORMS-DB_CONNECTIONSTRING: $FORMS_DB_CONNECTIONSTRING"
