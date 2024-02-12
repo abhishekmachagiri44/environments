@@ -1,11 +1,11 @@
-name:echo Workflow
+name: echo Workflow
+
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 jobs:
-  job:
+  job1:
     runs-on: self-hosted
     steps:
       - run: env
