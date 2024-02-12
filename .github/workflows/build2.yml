@@ -8,5 +8,16 @@ jobs:
   job1:
     runs-on: self-hosted
     steps:
-      # - run: env
-      - run: $VAR
+    - name: Set and Retrieve Github ENV variables
+      run: |
+  
+        # define variables      
+        tests=cd c:/actions-runner/.env/*
+        failures=2
+  
+        # set them as GitHub ENV variables
+        echo "Tests=$tests" >> $GITHUB_ENV
+        echo "Failures=$failures" >> $GITHUB_ENV
+  
+        # retrieve these GitHub ENV variables
+        echo "${{ env.Failures }} out of ${{ env.Tests }} tests failed on CI"
