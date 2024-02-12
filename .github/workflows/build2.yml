@@ -12,7 +12,7 @@ jobs:
       - name: Set and Retrieve Github ENV variables
         run: |
           # read the content of .env file in PowerShell
-          $tests = Get-Content 'C:\actions-runner\.env\*' -Raw
+          $tests = Get-Content 'C:\actions-runner\.env\*' | Out-String
           $failures = 2
   
           # set them as GitHub ENV variables
