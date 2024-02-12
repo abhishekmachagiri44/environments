@@ -9,13 +9,13 @@ jobs:
   job1:
     runs-on: self-hosted
     steps:
-      - name: Set and Echo Content of .env file
+      - name: Set Content of .env file
         run: |
-          # read the content of .env file in PowerShell and store it in a variable
-          tests = Get-Content 'C:\actions-runner\.env' | Out-String
-  
-          # set the content as a GitHub ENV variable
-          echo "T=$tests" >> $GITHUB_ENV
-  
-          # echo the content of the .env file
-          echo "$T"
+          # read the content of .env file in PowerShell and store it as a GitHub ENV variable
+          $tests = Get-Content 'C:\actions-runner\.env' | Out-String
+          echo "Tests=$tests" >> $GITHUB_ENV
+
+      - name: Echo Content of .env file
+        run: |
+          # retrieve the GitHub ENV variable and echo the content
+          echo "Content of .env file: ${{ env.Tests }}"
