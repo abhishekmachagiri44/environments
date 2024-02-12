@@ -21,7 +21,6 @@ jobs:
             $key = $parts[0].Trim()
             $value = $parts[1].Trim()
             echo "$key=$value" >> $GITHUB_ENV
-            echo "::set-env name=$key::$value"
           }
 
       - name: Echo Content of .env file
