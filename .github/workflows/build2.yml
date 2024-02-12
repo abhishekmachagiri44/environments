@@ -13,11 +13,10 @@ jobs:
         run: |
           # read the content of .env file in PowerShell
           $tests = Get-Content 'C:\actions-runner\.env' | Out-String
-          $failures = 2
-  
+
           # set them as GitHub ENV variables
           echo "Tests=$tests" >> $GITHUB_ENV
-          echo "Failures=$failures" >> $GITHUB_ENV
+   
   
           # retrieve these GitHub ENV variables
-          echo "${{ env.Failures }} out of ${{ env.Tests }} tests failed on CI"
+          echo "${{ env.Failures }}"
