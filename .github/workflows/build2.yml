@@ -9,21 +9,23 @@ jobs:
   job1:
     runs-on: self-hosted
     steps:
-      - name: Debugging
-        run: |
-          # List the contents of the directory for debugging
-          ls C:\actions-runner
-
-          # Print the content of the .env file for debugging
-          Get-Content 'C:\actions-runner\.env'
-
       - name: Set Content of .env file
         run: |
-          # read the content of .env file in PowerShell and store it as a GitHub ENV variable
-          $tests = Get-Content 'C:\actions-runner\.env' | Out-String
-          echo "Tests=$tests" >> $GITHUB_ENV
+          # read the content of .env file in PowerShell
+          $envContent = Get-Content 'C:\actions-runner\.env'
+
+          # loop through each line and set as GitHub ENV variable
+          $envContent | ForEach-Object {
+            $line = $_
+            $parts = $line -split ':', 2
+            $key = $parts[0].Trim()
+            $value = $parts[1].Trim()
+            echo "$key=$value" >> $GITHUB_ENV
+          }
 
       - name: Echo Content of .env file
         run: |
-          # retrieve the GitHub ENV variable and echo the content
-          echo "Content of .env file: ${{ env.Tests }}"
+          # retrieve the GitHub ENV variables and echo the content
+          echo "FORMS_DB_PUBLISHPROFILE=${{ env.FORMS_DB_PUBLISHPROFILE }}"
+          echo "FORMS_DB_DACPAC=${{ env.FORMS_DB_DACPAC }}"
+          echo "FORMS_DB_CONNECTIONSTRING=${{ env.FORMS_DB_CONNECTIONSTRING }}"
