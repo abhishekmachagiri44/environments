@@ -18,4 +18,4 @@ jobs:
           echo "Tests=$tests" >> $GITHUB_ENV
   
           # echo the content of the .env file
-          echo "${{ env.Tests }}"
+          echo "${{ Tests }}"
