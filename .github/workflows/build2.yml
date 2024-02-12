@@ -12,7 +12,7 @@ jobs:
       - name: Set and Echo Content of .env file
         run: |
           # read the content of .env file in PowerShell and store it in a variable
-          $tests = Get-Content 'C:\actions-runner\.env' | Out-String
+          tests = Get-Content 'C:\actions-runner\.env' | Out-String
   
           # set the content as a GitHub ENV variable
           echo "T=$tests" >> $GITHUB_ENV
