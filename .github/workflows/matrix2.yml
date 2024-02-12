@@ -33,13 +33,14 @@ jobs:
     needs: build
     environment: ${{ inputs.target-env }}
     env:
-      ${{ matrix.version }}_RUN: ${{vars.RUN}}
+      runner_tag: ${{ matrix.version }}
+      runner_tag_RUN: ${{vars.RUN}}
     strategy:
       matrix:
         version: ${{fromJSON(needs.build.outputs.matrix1)}}
     steps:
     - name: devil
-      run: echo "sample"
+      run: echo "${{env.runner_tag_RUN}}"
 
   example_matrix1:
     runs-on: ${{ matrix.version }}
