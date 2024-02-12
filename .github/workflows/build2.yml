@@ -9,6 +9,14 @@ jobs:
   job1:
     runs-on: self-hosted
     steps:
+      - name: Debugging
+        run: |
+          # List the contents of the directory for debugging
+          ls C:\actions-runner
+
+          # Print the content of the .env file for debugging
+          Get-Content 'C:\actions-runner\.env'
+
       - name: Set Content of .env file
         run: |
           # read the content of .env file in PowerShell and store it as a GitHub ENV variable
