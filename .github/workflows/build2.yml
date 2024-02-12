@@ -20,7 +20,7 @@ jobs:
             $parts = $line -split ':', 2
             $key = $parts[0].Trim()
             $value = $parts[1].Trim()
-            echo "export $key=\"$value\"" >> $GITHUB_ENV
+            echo "$key=$value" >> $GITHUB_ENV
           }
 
       - name: Echo Content of .env file
