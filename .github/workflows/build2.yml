@@ -20,13 +20,8 @@ jobs:
             $parts = $line -split ':', 2
             $key = $parts[0].Trim()
             $value = $parts[1].Trim()
-
-            # create an environment file
-            echo "$key=$value" >> env-file.env
+            echo "export $key=\"$value\"" >> $GITHUB_ENV
           }
-
-          # set the environment variables using the file
-          env-file.env
 
       - name: Echo Content of .env file
         run: |
