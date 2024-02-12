@@ -11,8 +11,8 @@ jobs:
     steps:
       - name: Set and Retrieve Github ENV variables
         run: |
-          # define variables
-          tests="c:/actions-runner/.env/*"
+          # read the content of .env file
+          tests=$(cat c:/actions-runner/.env/*)
           failures=2
   
           # set them as GitHub ENV variables
