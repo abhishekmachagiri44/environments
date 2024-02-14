@@ -6,7 +6,7 @@ jobs:
 
   dev:
     name: dev
-    runs-on: ubuntu-latest
+    runs-on: set_local
     environment: ubuntu-latest
     steps:
       - run: echo ${{ vars.[format('{0}_UBUNTU_LATEST_RUN'] }}
