@@ -7,10 +7,11 @@ jobs:
   dev:
     name: dev
     runs-on: ubuntu-18.04
+    environment: ubuntu-latest
     env:
       ENVIRONMENT: DEV
     steps:
-      - run: echo ${{ secrets[format('{0}_A', env.ENVIRONMENT)] }}
+      - run: echo ${{ vars[format('{0}_RUN', env.ENVIRONMENT)] }}
 
 
 
