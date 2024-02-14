@@ -19,11 +19,7 @@ jobs:
           echo "FORMS_DB_PUBLISHPROFILE=$(echo $envContent | Select-String 'FORMS-DB_PUBLISHPROFILE' | ForEach-Object { ($_ -split ': ')[1] })" >> $GITHUB_ENV
           echo "FORMS_DB_DACPAC=$(echo $envContent | Select-String 'FORMS-DB_DACPAC' | ForEach-Object { ($_ -split ': ')[1] })" >> $GITHUB_ENV
           echo "FORMS_DB_CONNECTIONSTRING=$(echo $envContent | Select-String 'FORMS-DB_CONNECTIONSTRING' | ForEach-Object { ($_ -split ': ')[1] })" >> $GITHUB_ENV
-
-  job2:
-    needs: job1
-    runs-on: self-hosted
-    steps:
+          
       - name: Echo Variables
         run: |
           # Access the environment variables set in job1
