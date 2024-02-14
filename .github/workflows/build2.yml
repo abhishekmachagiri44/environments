@@ -15,11 +15,47 @@ jobs:
           foreach ($line in $envContent) {
             echo $line
           }
-          $FORMS_DB_PUBLISHPROFILE = $envContent | Select-String 'FORMS-DB_PUBLISHPROFILE' | ForEach-Object { ($_ -split ': ')[1] }
-          $FORMS_DB_DACPAC = $envContent | Select-String 'FORMS-DB_DACPAC' | ForEach-Object { ($_ -split ': ')[1] }
-          $FORMS_DB_CONNECTIONSTRING = $envContent | Select-String 'FORMS-DB_CONNECTIONSTRING' | ForEach-Object { ($_ -split ': ')[1] }
+          
+          echo "FORMS_DB_PUBLISHPROFILE=$(echo $envContent | Select-String 'FORMS-DB_PUBLISHPROFILE' | ForEach-Object { ($_ -split ': ')[1] })" >> $GITHUB_ENV
+          echo "FORMS_DB_DACPAC=$(echo $envContent | Select-String 'FORMS-DB_DACPAC' | ForEach-Object { ($_ -split ': ')[1] })" >> $GITHUB_ENV
+          echo "FORMS_DB_CONNECTIONSTRING=$(echo $envContent | Select-String 'FORMS-DB_CONNECTIONSTRING' | ForEach-Object { ($_ -split ': ')[1] })" >> $GITHUB_ENV
 
-          # Echo each variable separately
-          echo "$FORMS_DB_PUBLISHPROFILE"
-          echo "$FORMS_DB_DACPAC"
-          echo "$FORMS_DB_CONNECTIONSTRING"
+  job2:
+    needs: job1
+    runs-on: self-hosted
+    steps:
+      - name: Echo Variables
+        run: |
+          # Access the environment variables set in job1
+          echo "FORMS_DB_PUBLISHPROFILE: $FORMS_DB_PUBLISHPROFILE"
+          echo "FORMS_DB_DACPAC: $FORMS_DB_DACPAC"
+          echo "FORMS_DB_CONNECTIONSTRING: $FORMS_DB_CONNECTIONSTRING"
+
+
+
+
+# name: Echo Workflow
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   job1:
+#     runs-on: self-hosted
+#     steps:
+#       - name: Set Content of .env file
+#         run: |
+#           $envContent = Get-Content 'C:\actions-runner\.env'
+#           foreach ($line in $envContent) {
+#             echo $line
+#           }
+#           $FORMS_DB_PUBLISHPROFILE = $envContent | Select-String 'FORMS-DB_PUBLISHPROFILE' | ForEach-Object { ($_ -split ': ')[1] }
+#           $FORMS_DB_DACPAC = $envContent | Select-String 'FORMS-DB_DACPAC' | ForEach-Object { ($_ -split ': ')[1] }
+#           $FORMS_DB_CONNECTIONSTRING = $envContent | Select-String 'FORMS-DB_CONNECTIONSTRING' | ForEach-Object { ($_ -split ': ')[1] }
+
+#           # Echo each variable separately
+#           echo "$FORMS_DB_PUBLISHPROFILE"
+#           echo "$FORMS_DB_DACPAC"
+#           echo "$FORMS_DB_CONNECTIONSTRING"
