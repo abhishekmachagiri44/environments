@@ -6,12 +6,11 @@ jobs:
 
   dev:
     name: dev
-    runs-on: set_local
+    runs-on: ubuntu-18.04
     env:
-      ENVIRONMENT: set_local
-    environment: ubuntu-latest
+      ENVIRONMENT: DEV
     steps:
-      - run: echo ${{ vars[format('{0}_RUN',env.ENVIRONMENT)] }}
+      - run: echo ${{ secrets[format('{0}_A', env.ENVIRONMENT)] }}
 
 
 
