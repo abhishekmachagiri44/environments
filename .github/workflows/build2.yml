@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Set Content of .env file
         run: |
-          $envContent = Get-Content 'C:\actions-runner\.env'
+          $envContent = Get-Content 'C:\actions-runner\DB-credentials.txt'
           foreach ($line in $envContent) {
             echo $line
           }
