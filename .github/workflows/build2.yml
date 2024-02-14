@@ -8,10 +8,10 @@ jobs:
     name: dev
     runs-on: set_local
     env:
-      ENVIRONMENT: DEV
+      ENVIRONMENT: set_local
     environment: ubuntu-latest
     steps:
-      - run: echo ${{ vars[format('{0}_RUN',set_local)] }}
+      - run: echo ${{ vars[format('{0}_RUN',env.ENVIRONMENT)] }}
 
 
 
