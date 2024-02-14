@@ -7,9 +7,11 @@ jobs:
   dev:
     name: dev
     runs-on: set_local
+    env:
+      ENVIRONMENT: DEV
     environment: ubuntu-latest
     steps:
-      - run: echo ${{ vars[format('{0}_RUN')] }}
+      - run: echo ${{ vars[format('{0}_RUN',set_local)] }}
 
 
 
