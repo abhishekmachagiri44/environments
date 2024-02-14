@@ -1,55 +1,55 @@
-name: Secrets
+# name: Secrets
 
-on: [push]
-
-jobs:
-
-  dev:
-    name: dev
-    runs-on: ubuntu-latest
-    environment: ubuntu-latest
-    env:
-      ENVIRONMENT: DEV
-    steps:
-      - run: echo ${{ vars[format('{0}_RUN', env.ENVIRONMENT)] }}
-
-
-
-# name: Echo Workflow
-
-# on:
-#   push:
-#     branches:
-#       - main
+# on: [push]
 
 # jobs:
-#   job1:
-#     runs-on: self-hosted
-#     steps:
-#       - name: Set Content of .env file
-#         run: |
-#           $envContent = Get-Content 'C:\actions-runner\DB-credentials.txt'
-#           foreach ($line in $envContent) {
-#             echo $line
-#           }
-#           $FORMS_DB_PUBLISHPROFILE = $envContent | Select-String 'FORMS-DB_PUBLISHPROFILE' | ForEach-Object { ($_ -split ': ')[1] }
-#           $FORMS_DB_DACPAC = $envContent | Select-String 'FORMS-DB_DACPAC' | ForEach-Object { ($_ -split ': ')[1] }
-#           $FORMS_DB_CONNECTIONSTRING = $envContent | Select-String 'FORMS-DB_CONNECTIONSTRING' | ForEach-Object { ($_ -split ': ')[1] }
-          
-#           echo "FORMS_DB_PUBLISHPROFILE=$FORMS_DB_PUBLISHPROFILE" >> $env:GITHUB_ENV
-#           echo "FORMS_DB_DACPAC=$FORMS_DB_DACPAC" >> $env:GITHUB_ENV
-#           echo "FORMS_DB_CONNECTIONSTRING=$FORMS_DB_CONNECTIONSTRING" >> $env:GITHUB_ENV
 
-#       - name: Echo Variables
-#         run: |
-#           # Access the environment variables set in the previous step
-#           echo "FORMS_DB_PUBLISHPROFILE: $env:FORMS_DB_PUBLISHPROFILE"
-#           echo "FORMS_DB_DACPAC: $env:FORMS_DB_DACPAC"
+#   dev:
+#     name: dev
+#     runs-on: ubuntu-latest
+#     environment: ubuntu-latest
+#     env:
+#       ENVIRONMENT: DEV
+#     steps:
+#       - run: echo ${{ vars[format('{0}_RUN', env.ENVIRONMENT)] }}
+
+
+
+name: Echo Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  job1:
+    runs-on: self-hosted
+    steps:
+      - name: Set Content of .env file
+        run: |
+          $envContent = Get-Content 'C:\actions-runner\DB-credentials.txt'
+          foreach ($line in $envContent) {
+            echo $line
+          }
+          $FORMS_DB_PUBLISHPROFILE = $envContent | Select-String 'FORMS-DB_PUBLISHPROFILE' | ForEach-Object { ($_ -split ': ')[1] }
+          $FORMS_DB_DACPAC = $envContent | Select-String 'FORMS-DB_DACPAC' | ForEach-Object { ($_ -split ': ')[1] }
+          $FORMS_DB_CONNECTIONSTRING = $envContent | Select-String 'FORMS-DB_CONNECTIONSTRING' | ForEach-Object { ($_ -split ': ')[1] }
           
-#       - name: Echo Variables2
-#         run: |
-#           # Access the environment variables set in the previous step
-#           echo "${{env.FORMS_DB_CONNECTIONSTRING}}"
+          echo "FORMS_DB_PUBLISHPROFILE=$FORMS_DB_PUBLISHPROFILE" >> $env:GITHUB_ENV
+          echo "FORMS_DB_DACPAC=$FORMS_DB_DACPAC" >> $env:GITHUB_ENV
+          echo "FORMS_DB_CONNECTIONSTRING=$FORMS_DB_CONNECTIONSTRING" >> $env:GITHUB_ENV
+
+      - name: Echo Variables
+        run: |
+          # Access the environment variables set in the previous step
+          echo "FORMS_DB_PUBLISHPROFILE: $env:FORMS_DB_PUBLISHPROFILE"
+          echo "FORMS_DB_DACPAC: $env:FORMS_DB_DACPAC"
+          
+      - name: Echo Variables2
+        run: |
+          # Access the environment variables set in the previous step
+          echo "${{env.FORMS_DB_CONNECTIONSTRING}}"
 
 
 
