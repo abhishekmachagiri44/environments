@@ -32,7 +32,7 @@ jobs:
       - name: Echo Variables2
         run: |
           # Access the environment variables set in the previous step
-          echo "${{env.FORMS_DB_CONNECTIONSTRING}}"
+          echo "${{env.FORMS_DB_CONNECTIONSTRING}};"
 
 
 
