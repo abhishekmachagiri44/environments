@@ -28,8 +28,11 @@ jobs:
           # Access the environment variables set in the previous step
           echo "FORMS_DB_PUBLISHPROFILE: $env:FORMS_DB_PUBLISHPROFILE"
           echo "FORMS_DB_DACPAC: $env:FORMS_DB_DACPAC"
+          
+      - name: Echo Variables2
+        run: |
+          # Access the environment variables set in the previous step
           echo "FORMS_DB_CONNECTIONSTRING: $env:FORMS_DB_CONNECTIONSTRING"
-
 
 
 
