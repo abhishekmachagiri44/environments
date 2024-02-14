@@ -6,19 +6,12 @@ jobs:
 
   dev:
     name: dev
-    runs-on: ubuntu-18.04
-    env:
-      ENVIRONMENT: DEV
+    runs-on: ubuntu-latest
+    environment: ubuntu-latest
     steps:
-      - run: echo ${{ secrets[format('{0}_A', env.ENVIRONMENT)] }}
+      - run: echo ${{ vars.[format('{0}_UBUNTU_LATEST_RUN'] }}
 
-  test:
-    name: test
-    runs-on: ubuntu-18.04
-    env:
-      ENVIRONMENT: TEST
-    steps:
-      - run: echo ${{ secrets[format('{0}_A', env.ENVIRONMENT)] }}
+
 
 # name: Echo Workflow
 
