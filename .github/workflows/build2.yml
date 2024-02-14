@@ -11,11 +11,13 @@ jobs:
     steps:
       - name: Set Content of .env file
         run: |
-          # Extract values from .env file and set environment variables
-          $envContent = Get-Content '.env' -Raw
-          $FORMS_DB_PUBLISHPROFILE = $envContent | Select-String 'FORMS-DB_PUBLISHPROFILE: (.+)' | ForEach-Object { $_.Matches.Groups[1].Value }
-          $FORMS_DB_DACPAC = $envContent | Select-String 'FORMS-DB_DACPAC: (.+)' | ForEach-Object { $_.Matches.Groups[1].Value }
-          $FORMS_DB_CONNECTIONSTRING = $envContent | Select-String 'FORMS-DB_CONNECTIONSTRING: (.+)' | ForEach-Object { $_.Matches.Groups[1].Value }
+          $envContent = Get-Content 'C:\actions-runner\.env'
+          foreach ($line in $envContent) {
+            echo $line
+          }
+          $FORMS_DB_PUBLISHPROFILE = $envContent | Select-String 'FORMS-DB_PUBLISHPROFILE' | ForEach-Object { ($_ -split ': ')[1] }
+          $FORMS_DB_DACPAC = $envContent | Select-String 'FORMS-DB_DACPAC' | ForEach-Object { ($_ -split ': ')[1] }
+          $FORMS_DB_CONNECTIONSTRING = $envContent | Select-String 'FORMS-DB_CONNECTIONSTRING' | ForEach-Object { ($_ -split ': ')[1] }
           
           echo "FORMS_DB_PUBLISHPROFILE=$FORMS_DB_PUBLISHPROFILE" >> $env:GITHUB_ENV
           echo "FORMS_DB_DACPAC=$FORMS_DB_DACPAC" >> $env:GITHUB_ENV
