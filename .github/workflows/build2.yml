@@ -7,18 +7,16 @@ jobs:
   dev:
     name: dev
     runs-on: ubuntu-latest
-    env:
-      ENVIRONMENT: DEV
+    environment: ubuntu-latest
     steps:
-      - run: echo ${{ secrets[format('{0}_A', env.ENVIRONMENT)] }}
+      - run: echo ${{ vars[format('{0}_RUN', set_local)] }}
 
   test:
     name: test
     runs-on: ubuntu-latest
-    env:
-      ENVIRONMENT: TEST
+    environment: ubuntu-latest
     steps:
-      - run: echo ${{ secrets[format('{0}_A', env.ENVIRONMENT)] }}
+      - run: echo ${{ vars.[format('{0}_RUN2', set_local)] }}
 
 
 
