@@ -18,7 +18,7 @@ jobs:
       matrix1: ${{ steps.demo.outputs.sample }}
     steps:
     - name: Run tests
-      run: echo "${{ vars.ENVS }}"
+      run: echo "${{ vars.ENV }}"
     - name: demo
       id: demo
       run: echo "sample=${{ vars.ENV }}" >> $GITHUB_OUTPUT
