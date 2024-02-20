@@ -22,6 +22,7 @@ jobs:
     - name: demo
       id: demo
       run: echo "sample=${{ vars.ENV }}" >> $GITHUB_OUTPUT
+    - run: echo "${{fromJSON(needs.runners-list.outputs.matrix1)}}"
 
   Deploy-ab:
     needs: runners-list
