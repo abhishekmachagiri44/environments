@@ -35,6 +35,8 @@ jobs:
     # env:
     #   ${{ matrix.version }}_RUN: ${{vars.RUN}}
     strategy:
+      fail-fast: true
+      max-parallel: 1
       matrix:
         version: ${{fromJSON(needs.build.outputs.matrix1)}}
     steps:
@@ -48,6 +50,8 @@ jobs:
     # env:
     #   ${{ matrix.version }}_RUN2: ${{vars.RUN2}}
     strategy:
+      fail-fast: true
+      max-parallel: 1
       matrix:
         version: ${{fromJSON(needs.build.outputs.matrix2)}}
     steps:
