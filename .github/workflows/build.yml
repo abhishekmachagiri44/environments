@@ -14,11 +14,12 @@ on:
 jobs:
   runners-list:
     runs-on: ubuntu-latest
+    environment: ubuntu-latest
     outputs:
       matrix1: ${{ steps.demo.outputs.sample }}
     steps:
     - name: Run tests
-      run: echo "${{ vars.ENV }}"
+      run: echo "${{ vars.ENVS }}"
     - name: demo
       id: demo
       run: echo "sample=${{ vars.ENV }}" >> $GITHUB_OUTPUT
